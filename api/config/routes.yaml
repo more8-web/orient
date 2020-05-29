@@ -1,9 +1,9 @@
 
 
-register:
-    path: /register
-    controller: App\Controller\RegisterController\RegisterController::index
+# register:
+#     path: /register
+#     controller: App\Controller\AuthController::index
 
-register_complete:
-    path: /register/complete
-    controller: App\Controller\RegisterController::complete
+# register_complete:
+#     path: /register/complete
+#     controller: App\Controller\RegisterController::complete
