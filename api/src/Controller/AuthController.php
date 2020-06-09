@@ -2,6 +2,11 @@
 
 namespace App\Controller;
 
+use App\Controller\Dto as DTO;
+use App\Exceptions\AbstractApiException;
+use App\Services\Auth\RegisterService;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Swagger\Annotations as SWG;
@@ -9,7 +14,7 @@ use Swagger\Annotations as SWG;
 class AuthController extends AbstractApiController
 {
     /**
-     * @Route("/register", name="register", methods={"POST"})
+     * @Route("/register", methods={"POST"})
      * @SWG\Post(
      *    tags={"Authorization"},
      *    summary="Register new user",
@@ -18,44 +23,51 @@ class AuthController extends AbstractApiController
      *         in="body",
      *         description="Request with user email",
      *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="email", type="string", example="nickname@server.com")
-     *         )
+     *         @Model(type=DTO\RegisterRequestBody::class)
      *     ),
      *     @SWG\Response(
      *         response=200,
-     *         description="Start registration proccess"
+     *         description="Start registration proccess",
+     *         @Model(type=DTO\RegisterResponseBody::class)
      *     ),
      * )
+     * @param Request $request
+     * @param RegisterService $service
+     * @return JsonResponse
+     * @throws \Exception
      */
-    public function register(Request $request)
+    public function register(Request $request, RegisterService $service)
     {
-        $data = $this->getJson($request);
+        /** @var DTO\RegisterRequestBody $dto */
+        $dto = $this->getDto($request, DTO\RegisterRequestBody::class);
 
         return $this->json([
-            "success" => $data["email"]
+            "success" => $service->register($dto->getEmail(), $dto->getPassword())
         ]);
     }
 
+
     /**
-     * @Route("/register/complete", name="registerComplete", methods={"POST"})
+     * @Route("/register/complete", methods={"POST"})
      * @SWG\Post(
      *    tags={"Authorization"},
      *    summary="Complete register with email code",
      *     @SWG\Parameter(
      *         name="emailCode",
      *         in="body",
-     *         description="Request with email code",
+     *         description="Request complete registration",
      *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="email_code", type="string", example="nickname@server.com")
+     *         @Model(type=DTO\RegisterCompleteRequestBody::class)
      *         )
      *     ),
-     *     @SWG\Response(
+     * @SWG\Response(
      *         response=200,
-     *         description="Complete registration proccess"
+     *         description="Complete registration proccess",
+     *         @Model(type=DTO\RegisterCompleteResponseBody::class)
      *     ),
      * )
+     * @param Request $request
+     * @return JsonResponse
      */
     public function registerComplete(Request $request)
     {
@@ -63,8 +75,8 @@ class AuthController extends AbstractApiController
             "success" => $this->getJson($request)
         ]);
     }
-    
-     /**
+
+    /**
      * @Route("/login", name="login", methods={"POST"})
      * @SWG\Post(
      *    tags={"Authorization"},
@@ -74,20 +86,19 @@ class AuthController extends AbstractApiController
      *         in="body",
      *         description="Request body with email and password",
      *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="email", type="string", example="user@host.zone"),
-     *             @SWG\Property(property="password", type="string", example="password")
+     *         @Model(type=DTO\LoginRequestBody::class)
      *         )
      *     ),
-     *     @SWG\Response(
+     * @SWG\Response(
      *         response=200,
-     *         description="Start login proccess"
+     *         description="Start login proccess",
+     *         @Model(type=DTO\LoginResponseBody::class)
      *     ),
      * )
      */
     public function login(Request $request)
     {
-        $data = $this->getJson($request);
+        $data = $this->getDto($request, DTO\LoginRequestBody::class);
 
         return $this->json([
             "success" => $data
@@ -105,13 +116,13 @@ class AuthController extends AbstractApiController
      *         in="body",
      *         description="Request with email user",
      *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="email", type="string", example="user@host.zone"),
+     *         @Model(type=DTO\LogoutRequestBody::class)
      *         )
      *     ),
-     *     @SWG\Response(
+     * @SWG\Response(
      *         response=200,
-     *         description="Start login proccess"
+     *         description="Start logout proccess",
+     *         @Model(type=DTO\LogoutResponseBody::class)
      *     ),
      * )
      */
@@ -124,7 +135,7 @@ class AuthController extends AbstractApiController
         ]);
     }
 
-     /**
+    /**
      * @Route("/password/reset", name="passwordReset", methods={"POST"})
      * @SWG\Post(
      *    tags={"Authorization"},
@@ -134,16 +145,17 @@ class AuthController extends AbstractApiController
      *         in="body",
      *         description="Request for password reset",
      *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="new_password", type="string", example="qwerty"),
-     *             @SWG\Property(property="old_password", type="string", example="123456")
+     *         @Model(type=DTO\PasswordResetRequestBody::class)
      *         )
      *     ),
-     *     @SWG\Response(
+     * @SWG\Response(
      *         response=200,
-     *         description="Start login proccess"
+     *         description="Start login proccess",
+     *         @Model(type=DTO\PasswordResetResponseBody::class)
      *     ),
      * )
+     * @param Request $request
+     * @return JsonResponse
      */
     public function passwordReset(Request $request)
     {
@@ -158,21 +170,23 @@ class AuthController extends AbstractApiController
      * @Route("/password/reset/complete", name="passwordResetComplete", methods={"POST"})
      * @SWG\Post(
      *    tags={"Authorization"},
-     *    summary="Password reset",
+     *    summary="Password reset complete",
      *     @SWG\Parameter(
      *         name="body",
      *         in="body",
-     *         description="Request for password reset",
+     *         description="Request for password reset complete",
      *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="message", type="string", example="Password has been changed"),
+     *         @Model(type=DTO\PasswordResetCompleteRequestBody::class)
      *         )
      *     ),
-     *     @SWG\Response(
+     * @SWG\Response(
      *         response=200,
-     *         description="Start login proccess"
+     *         description="Response password reset complete",
+     *         @Model(type=DTO\PasswordResetCompleteResponseBody::class)
      *     ),
      * )
+     * @param Request $request
+     * @return JsonResponse
      */
     public function passwordResetComplete(Request $request)
     {
@@ -182,5 +196,5 @@ class AuthController extends AbstractApiController
             "success" => $data
         ]);
     }
-    
+
 }

@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -14,27 +16,70 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class UserRepository extends ServiceEntityRepository
 {
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserName()
+    {
+        return $this->userName;
+    }
+    public $email;
+    public $userName;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param $email
+     * @return User Returns a User object
+     */
+    public function findByEmail($email)
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->findOneBy(["email" => $email]);
     }
-    */
+
+    /**
+     * @param $email
+     * @return bool
+     */
+    public function isEmailExists($email)
+    {
+        $user = $this->findByEmail($email);
+        return !is_null($user);
+    }
+
+    /**
+     * @param $email
+     * @param $password
+     * @param $roleId
+     * @return User
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function createUser($email, $password, $roleId)
+    {
+        $user = new User();
+        $user->setEmail($email);
+        $user->setPassword(md5($password));
+        $user->setConfirmationCode(md5($email . $password));
+        $user->setRoleId($roleId);
+
+        $em = $this->getEntityManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $user;
+    }
 
     /*
     public function findOneBySomeField($value): ?User
@@ -47,4 +92,9 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @return mixed
+     */
+
 }

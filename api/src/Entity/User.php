@@ -8,7 +8,8 @@ use Doctrine\DBAL\Types\DateType;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository", repositoryClass=UserRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class User
 {
@@ -35,12 +36,12 @@ class User
     private $confirmation_code;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
      */
     private $updated_at;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
      */
     private $created_at;
 
@@ -48,6 +49,12 @@ class User
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $last_login_at;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="user")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $role;
 
     public function getId(): ?int
     {
@@ -95,7 +102,7 @@ class User
         return $this->updated_at;
     }
 
-    public function setUpdatedUp(\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
 
@@ -124,5 +131,27 @@ class User
         $this->last_login_at = $last_login_at;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updatedTimestamps(): void
+    {
+        $this->setUpdatedAt(new \DateTime('now'));
+        if ($this->getCreatedAt() === null) {
+            $this->setCreatedAt(new \DateTime('now'));
+        }
+    }
+
+    public function setRoleId($role): void
+    {
+        $this->role = $role;
+    }
+
+    public function getRoleId(): ?Role
+    {
+        return $this->role_id;
     }
 }
