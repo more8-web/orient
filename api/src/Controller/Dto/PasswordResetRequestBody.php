@@ -14,7 +14,9 @@ class PasswordResetRequestBody
 
     const
         PROPERTY_EMAIL = "email",
-        PROPERTY_PASSWORD = "password";
+        PROPERTY_OLD_PASSWORD = "old_password",
+        PROPERTY_NEW_PASSWORD = "new_password",
+        PROPERTY_DOUBLED_NEW_PASSWORD = "doubled_new_password";
 
     /**
      * @SWG\Property(type="string")
@@ -31,11 +33,21 @@ class PasswordResetRequestBody
      * @Assert\Length(
      *      min = 8,
      *      max = 16,
-     *      minMessage = "Ваш пароль должно быть как минимум {{ limit }} символов",
-     *      maxMessage = "Ваш пароль не должен быть длиннее {{ limit }} символов"
+     *      minMessage = "Ваш новый пароль должен быть как минимум {{ limit }} символов",
+     *      maxMessage = "Ваш новый пароль не должен быть длиннее {{ limit }} символов"
      * )
      */
-    private $password;
+    private $newPassword;
+
+    /**
+     * @var
+     */
+    private $doubledNewPassword;
+
+    /**
+     * @var
+     */
+    private $oldPassword;
 
     /**
      * PasswordResetRequestBody constructor.
@@ -47,10 +59,19 @@ class PasswordResetRequestBody
             $this->setEmail($data[self::PROPERTY_EMAIL]);
         }
 
-        if (isset($data[self::PROPERTY_PASSWORD])) {
-            $this->setPassword($data[self::PROPERTY_PASSWORD]);
+        if (isset($data[self::PROPERTY_OLD_PASSWORD])) {
+            $this->setOldPassword($data[self::PROPERTY_OLD_PASSWORD]);
+        }
+
+        if (isset($data[self::PROPERTY_NEW_PASSWORD])) {
+            $this->setNewPassword($data[self::PROPERTY_NEW_PASSWORD]);
+        }
+
+        if (isset($data[self::PROPERTY_DOUBLED_NEW_PASSWORD])) {
+            $this->setDoubledNewPassword($data[self::PROPERTY_DOUBLED_NEW_PASSWORD]);
         }
     }
+
 
     /**
      * @return mixed
@@ -71,20 +92,49 @@ class PasswordResetRequestBody
     /**
      * @return mixed
      */
-    public function getPassword()
+    public function getOldPassword()
     {
-        return $this->password;
+        return $this->oldPassword;
     }
 
     /**
-     * @param mixed $password
+     * @param $oldPassword
      */
-    public function setPassword($password): void
+    public function setOldPassword($oldPassword): void
     {
-        $this->password = $password;
+        $this->oldPassword = $oldPassword;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getDoubledNewPassword()
+    {
+        return $this->doubledNewPassword;
+    }
 
+    /**
+     * @param mixed $doubledNewPassword
+     */
+    public function setDoubledNewPassword($doubledNewPassword): void
+    {
+        $this->doubledNewPassword = $doubledNewPassword;
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getNewPassword()
+    {
+        return $this->newPassword;
+    }
+
+    /**
+     * @param mixed $newPassword
+     */
+    public function setNewPassword($newPassword): void
+    {
+        $this->newPassword = $newPassword;
+    }
 
 }

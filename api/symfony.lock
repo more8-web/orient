@@ -105,6 +105,9 @@
     "fzaninotto/faker": {
         "version": "v1.9.1"
     },
+    "lcobucci/jwt": {
+        "version": "3.3.2"
+    },
     "monolog/monolog": {
         "version": "2.1.0"
     },

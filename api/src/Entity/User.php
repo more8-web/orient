@@ -3,16 +3,19 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\DBAL\Types\DateType;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository", repositoryClass=UserRepository::class)
  * @ORM\HasLifecycleCallbacks
  */
-class User
+class User implements UserInterface
 {
+    const ROLES_SEPARATOR = ", ";
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue()
@@ -26,35 +29,44 @@ class User
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=128)
      */
     private $password;
 
     /**
+     * @ORM\Column(type="string", length=64)
+     */
+    private $salt;
+
+    /**
+     * @ORM\Column(type="string", length=255, name="confirmation_code")
+     */
+    private $confirmationCode;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
-    private $confirmation_code;
+    private $roles;
 
     /**
-     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"}, name="updated_at")
      */
-    private $updated_at;
+    private $updatedAt;
 
     /**
-     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"}, name="created_at")
      */
-    private $created_at;
+    private $createdAt;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true, name="last_login_at")
      */
-    private $last_login_at;
+    private $lastLoginAt;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="user")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $role;
+    public function __construct()
+    {
+        $this->addRoles(UserRole::PENDING_USER);
+    }
 
     public function getId(): ?int
     {
@@ -87,48 +99,82 @@ class User
 
     public function getConfirmationCode(): ?string
     {
-        return $this->confirmation_code;
+        return $this->confirmationCode;
     }
 
-    public function setConfirmationCode(string $confirmation_code): self
+    public function setConfirmationCode(string $confirmationCode): self
     {
-        $this->confirmation_code = $confirmation_code;
+        $this->confirmationCode = $confirmationCode;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    /**
+     * @param $roles
+     * @return $this
+     */
+    public function setRoles($roles): self
     {
-        return $this->updated_at;
-    }
-
-    public function setUpdatedAt(\DateTimeInterface $updated_at): self
-    {
-        $this->updated_at = $updated_at;
+        $roles = is_array($roles) ? $roles : [$roles];
+        $roles = array_filter(array_unique($roles));
+        $this->roles = join(self::ROLES_SEPARATOR, $roles);
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    /**
+     * @param $role
+     * @return $this
+     */
+    public function addRoles($role): self
     {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $created_at): self
-    {
-        $this->created_at = $created_at;
+        $roles = $this->getRoles();
+        $roles[] = $role;
+        $this->setRoles($roles);
 
         return $this;
     }
 
-    public function getLastLoginAt(): ?\DateTimeInterface
+    /**
+     * @return array
+     */
+    public function getRoles(): array
     {
-        return $this->last_login_at;
+        return explode(self::ROLES_SEPARATOR, $this->roles);
     }
 
-    public function setLastLoginAt(?\DateTimeInterface $last_login_at): self
+    public function getUpdatedAt(): ?DateTimeInterface
     {
-        $this->last_login_at = $last_login_at;
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getLastLoginAt(): ?DateTimeInterface
+    {
+        return $this->lastLoginAt;
+    }
+
+    public function setLastLoginAt(?DateTimeInterface $lastLoginAt): self
+    {
+        $this->lastLoginAt = $lastLoginAt;
 
         return $this;
     }
@@ -139,19 +185,41 @@ class User
      */
     public function updatedTimestamps(): void
     {
-        $this->setUpdatedAt(new \DateTime('now'));
+        $this->setUpdatedAt(new DateTime('now'));
         if ($this->getCreatedAt() === null) {
-            $this->setCreatedAt(new \DateTime('now'));
+            $this->setCreatedAt(new DateTime('now'));
         }
     }
 
-    public function setRoleId($role): void
+    /**
+     * @return mixed
+     */
+    public function getSalt()
     {
-        $this->role = $role;
+        return $this->salt;
     }
 
-    public function getRoleId(): ?Role
+    /**
+     * @param mixed $salt
+     */
+    public function setSalt($salt): void
     {
-        return $this->role_id;
+        $this->salt = $salt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->getEmail();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
     }
 }

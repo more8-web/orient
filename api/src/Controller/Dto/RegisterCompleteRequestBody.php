@@ -14,14 +14,14 @@ class RegisterCompleteRequestBody
 {
 
     const
-        EMAIL_CODE = "email_code";
+        CONFIRMATION_CODE = "confirmation_code";
 
     /**
-     * @SWG\Property(type="string")
+     * @SWG\Property(property=RegisterCompleteRequestBody::CONFIRMATION_CODE, type="string")
      * @Assert\NotBlank()
      * @var string
      */
-    private $emailCode;
+    private $confirmationCode;
 
     /**
      * RegisterCompleteRequestBody constructor.
@@ -29,8 +29,8 @@ class RegisterCompleteRequestBody
      */
     public function __construct(array $data)
     {
-        if (isset($data[self::EMAIL_CODE])) {
-            $this->setEmailCode($data[self::EMAIL_CODE]);
+        if (isset($data[self::CONFIRMATION_CODE])) {
+            $this->setConfirmationCode($data[self::CONFIRMATION_CODE]);
         }
 
     }
@@ -38,17 +38,17 @@ class RegisterCompleteRequestBody
     /**
      * @return mixed
      */
-    public function getEmailCode()
+    public function getConfirmationCode()
     {
-        return $this->emailCode;
+        return $this->confirmationCode;
     }
 
     /**
-     * @param mixed $emailCode
+     * @param mixed $confirmationCode
      */
-    public function setEmailCode($emailCode): void
+    public function setConfirmationCode($confirmationCode): void
     {
-        $this->emailCode = $emailCode;
+        $this->confirmationCode = $confirmationCode;
     }
 
 }

@@ -3,13 +3,17 @@
 namespace App\Controller;
 
 use App\Controller\Dto as DTO;
-use App\Exceptions\AbstractApiException;
+use App\Services\Auth\LoginService;
+use App\Services\Auth\LogoutService;
+use App\Services\Auth\RegisterCompleteService;
 use App\Services\Auth\RegisterService;
+use Exception as ExceptionAlias;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Swagger\Annotations as SWG;
+use App\Entity\User;
 
 class AuthController extends AbstractApiController
 {
@@ -34,7 +38,7 @@ class AuthController extends AbstractApiController
      * @param Request $request
      * @param RegisterService $service
      * @return JsonResponse
-     * @throws \Exception
+     * @throws ExceptionAlias
      */
     public function register(Request $request, RegisterService $service)
     {
@@ -53,7 +57,7 @@ class AuthController extends AbstractApiController
      *    tags={"Authorization"},
      *    summary="Complete register with email code",
      *     @SWG\Parameter(
-     *         name="emailCode",
+     *         name="body",
      *         in="body",
      *         description="Request complete registration",
      *         required=true,
@@ -67,12 +71,17 @@ class AuthController extends AbstractApiController
      *     ),
      * )
      * @param Request $request
+     * @param RegisterCompleteService $service
      * @return JsonResponse
      */
-    public function registerComplete(Request $request)
+    public function registerComplete(Request $request, RegisterCompleteService $service)
     {
+        /** @var DTO\RegisterCompleteRequestBody $dto */
+        $dto = $this->getDto($request, DTO\RegisterCompleteRequestBody::class);
+        $confirmationCode = $dto->getConfirmationCode();
+        $user = $service->registerComplete($confirmationCode);
         return $this->json([
-            "success" => $this->getJson($request)
+            "success" => $user->getRoles()
         ]);
     }
 
@@ -95,13 +104,18 @@ class AuthController extends AbstractApiController
      *         @Model(type=DTO\LoginResponseBody::class)
      *     ),
      * )
+     * @param Request $request
+     * @param LoginService $service
+     * @return JsonResponse
+     * @throws ExceptionAlias
      */
-    public function login(Request $request)
+    public function login(Request $request, LoginService $service)
     {
-        $data = $this->getDto($request, DTO\LoginRequestBody::class);
+        $dto = $this->getDto($request, DTO\LoginRequestBody::class);
 
+        $token = $service->login($dto->getEmail(), $dto->getPassword());
         return $this->json([
-            "success" => $data
+            "token" => $token
         ]);
     }
 
@@ -125,10 +139,16 @@ class AuthController extends AbstractApiController
      *         @Model(type=DTO\LogoutResponseBody::class)
      *     ),
      * )
+     * @param Request $request
+     * @param LogoutService $service
+     * @param User $user
+     * @return JsonResponse
+     * @throws ExceptionAlias
      */
-    public function logout(Request $request)
+    public function logout(Request $request, LogoutService $service, User $user)
     {
         $data = $this->getJson($request);
+        $service->logout($user);
 
         return $this->json([
             "success" => $data
@@ -159,6 +179,7 @@ class AuthController extends AbstractApiController
      */
     public function passwordReset(Request $request)
     {
+        $dto = $this->getDto($request, DTO\PasswordResetRequestBody::class);
         $data = $this->getJson($request);
 
         return $this->json([

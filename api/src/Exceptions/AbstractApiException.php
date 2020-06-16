@@ -3,8 +3,6 @@
 
 namespace App\Exceptions;
 
-
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
