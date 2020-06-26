@@ -1,0 +1,20 @@
+.home-header {
+  margin: 0 auto;
+  border: 2px gray dotted;
+  text-align: center;
+}
+.home-main {
+  margin: 10px 200px;
+  padding: 10px;
+  border: black solid 3px;
+  text-align: center;
+}
+
+.home-main * {
+  margin: 10px;
+}
+
+.home-main button {
+  display: table-cell;
+  margin-right: 8px;
+}

@@ -1,0 +1,21 @@
+.register-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+
+
+  margin: 10px auto;
+  border: black solid 3px;
+
+  width: 400px;
+}
+
+.register-form * {
+  margin: 5px;
+}
+
+
+mat-label {
+  color: cornflowerblue;
+}
