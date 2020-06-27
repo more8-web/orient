@@ -40,12 +40,12 @@ class PasswordResetRequestBody
     private $newPassword;
 
     /**
-     * @var
+     * @var string
      */
     private $doubledNewPassword;
 
     /**
-     * @var
+     * @var string
      */
     private $oldPassword;
 

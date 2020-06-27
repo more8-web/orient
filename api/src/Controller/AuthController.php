@@ -50,7 +50,6 @@ class AuthController extends AbstractApiController
         ]);
     }
 
-
     /**
      * @Route("/register/complete", methods={"POST"})
      * @SWG\Post(
@@ -119,7 +118,6 @@ class AuthController extends AbstractApiController
         ]);
     }
 
-
     /**
      * @Route("/logout", name="logout", methods={"POST"})
      * @SWG\Post(
@@ -180,10 +178,9 @@ class AuthController extends AbstractApiController
     public function passwordReset(Request $request)
     {
         $dto = $this->getDto($request, DTO\PasswordResetRequestBody::class);
-        $data = $this->getJson($request);
 
         return $this->json([
-            "success" => $data
+            "success" => $dto
         ]);
     }
 
@@ -217,5 +214,4 @@ class AuthController extends AbstractApiController
             "success" => $data
         ]);
     }
-
 }
