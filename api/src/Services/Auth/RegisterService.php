@@ -12,7 +12,6 @@ use Doctrine\ORM\ORMException;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
-use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
 
 class RegisterService

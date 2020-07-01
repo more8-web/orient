@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Controller\Dto as DTO;
 use App\Services\Auth\LoginService;
 use App\Services\Auth\LogoutService;
+use App\Services\Auth\PasswordResetCompleteService;
+use App\Services\Auth\PasswordResetService;
 use App\Services\Auth\RegisterCompleteService;
 use App\Services\Auth\RegisterService;
 use Exception as ExceptionAlias;
@@ -173,12 +175,13 @@ class AuthController extends AbstractApiController
      *     ),
      * )
      * @param Request $request
+     * @param PasswordResetService $service
      * @return JsonResponse
      */
-    public function passwordReset(Request $request)
+    public function passwordReset(Request $request, PasswordResetService $service)
     {
         $dto = $this->getDto($request, DTO\PasswordResetRequestBody::class);
-
+        $service->resetPassword($dto->getEmail());
         return $this->json([
             "success" => $dto
         ]);
@@ -204,14 +207,19 @@ class AuthController extends AbstractApiController
      *     ),
      * )
      * @param Request $request
+     * @param PasswordResetCompleteService $service
      * @return JsonResponse
+     * @throws ExceptionAlias
      */
-    public function passwordResetComplete(Request $request)
+    public function passwordResetComplete(Request $request, PasswordResetCompleteService $service)
     {
-        $data = $this->getJson($request);
+        $dto = $this->getDto($request, DTO\PasswordResetCompleteRequestBody::class);
+
+        $token = $service->passwordResetComplete($dto->getEmail(), $dto->getPassword());
 
         return $this->json([
-            "success" => $data
+            "token" => $token
         ]);
+
     }
 }

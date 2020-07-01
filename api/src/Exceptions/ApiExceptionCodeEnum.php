@@ -13,6 +13,7 @@ class ApiExceptionCodeEnum
         DATABASE_ERROR = 10003,
         MAILER_ERROR = 10004,
         CONFIRMATION_ERROR = 10005,
-        INVALID_PASSWORD = 10006
+        INVALID_PASSWORD = 10006,
+        INVALID_EMAIL = 10007
     ;
 }

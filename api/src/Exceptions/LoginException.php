@@ -3,7 +3,6 @@
 
 namespace App\Exceptions;
 
-use Symfony\Component\HttpFoundation\Response;
 
 class LoginException extends AbstractApiException
 {
