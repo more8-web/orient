@@ -31,20 +31,22 @@ class PasswordResetCompleteService
     }
 
     /**
-     * @param $email
-     * @param $password
+     * @param $confirmationCode
+     * @param $newPassword
      * @return string
-     * @throws Exception
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function passwordResetComplete($email, $password)
+    public function passwordResetComplete(string $confirmationCode, string $newPassword)
     {
 
-            $user = $this->repo->findByEmail($email);
+            $user = $this->repo->findUserByConfirmationCode($confirmationCode);
             if (is_null($user)) {
                 throw new NotFoundEmailException();
             }
 
-            $user->setPassword($password);
+            $user->setPassword($newPassword);
+            $user->setConfirmationCode("");
 
             $this->repo->flush();
 

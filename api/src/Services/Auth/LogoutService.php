@@ -21,11 +21,11 @@ class LogoutService
     }
 
     /**
-     * @param User $user
-     * @throws Exception
+     * @param $email
      */
-    public function logout(User $user)
+    public function logout($email)
     {
+        $user = $this->repo->findByEmail($email);
         $this->token->destroyPublicKey($user);
 
     }

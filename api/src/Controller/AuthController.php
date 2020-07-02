@@ -141,17 +141,16 @@ class AuthController extends AbstractApiController
      * )
      * @param Request $request
      * @param LogoutService $service
-     * @param User $user
      * @return JsonResponse
-     * @throws ExceptionAlias
      */
-    public function logout(Request $request, LogoutService $service, User $user)
+    public function logout(Request $request, LogoutService $service)
     {
-        $data = $this->getJson($request);
-        $service->logout($user);
+        $dto = $this->getDto($request, DTO\LogoutRequestBody::class);
+
+        $service->logout($dto->getEmail());
 
         return $this->json([
-            "success" => $data
+            "success" => $dto
         ]);
     }
 
@@ -181,9 +180,9 @@ class AuthController extends AbstractApiController
     public function passwordReset(Request $request, PasswordResetService $service)
     {
         $dto = $this->getDto($request, DTO\PasswordResetRequestBody::class);
-        $service->resetPassword($dto->getEmail());
+        $confirmationCode = $service->passwordReset($dto->getEmail());
         return $this->json([
-            "success" => $dto
+            "success" => $confirmationCode
         ]);
     }
 
@@ -215,7 +214,7 @@ class AuthController extends AbstractApiController
     {
         $dto = $this->getDto($request, DTO\PasswordResetCompleteRequestBody::class);
 
-        $token = $service->passwordResetComplete($dto->getEmail(), $dto->getPassword());
+        $token = $service->passwordResetComplete($dto->getConfirmationCode(), $dto->getNewPassword());
 
         return $this->json([
             "token" => $token

@@ -12,6 +12,7 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
+
 class PasswordResetService
 {
     /** @var UserRepository */
@@ -25,7 +26,7 @@ class PasswordResetService
         $this->mailer = $mailer;
     }
 
-    public function resetPassword($email): User
+    public function passwordReset($email)
     {
         if (!$this->repo->isEmailExists($email)) {
             throw new NotFoundEmailException();
@@ -33,16 +34,19 @@ class PasswordResetService
 
         $user = $this->repo->findByEmail($email);
 
+        $confirmationCode = $this->repo->setPasswordResetConfirmationCode($user);
+
         try {
             $this->sendResetPasswordEmail($user);
         } catch (TransportExceptionInterface $e) {
             throw (new MailerException())->setDebugInfo($e->getMessage());
         }
-        return $user;
+        return $confirmationCode;
     }
 
     public function sendResetPasswordEmail(User $user)
     {
+
         $resetPasswordEmail = (new Email())
             ->from('qweqwe@qwqw')
             ->to($user->getEmail())

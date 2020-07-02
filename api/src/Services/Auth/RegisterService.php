@@ -31,6 +31,7 @@ class RegisterService
      * @param $email
      * @param $password
      * @return string
+     * @throws \Exception
      */
     public function register($email, $password)
     {

@@ -39,7 +39,7 @@ class User implements UserInterface
     private $salt;
 
     /**
-     * @ORM\Column(type="string", length=255, name="confirmation_code")
+     * @ORM\Column(type="string", length=255, name="confirmation_code", nullable=true)
      */
     private $confirmationCode;
 

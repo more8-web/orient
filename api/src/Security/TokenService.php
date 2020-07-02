@@ -54,6 +54,7 @@ class TokenService
     {
         $publicKey = null;
         $this->redis->set($publicKey, $user->getId());
+        return $this;
     }
 
     /**

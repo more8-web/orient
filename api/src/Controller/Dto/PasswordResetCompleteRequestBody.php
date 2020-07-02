@@ -14,19 +14,18 @@ class PasswordResetCompleteRequestBody
 {
 
     const
-        PROPERTY_EMAIL = "email",
-        PROPERTY_PASSWORD = "password";
+        CONFIRMATION_CODE = "confirmation_code",
+        NEW_PASSWORD = "new_password";
 
     /**
-     * @SWG\Property(type="string")
-     *
+     * @SWG\Property(property=PasswordResetCompleteRequestBody::CONFIRMATION_CODE, type="string")
      * @Assert\NotBlank()
-     * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
+     * @var string
      */
-    private $email;
+    private $confirmationCode;
 
     /**
-     * @SWG\Property(type="string")
+     * @SWG\Property(property=PasswordResetCompleteRequestBody::NEW_PASSWORD, type="string")
      *
      * @Assert\NotBlank()
      * @Assert\Length(
@@ -36,7 +35,7 @@ class PasswordResetCompleteRequestBody
      *      maxMessage = "Ваш пароль не должен быть длиннее {{ limit }} символов"
      * )
      */
-    private $password;
+    private $newPassword;
 
     /**
      * PasswordResetCompleteRequestBody constructor.
@@ -44,45 +43,45 @@ class PasswordResetCompleteRequestBody
      */
     public function __construct(array $data)
     {
-        if (isset($data[self::PROPERTY_EMAIL])) {
-            $this->setEmail($data[self::PROPERTY_EMAIL]);
+        if (isset($data[self::CONFIRMATION_CODE])) {
+            $this->setConfirmationCode($data[self::CONFIRMATION_CODE]);
         }
 
-        if (isset($data[self::PROPERTY_PASSWORD])) {
-            $this->setPassword($data[self::PROPERTY_PASSWORD]);
+        if (isset($data[self::NEW_PASSWORD])) {
+            $this->setNewPassword($data[self::NEW_PASSWORD]);
         }
     }
 
     /**
      * @return mixed
      */
-    public function getEmail()
+    public function getConfirmationCode()
     {
-        return $this->email;
+        return $this->confirmationCode;
     }
 
     /**
-     * @param mixed $email
+     * @param mixed
      */
-    public function setEmail($email): void
+    public function setConfirmationCode($confirmationCode): void
     {
-        $this->email = $email;
+        $this->confirmationCode = $confirmationCode;
     }
 
     /**
      * @return mixed
      */
-    public function getPassword()
+    public function getNewPassword()
     {
-        return $this->password;
+        return $this->newPassword;
     }
 
     /**
-     * @param mixed $password
+     * @param $newPassword
      */
-    public function setPassword($password): void
+    public function setNewPassword($newPassword): void
     {
-        $this->password = $password;
+        $this->newPassword = $newPassword;
     }
 
 

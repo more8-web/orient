@@ -35,6 +35,7 @@ class RegisterCompleteService
             }
 
             $user->addRoles(UserRole::USER);
+            $user->setConfirmationCode("");
             $this->repo->flush();
         } catch (ORMException | ConnectionException $e) {
             throw (new DatabaseException())->setDebugInfo($e->getMessage());
