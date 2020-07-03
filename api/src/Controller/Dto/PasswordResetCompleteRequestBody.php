@@ -63,7 +63,7 @@ class PasswordResetCompleteRequestBody
     /**
      * @param mixed
      */
-    public function setConfirmationCode($confirmationCode): void
+    public function setConfirmationCode($confirmationCode)
     {
         $this->confirmationCode = $confirmationCode;
     }
@@ -79,7 +79,7 @@ class PasswordResetCompleteRequestBody
     /**
      * @param $newPassword
      */
-    public function setNewPassword($newPassword): void
+    public function setNewPassword($newPassword)
     {
         $this->newPassword = $newPassword;
     }

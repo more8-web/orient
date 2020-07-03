@@ -52,7 +52,7 @@ class TokenService
 
     public function destroyPublicKey(User $user)
     {
-        $publicKey = null;
+        $publicKey = "null";
         $this->redis->set($publicKey, $user->getId());
         return $this;
     }

@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Swagger\Annotations as SWG;
-use App\Entity\User;
 
 class AuthController extends AbstractApiController
 {
@@ -53,7 +52,7 @@ class AuthController extends AbstractApiController
     }
 
     /**
-     * @Route("/register/complete", methods={"POST"})
+     * @Route("/register/complete", name="register complete", methods={"POST"})
      * @SWG\Post(
      *    tags={"Authorization"},
      *    summary="Complete register with email code",
@@ -128,7 +127,7 @@ class AuthController extends AbstractApiController
      *     @SWG\Parameter(
      *         name="body",
      *         in="body",
-     *         description="Request with email user",
+     *         description="Request body with email",
      *         required=true,
      *         @Model(type=DTO\LogoutRequestBody::class)
      *         )
@@ -145,8 +144,8 @@ class AuthController extends AbstractApiController
      */
     public function logout(Request $request, LogoutService $service)
     {
+        var_dump($request); die();
         $dto = $this->getDto($request, DTO\LogoutRequestBody::class);
-
         $service->logout($dto->getEmail());
 
         return $this->json([

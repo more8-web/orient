@@ -135,7 +135,7 @@ class UserRepository extends ServiceEntityRepository implements UserProviderInte
      * @param string $username
      * @return void
      */
-    public function loadUserByUsername(string $username)
+    public function loadUserByUsername($username)
     {
         // TODO: Implement loadUserByUsername() method.
     }

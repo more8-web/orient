@@ -7,6 +7,8 @@ namespace App\Services\Auth;
 use App\Exceptions\NotFoundEmailException;
 use App\Repository\UserRepository;
 use App\Security\TokenService;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Exception;
 
 /**
@@ -34,10 +36,11 @@ class PasswordResetCompleteService
      * @param $confirmationCode
      * @param $newPassword
      * @return string
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
+     * @throws Exception
      */
-    public function passwordResetComplete(string $confirmationCode, string $newPassword)
+    public function passwordResetComplete($confirmationCode, $newPassword)
     {
 
             $user = $this->repo->findUserByConfirmationCode($confirmationCode);

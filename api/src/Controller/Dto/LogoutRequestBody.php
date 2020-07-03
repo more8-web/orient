@@ -15,13 +15,13 @@ class LogoutRequestBody
 
     /**
      * @SWG\Property(type="string")
-     *
      * @Assert\NotBlank()
+     * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
      */
     private $email;
 
     /**
-     * RegisterRequestBody constructor.
+     * LogoutRequestBody constructor.
      * @param array $data
      */
     public function __construct(array $data)
@@ -33,7 +33,7 @@ class LogoutRequestBody
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getEmail()
     {
@@ -41,7 +41,7 @@ class LogoutRequestBody
     }
 
     /**
-     * @param mixed $email
+     * @param string $email
      */
     public function setEmail($email): void
     {
