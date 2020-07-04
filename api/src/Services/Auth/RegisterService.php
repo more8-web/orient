@@ -60,10 +60,10 @@ class RegisterService
      */
     public function sendConfirmEmail(User $user)
     {
-        $adminEmail = getenv('MAILER_FROM_EMAIL');
-        $schema = getenv('ADMIN_CLIENT_SCHEMA');
-        $host = getenv('ADMIN_CLIENT_HOST');
-        $path = getenv('ADMIN_CLIENT_REGISTER_COMPLETE_PATH');
+        $adminEmail = $_ENV['MAILER_FROM_EMAIL'];
+        $schema = $_ENV['ADMIN_CLIENT_SCHEMA'];
+        $host = $_ENV['ADMIN_CLIENT_HOST'];
+        $path = $_ENV['ADMIN_CLIENT_REGISTER_COMPLETE_PATH'];
         $code = $user->getConfirmationCode();
 
         $confirmEmail = (new Email())
@@ -75,3 +75,4 @@ class RegisterService
         $this->mailer->send($confirmEmail);
     }
 }
+

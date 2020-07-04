@@ -99,7 +99,7 @@ class AuthController extends AbstractApiController
      *     ),
      * @SWG\Response(
      *         response=200,
-     *         description="Start login proccess",
+     *         description="Start login-form proccess",
      *         @Model(type=DTO\LoginResponseBody::class)
      *     ),
      * )
@@ -165,7 +165,7 @@ class AuthController extends AbstractApiController
      *     ),
      * @SWG\Response(
      *         response=200,
-     *         description="Start login proccess",
+     *         description="Start login-form proccess",
      *         @Model(type=DTO\PasswordResetResponseBody::class)
      *     ),
      * )
