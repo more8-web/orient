@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controller\Dto;
 
 use Swagger\Annotations as SWG;

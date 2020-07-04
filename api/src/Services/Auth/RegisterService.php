@@ -9,10 +9,10 @@ use App\Exceptions\UserAlreadyRegisteredException;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Exception\{ConnectionException};
 use Doctrine\ORM\ORMException;
+use Exception;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
-
 
 class RegisterService
 {
@@ -30,12 +30,11 @@ class RegisterService
     /**
      * @param $email
      * @param $password
-     * @return string
-     * @throws \Exception
+     * @return User
+     * @throws Exception
      */
     public function register($email, $password)
     {
-
         try {
             if ($this->repo->isEmailExists($email)) {
                 throw new UserAlreadyRegisteredException();
@@ -61,15 +60,18 @@ class RegisterService
      */
     public function sendConfirmEmail(User $user)
     {
+        $adminEmail = getenv('MAILER_FROM_EMAIL');
+        $schema = getenv('ADMIN_CLIENT_SCHEMA');
+        $host = getenv('ADMIN_CLIENT_HOST');
+        $path = getenv('ADMIN_CLIENT_REGISTER_COMPLETE_PATH');
+        $code = $user->getConfirmationCode();
+
         $confirmEmail = (new Email())
-            ->from('qweqwe@qwqw')
+            ->from($adminEmail)
             ->to($user->getEmail())
             ->subject('Welcome to the Space Bar!')
-            ->text('link for confirm email: http://api/register/complete?emailCode=' . $user->getConfirmationCode());
+            ->text("link for confirm email: {$schema}://{$host}/{$path}?emailCode={$code}");
 
         $this->mailer->send($confirmEmail);
     }
-
-
-
 }

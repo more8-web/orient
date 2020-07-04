@@ -92,15 +92,31 @@ class UserRepository extends ServiceEntityRepository implements UserProviderInte
         return $user;
     }
 
-    public function setPasswordResetConfirmationCode($user)
+    /**
+     * @param $user
+     * @param $password
+     * @return User
+     * @throws Exception
+     */
+    public function setPassword($user, $password): User
     {
-        $user->setConfirmationCode(md5($user->getEmail()));
-        $confirmationCode = $user->getConfirmationCode();
+        $user->setSalt(md5(random_bytes(16)));
+        $user->setPassword($this->getEncoder()->encodePassword($user, $password));
+
+        return $user;
+    }
+
+    /**
+     * @param $user
+     * @throws ORMException
+     * @throws OptimisticLockException
+     * @throws Exception
+     */
+    public function createPasswordResetConfirmationCode($user)
+    {
+        $confirmationCode = md5(random_bytes(16));
+        $user->setConfirmationCode($confirmationCode);
         $this->flush();
-
-        return $confirmationCode;
-
-
     }
 
     /**

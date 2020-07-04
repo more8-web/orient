@@ -9,10 +9,11 @@ use App\Services\Auth\PasswordResetCompleteService;
 use App\Services\Auth\PasswordResetService;
 use App\Services\Auth\RegisterCompleteService;
 use App\Services\Auth\RegisterService;
-use Exception as ExceptionAlias;
+use Exception;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Swagger\Annotations as SWG;
 
@@ -39,16 +40,15 @@ class AuthController extends AbstractApiController
      * @param Request $request
      * @param RegisterService $service
      * @return JsonResponse
-     * @throws ExceptionAlias
+     * @throws Exception
      */
     public function register(Request $request, RegisterService $service)
     {
         /** @var DTO\RegisterRequestBody $dto */
         $dto = $this->getDto($request, DTO\RegisterRequestBody::class);
+        $service->register($dto->getEmail(), $dto->getPassword());
 
-        return $this->json([
-            "success" => $service->register($dto->getEmail(), $dto->getPassword())
-        ]);
+        return $this->json(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -73,16 +73,15 @@ class AuthController extends AbstractApiController
      * @param Request $request
      * @param RegisterCompleteService $service
      * @return JsonResponse
+     * @throws Exception
      */
     public function registerComplete(Request $request, RegisterCompleteService $service)
     {
         /** @var DTO\RegisterCompleteRequestBody $dto */
         $dto = $this->getDto($request, DTO\RegisterCompleteRequestBody::class);
-        $confirmationCode = $dto->getConfirmationCode();
-        $user = $service->registerComplete($confirmationCode);
-        return $this->json([
-            "success" => $user->getRoles()
-        ]);
+        $token = $service->registerComplete($dto->getConfirmationCode());
+
+        return $this->json((new DTO\RegisterCompleteResponseBody($token))->asArray());
     }
 
     /**
@@ -107,16 +106,14 @@ class AuthController extends AbstractApiController
      * @param Request $request
      * @param LoginService $service
      * @return JsonResponse
-     * @throws ExceptionAlias
+     * @throws Exception
      */
     public function login(Request $request, LoginService $service)
     {
         $dto = $this->getDto($request, DTO\LoginRequestBody::class);
-
         $token = $service->login($dto->getEmail(), $dto->getPassword());
-        return $this->json([
-            "token" => $token
-        ]);
+
+        return $this->json((new DTO\LoginResponseBody($token)));
     }
 
     /**
@@ -176,13 +173,12 @@ class AuthController extends AbstractApiController
      * @param PasswordResetService $service
      * @return JsonResponse
      */
-    public function passwordReset(Request $request, PasswordResetService $service)
+    public function passwordReset(Request $request, PasswordResetService $service): JsonResponse
     {
         $dto = $this->getDto($request, DTO\PasswordResetRequestBody::class);
-        $confirmationCode = $service->passwordReset($dto->getEmail());
-        return $this->json([
-            "success" => $confirmationCode
-        ]);
+        $service->passwordReset($dto->getEmail());
+
+        return $this->json(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -207,17 +203,13 @@ class AuthController extends AbstractApiController
      * @param Request $request
      * @param PasswordResetCompleteService $service
      * @return JsonResponse
-     * @throws ExceptionAlias
+     * @throws Exception
      */
     public function passwordResetComplete(Request $request, PasswordResetCompleteService $service)
     {
         $dto = $this->getDto($request, DTO\PasswordResetCompleteRequestBody::class);
-
         $token = $service->passwordResetComplete($dto->getConfirmationCode(), $dto->getNewPassword());
 
-        return $this->json([
-            "token" => $token
-        ]);
-
+        return $this->json((new DTO\PasswordResetCompleteResponseBody($token))->asArray());
     }
 }

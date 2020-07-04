@@ -4,21 +4,22 @@
 namespace App\Services\Auth;
 
 use App\Entity\User;
+use App\Exceptions\DatabaseException;
 use App\Exceptions\MailerException;
 use App\Exceptions\NotFoundEmailException;
 use App\Repository\UserRepository;
-use Doctrine\DBAL\Exception\{ConnectionException};
+use Exception;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
-
 
 class PasswordResetService
 {
     /** @var UserRepository */
     protected $repo;
+
+    /** @var MailerInterface */
     protected $mailer;
-    protected $encoder;
 
     public function __construct(UserRepository $repo, MailerInterface $mailer)
     {
@@ -26,32 +27,46 @@ class PasswordResetService
         $this->mailer = $mailer;
     }
 
+    /**
+     * @param $email
+     */
     public function passwordReset($email)
     {
         if (!$this->repo->isEmailExists($email)) {
             throw new NotFoundEmailException();
         }
 
-        $user = $this->repo->findByEmail($email);
-
-        $confirmationCode = $this->repo->setPasswordResetConfirmationCode($user);
+        try {
+            $user = $this->repo->findByEmail($email);
+            $this->repo->createPasswordResetConfirmationCode($user);
+        } catch (Exception $e) {
+            throw (new DatabaseException())->setDebugInfo($e->getMessage());
+        }
 
         try {
             $this->sendResetPasswordEmail($user);
         } catch (TransportExceptionInterface $e) {
             throw (new MailerException())->setDebugInfo($e->getMessage());
         }
-        return $confirmationCode;
     }
 
+    /**
+     * @param User $user
+     * @throws TransportExceptionInterface
+     */
     public function sendResetPasswordEmail(User $user)
     {
+        $adminEmail = getenv('MAILER_FROM_EMAIL');
+        $schema = getenv('ADMIN_CLIENT_SCHEMA');
+        $host = getenv('ADMIN_CLIENT_HOST');
+        $path = getenv('ADMIN_CLIENT_REGISTER_COMPLETE_PATH');
+        $code = $user->getConfirmationCode();
 
         $resetPasswordEmail = (new Email())
-            ->from('qweqwe@qwqw')
+            ->from($adminEmail)
             ->to($user->getEmail())
             ->subject('Welcome to the password reset page!')
-            ->text('link for reset password: http://api/password/reset/complete?emailCode=' . $user->getConfirmationCode());
+            ->text("link for reset password: {$schema}://{$host}/{$path}?emailCode={$code}");
 
         $this->mailer->send( $resetPasswordEmail);
     }

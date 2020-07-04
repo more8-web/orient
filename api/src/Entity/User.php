@@ -109,6 +109,13 @@ class User implements UserInterface
         return $this;
     }
 
+    public function clearConfirmationCode(): self
+    {
+        $this->confirmationCode = null;
+
+        return $this;
+    }
+
     /**
      * @param $roles
      * @return $this

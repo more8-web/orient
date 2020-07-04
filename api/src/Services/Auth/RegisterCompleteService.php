@@ -2,31 +2,34 @@
 
 namespace App\Services\Auth;
 
-use App\Entity\User;
 use App\Entity\UserRole;
 use App\Exceptions\BadConfirmationCodeException;
 use App\Exceptions\DatabaseException;
 use App\Repository\UserRepository;
-use Doctrine\DBAL\Exception\{ConnectionException};
+use App\Security\TokenService;
 use Doctrine\ORM\ORMException;
-
+use Exception;
 
 class RegisterCompleteService
 {
     /** @var UserRepository */
     protected $repo;
 
-    public function __construct(UserRepository $repo)
+    /** @var TokenService */
+    protected $token;
+
+    public function __construct(UserRepository $repo, TokenService $token)
     {
         $this->repo = $repo;
-
+        $this->token = $token;
     }
 
     /**
      * @param $confirmationCode
-     * @return User
+     * @return string
+     * @throws Exception
      */
-    public function registerComplete($confirmationCode): User
+    public function registerComplete($confirmationCode): string
     {
         try {
             $user = $this->repo->findUserByConfirmationCode($confirmationCode);
@@ -34,14 +37,14 @@ class RegisterCompleteService
                 throw new BadConfirmationCodeException();
             }
 
-            $user->addRoles(UserRole::USER);
-            $user->setConfirmationCode("");
+            $user->setRoles(UserRole::USER);
+            $user->clearConfirmationCode();
             $this->repo->flush();
-        } catch (ORMException | ConnectionException $e) {
+        } catch (ORMException $e) {
             throw (new DatabaseException())->setDebugInfo($e->getMessage());
         }
 
-        return $user;
+        return $this->token->provideToken($user);
     }
 
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services\Auth;
-
 
 use App\Exceptions\NotFoundEmailException;
 use App\Repository\UserRepository;
@@ -11,13 +9,12 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Exception;
 
-/**
- * @method login($getEmail, $getPassword)
- */
 class PasswordResetCompleteService
 {
     /** @var UserRepository */
     protected $repo;
+
+    /** @var TokenService */
     protected $token;
 
     /**
@@ -29,7 +26,6 @@ class PasswordResetCompleteService
     {
         $this->repo = $repo;
         $this->token = $token;
-
     }
 
     /**
@@ -42,18 +38,15 @@ class PasswordResetCompleteService
      */
     public function passwordResetComplete($confirmationCode, $newPassword)
     {
+        $user = $this->repo->findUserByConfirmationCode($confirmationCode);
+        if (is_null($user)) {
+            throw new NotFoundEmailException();
+        }
 
-            $user = $this->repo->findUserByConfirmationCode($confirmationCode);
-            if (is_null($user)) {
-                throw new NotFoundEmailException();
-            }
+        $user->clearConfirmationCode();
+        $this->repo->setPassword($user, $newPassword);
+        $this->repo->flush();
 
-            $user->setPassword($newPassword);
-            $user->setConfirmationCode("");
-
-            $this->repo->flush();
-
-            return $this->token->provideToken($user);
-
+        return $this->token->provideToken($user);
     }
 }

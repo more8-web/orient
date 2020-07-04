@@ -33,7 +33,6 @@ class LoginService
      */
     public function login($email, $password)
     {
-        /** @var User $user */
         $user = $this->repo->findByEmail($email);
         if(is_null($user)) {
             throw new LoginException();
