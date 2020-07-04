@@ -4,6 +4,7 @@ import {CommonModule} from "@angular/common";
 import {AuthorizationModule} from "./authorization/authorization.module";
 import {DashboardModule} from "@pages/dashboard";
 import {HomeModule} from "@pages/home";
+
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';

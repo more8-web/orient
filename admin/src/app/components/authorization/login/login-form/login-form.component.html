@@ -1,0 +1,24 @@
+<div class="login-main">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <label> Enter Your Login </label>
+    <div>
+      <input formControlName="email">
+    </div>
+    <div *ngIf="_email.invalid && (_email.touched || _email.dirty)">
+      <span *ngIf="_email.errors?.required">Login is required</span>
+    </div>
+    <span *ngIf="apiError?.password">{{apiError.password}}</span> <!-- ошибка от сервера -->
+    <label> Enter Your Password </label>
+    <div>
+      <input formControlName="password">
+    </div>
+    <div *ngIf="_password.invalid && (_password.touched || _password.dirty)">
+      <span *ngIf="_password.errors?.required">Login is required</span>
+    </div>
+
+    <button type="submit"> Login</button>
+  </form>
+  <div>
+    <a routerLink="/reset_password"> Забыли пароль?</a>
+  </div>
+</div>

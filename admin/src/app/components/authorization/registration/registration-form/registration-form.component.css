@@ -12,10 +12,18 @@
 }
 
 .register-form * {
-  margin: 5px;
+  margin: 5px auto;
 }
 
+#mail-field {
+  width: 236px;
+}
+
+#register-button {
+  padding: 0 50px;
+}
 
 mat-label {
   color: cornflowerblue;
 }
+

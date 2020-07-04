@@ -1,6 +1,6 @@
 <div class="register-form">
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <mat-form-field>
+    <mat-form-field appearance="fill" id="mail-field">
       <mat-label>Enter your mail</mat-label>
       <input matInput formControlName="mail"/>
     </mat-form-field>
@@ -9,31 +9,36 @@
       <span *ngIf="_mail.errors?.email">E-mail is incorrect</span>
     </div>
     <br>
-    <mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label>Enter your password</mat-label>
-      <input matInput formControlName="password" type="password"/>
+      <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" type="password">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
     </mat-form-field>
     <br/>
+    <span *ngIf="apiError?.password">{{apiError.password}}</span> <!-- ошибка от сервера -->
     <div *ngIf="_password.invalid && (_password.touched || _password.dirty)">
       <span *ngIf="_password.errors?.required">Field is required</span>
       <span *ngIf="_password.errors?.minlength">Password must have more than 6 symbols</span>
       <span *ngIf="_password.errors?.pattern">Password is incorrect (Password must have only numbers and letters)</span>
     </div>
     <br>
-    <mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label>Confirm your password</mat-label>
-      <input matInput formControlName="confirmPassword" type="password"/>
+      <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmPassword" type="password">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
     </mat-form-field>
     <br/>
     <div *ngIf="_confirmPassword.invalid && (_confirmPassword.touched || _password.dirty)">
-      <span *ngIf="_confirmPassword.errors?.required">Field is required</span>
       <span *ngIf="_confirmPassword.errors?.mustMatch">Password must match</span>
     </div>
     <br>
-    <div class="example-button-row">
-      <button mat-raised-button> Register</button>
-    </div>
+      <button mat-raised-button > Register</button>
   </form>
 </div>
+
 
 

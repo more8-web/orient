@@ -1,5 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+
+import {AuthorizationApiService} from "@app/api/authorization";
+
 import {MustMatch} from "@app/_shared/validation";
 
 @Component({
@@ -11,11 +14,18 @@ export class RegistrationFormComponent implements OnInit {
 
   public registerForm: FormGroup;
   public submitted = false;
+  hide = true;
+
   public mail: string;
   public password: string;
   public confirmPassword: string;
 
-  constructor(private fb: FormBuilder) {
+  public apiError: any;
+
+  constructor(
+    private fb: FormBuilder,
+    private api: AuthorizationApiService
+  ) {
     this._createForm();
   }
 
@@ -53,6 +63,21 @@ export class RegistrationFormComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
+
+    const {mail, password} = this.registerForm.value;
+
+    this.apiError = null;
+
+    this.api.register(mail, password).subscribe(
+      (data) => console.log(data),
+      (err) => {
+        if (err?.error?.details?.password) {
+          this.apiError = {
+            password: err.error.details.password
+          };
+        }
+      }
+    );
   }
 
 }
