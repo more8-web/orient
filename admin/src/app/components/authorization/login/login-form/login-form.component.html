@@ -1,24 +1,28 @@
 <div class="login-main">
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <label> Enter Your Login </label>
-    <div>
-      <input formControlName="email">
-    </div>
+    <mat-form-field appearance="fill" id="email-input">
+    <mat-label> Введите ваш логин </mat-label>
+      <input matInput formControlName="email">
     <div *ngIf="_email.invalid && (_email.touched || _email.dirty)">
-      <span *ngIf="_email.errors?.required">Login is required</span>
+      <span *ngIf="_email.errors?.required">Обязательное поле</span>
     </div>
-    <span *ngIf="apiError?.password">{{apiError.password}}</span> <!-- ошибка от сервера -->
-    <label> Enter Your Password </label>
-    <div>
-      <input formControlName="password">
-    </div>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+    <mat-label> Введите ваш пароль </mat-label>
+      <input matInput [type]="hide ? 'password' : 'text'" type="password" formControlName="password">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
     <div *ngIf="_password.invalid && (_password.touched || _password.dirty)">
-      <span *ngIf="_password.errors?.required">Login is required</span>
+      <span *ngIf="_password.errors?.required">Обязательное поле</span>
     </div>
-
-    <button type="submit"> Login</button>
+    </mat-form-field>
+    <span *ngIf="apiError?.password">{{apiError.password}}</span> <!-- ошибка от сервера -->
+    <span *ngIf="apiError?.email">{{apiError.email}}</span> <!-- ошибка от сервера -->
+<br>
+    <button mat-raised-button type="submit"> Login</button>
   </form>
   <div>
-    <a routerLink="/reset_password"> Забыли пароль?</a>
+    <button mat-button color="primary" routerLink="/reset_password">Забыли пароль?</button>
   </div>
 </div>

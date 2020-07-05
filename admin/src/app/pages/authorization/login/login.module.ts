@@ -3,6 +3,7 @@ import {CommonModule} from "@angular/common";
 import {LoginComponent} from "./login.component";
 import {RouterModule} from "@angular/router";
 import {AuthorizationModule} from "@components/authorization";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import {AuthorizationModule} from "@components/authorization";
     imports: [
         CommonModule,
         RouterModule,
-        AuthorizationModule
+        AuthorizationModule,
+        MatButtonModule
     ]
 })
 export class LoginModule {

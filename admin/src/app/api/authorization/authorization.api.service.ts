@@ -14,7 +14,7 @@ export class AuthorizationApiService extends ApiService {
   }
 
   public login(email, password) {
-    return this.post("login-form", {email, password});
+    return this.post("login", {email, password});
   }
 
   public resetPassword(email) {

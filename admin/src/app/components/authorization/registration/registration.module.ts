@@ -12,13 +12,15 @@ import {AuthorizationApiService} from "@app/api/authorization";
 import {RegistrationFormComponent} from "./registration-form";
 import { ConfirmRegistrationComponent } from './confirm-registration/confirm-registration.component';
 import {MatIconModule} from "@angular/material/icon";
+import {AppRoutingModule} from "@app/app-routing.module";
 
 
 @NgModule({
   declarations: [RegistrationFormComponent, ConfirmRegistrationComponent],
-  exports: [
-    RegistrationFormComponent
-  ],
+    exports: [
+        RegistrationFormComponent,
+        ConfirmRegistrationComponent
+    ],
     imports: [
         CommonModule,
         HttpClientModule,
@@ -28,7 +30,8 @@ import {MatIconModule} from "@angular/material/icon";
         MatInputModule,
         MatButtonModule,
         ReactiveFormsModule,
-        MatIconModule
+        MatIconModule,
+        AppRoutingModule
     ],
   providers: [AuthorizationApiService]
 })

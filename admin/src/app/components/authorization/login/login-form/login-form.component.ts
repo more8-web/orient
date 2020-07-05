@@ -15,6 +15,8 @@ export class LoginFormComponent implements OnInit {
   email: string; // login
   password: string;
 
+  hide = true;
+
   public apiError: any;
 
   constructor(private fb: FormBuilder,
@@ -48,7 +50,8 @@ export class LoginFormComponent implements OnInit {
     this.api.login(email, password).subscribe(
       (data) => console.log(data),
       (err) => {
-        if (err?.error?.details?.password) {
+        if (err?.error?.details) {
+          console.log(err?.error?.details);
           this.apiError = {
             password: err.error.details.password
           };

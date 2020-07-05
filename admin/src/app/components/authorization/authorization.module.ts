@@ -7,6 +7,8 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { ResetPasswordFormComponent } from './reset-password/reset-password-form/reset-password-form.component';
 import {RouterModule} from "@angular/router";
 import {MatButtonModule} from "@angular/material/button";
+import {MatInputModule} from "@angular/material/input";
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import {MatButtonModule} from "@angular/material/button";
     RegistrationModule,
     ReactiveFormsModule,
     RouterModule,
-    MatButtonModule
+    MatButtonModule,
+    MatInputModule,
+    MatIconModule
   ]
 })
 export class AuthorizationModule { }

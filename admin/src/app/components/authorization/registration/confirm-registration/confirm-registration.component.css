@@ -1,0 +1,15 @@
+.register-confirm-header {
+  margin: 0 auto;
+  border: 2px gray dotted;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.register-confirm-text {
+  text-align: center;
+
+  margin: 10px auto;
+  border: black solid 3px;
+
+  width: 400px;
+}

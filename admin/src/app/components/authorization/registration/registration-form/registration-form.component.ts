@@ -37,7 +37,8 @@ export class RegistrationFormComponent implements OnInit {
       mail: ["", [Validators.required, Validators.email]],
       password: ["", [
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(8),
+        Validators.maxLength(16),
         Validators.pattern("[0-9a-zA-Z]+")
       ]],
       confirmPassword: ["", [Validators.required]],
