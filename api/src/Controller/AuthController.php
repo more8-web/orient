@@ -141,7 +141,7 @@ class AuthController extends AbstractApiController
      */
     public function logout(Request $request, LogoutService $service)
     {
-        var_dump($request); die();
+        //var_dump($request); die();
         $dto = $this->getDto($request, DTO\LogoutRequestBody::class);
         $service->logout($dto->getEmail());
 

@@ -7,7 +7,6 @@ use App\Exceptions\DatabaseException;
 use App\Exceptions\MailerException;
 use App\Exceptions\UserAlreadyRegisteredException;
 use App\Repository\UserRepository;
-use Doctrine\DBAL\Exception\{ConnectionException};
 use Doctrine\ORM\ORMException;
 use Exception;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -41,7 +40,7 @@ class RegisterService
             }
 
             $user = $this->repo->createUser($email, $password);
-        } catch (ORMException | ConnectionException $e) {
+        } catch (ORMException $e) {
             throw (new DatabaseException())->setDebugInfo($e->getMessage());
         }
 
