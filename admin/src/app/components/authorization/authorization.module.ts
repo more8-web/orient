@@ -9,10 +9,11 @@ import {RouterModule} from "@angular/router";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
+import { ConfirmResetPasswordFormComponent } from './reset-password/confirm-reset-password-form/confirm-reset-password-form.component';
 
 
 @NgModule({
-  declarations: [LoginFormComponent, ResetPasswordFormComponent],
+  declarations: [LoginFormComponent, ResetPasswordFormComponent, ConfirmResetPasswordFormComponent],
     exports: [
         LoginFormComponent,
         ResetPasswordFormComponent

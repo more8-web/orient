@@ -48,12 +48,14 @@ export class LoginFormComponent implements OnInit {
     this.apiError = null;
 
     this.api.login(email, password).subscribe(
-      (data) => console.log(data),
+      (data) => {
+          console.log(data);
+      },
       (err) => {
-        if (err?.error?.details) {
-          console.log(err?.error?.details);
+        if (err?.error?.message) {
+          console.log(err?.error?.message);
           this.apiError = {
-            password: err.error.details.password
+            error: err.error.message
           };
         }
       }

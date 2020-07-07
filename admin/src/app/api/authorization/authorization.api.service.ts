@@ -20,4 +20,9 @@ export class AuthorizationApiService extends ApiService {
   public resetPassword(email) {
     return this.post("password/reset", {email});
   }
+
+  public completeResetPassword(confirmCode, password) {
+    return this.post("password/reset/complete", {confirmation_code: confirmCode,
+                                                            new_password: password});
+  }
 }

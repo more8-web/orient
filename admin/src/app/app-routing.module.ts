@@ -7,12 +7,14 @@ import {RegistrationComponent} from "@pages/authorization/registration/registrat
 import {LoginComponent} from "@pages/authorization/login/login.component";
 import {ConfirmRegistrationComponent} from "@components/authorization/registration/confirm-registration/confirm-registration.component";
 import {ResetPasswordComponent} from "@pages/authorization/reset-password/reset-password.component";
+import {ConfirmResetPasswordFormComponent} from "@components/authorization/reset-password/confirm-reset-password-form/confirm-reset-password-form.component";
 
 
 const routes: Routes = [
   {path: "register/complete/:code", component: ConfirmRegistrationComponent},
   {path: "register", component: RegistrationComponent},
-  {path: "reset_password", component: ResetPasswordComponent},
+  {path: "password/reset/complete/:code", component: ConfirmResetPasswordFormComponent},
+  {path: "password/reset", component: ResetPasswordComponent},
   {path: "login", component: LoginComponent},
   {path: "dashboard", component: DashboardComponent},
   {path: "", component: HomeComponent}

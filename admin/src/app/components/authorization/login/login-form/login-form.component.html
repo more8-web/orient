@@ -17,12 +17,11 @@
       <span *ngIf="_password.errors?.required">Обязательное поле</span>
     </div>
     </mat-form-field>
-    <span *ngIf="apiError?.password">{{apiError.password}}</span> <!-- ошибка от сервера -->
-    <span *ngIf="apiError?.email">{{apiError.email}}</span> <!-- ошибка от сервера -->
+    <span *ngIf="apiError">{{ apiError.error }}</span>
 <br>
     <button mat-raised-button type="submit"> Login</button>
   </form>
   <div>
-    <button mat-button color="primary" routerLink="/reset_password">Забыли пароль?</button>
+    <button mat-button color="primary" routerLink="/password/reset">Забыли пароль?</button>
   </div>
 </div>
