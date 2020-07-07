@@ -1,13 +1,13 @@
 <?php
 
 
-namespace App\Services\News;
+namespace App\Services\Keywords;
 
 
 use App\Repository\NewsRepository;
 use App\Security\TokenService;
 
-class NewsService
+class KeywordsService
 {
     /** @var NewsRepository */
     protected $repo;

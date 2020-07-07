@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Controller\Dto as DTO;
+use App\Controller\Dto\Auth as DTO;
 use App\Services\Auth\LoginService;
 use App\Services\Auth\LogoutService;
 use App\Services\Auth\PasswordResetCompleteService;
