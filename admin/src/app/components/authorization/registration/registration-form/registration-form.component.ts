@@ -13,8 +13,10 @@ import {MustMatch} from "@app/_shared/validation";
 export class RegistrationFormComponent implements OnInit {
 
   public registerForm: FormGroup;
+
   public submitted = false;
   hide = true;
+  public success = false;
 
   public mail: string;
   public password: string;
@@ -70,7 +72,10 @@ export class RegistrationFormComponent implements OnInit {
     this.apiError = null;
 
     this.api.register(mail, password).subscribe(
-      (data) => console.log(data),
+      (data) => {
+        console.log(data);
+        this.success = true;
+      },
       (err) => {
         if (err?.error?.details?.password) {
           this.apiError = {

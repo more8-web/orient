@@ -27,3 +27,10 @@ mat-label {
   color: cornflowerblue;
 }
 
+.text-info {
+  margin: 10px auto;
+  border: black solid 3px;
+
+  width: 400px;
+}
+

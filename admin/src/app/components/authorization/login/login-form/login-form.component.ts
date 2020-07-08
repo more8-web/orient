@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import { AuthorizationApiService} from "@app/api/authorization";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login-form',
@@ -20,7 +21,8 @@ export class LoginFormComponent implements OnInit {
   public apiError: any;
 
   constructor(private fb: FormBuilder,
-              private api: AuthorizationApiService) {
+              private api: AuthorizationApiService,
+              private router: Router) {
     this._createForm();
   }
 
@@ -48,8 +50,10 @@ export class LoginFormComponent implements OnInit {
     this.apiError = null;
 
     this.api.login(email, password).subscribe(
-      (data) => {
+      (data: any) => {
+          localStorage.setItem('X-AUTH-TOKEN', data.token);
           console.log(data);
+          this.router.navigateByUrl("dashboard");
       },
       (err) => {
         if (err?.error?.message) {

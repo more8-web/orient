@@ -4,7 +4,10 @@
 <div class="home-main">
   <h2>Welcome!</h2>
   <div class="example-button-row">
-    <button mat-raised-button routerLink="/login"> Log in!</button>
+    <button mat-raised-button
+            *ngIf="auth == false"
+            routerLink="/login"> Log in!</button>
+    <app-logout-button *ngIf="auth == true"></app-logout-button>
     <button mat-raised-button routerLink="/register"> Register!</button> <br>
     <button mat-raised-button routerLink="/dashboard"> Dashboard!</button>
   </div>

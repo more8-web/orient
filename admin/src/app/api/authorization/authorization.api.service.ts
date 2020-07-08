@@ -25,4 +25,8 @@ export class AuthorizationApiService extends ApiService {
     return this.post("password/reset/complete", {confirmation_code: confirmCode,
                                                             new_password: password});
   }
+
+  get authenticated() {
+    return localStorage.getItem("X-AUTH-TOKEN") != null;
+  }
 }

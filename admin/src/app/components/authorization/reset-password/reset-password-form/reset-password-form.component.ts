@@ -10,6 +10,8 @@ import {AuthorizationApiService} from "@app/api/authorization";
 export class ResetPasswordFormComponent implements OnInit {
 
   public resetPasswordForm: FormGroup;
+
+  public success = false;
   public submitted = false;
 
   public apiError: any;
@@ -35,7 +37,10 @@ export class ResetPasswordFormComponent implements OnInit {
     this.apiError = null;
 
     this.api.resetPassword(email).subscribe(
-      (data) => console.log(data),
+      (data) => {
+        console.log(data);
+        this.success = true;
+      },
       (err) => {
         if (err?.error?.details?.email) {
           this.apiError = {
