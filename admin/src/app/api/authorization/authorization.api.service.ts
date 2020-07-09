@@ -27,6 +27,6 @@ export class AuthorizationApiService extends ApiService {
   }
 
   get authenticated() {
-    return localStorage.getItem("X-AUTH-TOKEN") != null;
+    return localStorage.getItem("X-AUTH-TOKEN") != null || sessionStorage.getItem("X-AUTH-TOKEN") != null;
   }
 }

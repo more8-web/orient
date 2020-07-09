@@ -16,8 +16,4 @@ export class HomeComponent implements OnInit {
     this.auth = this.api.authenticated;
   }
 
-  ngOnChanges() {
-
-  }
-
 }

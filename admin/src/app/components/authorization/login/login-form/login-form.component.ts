@@ -11,12 +11,15 @@ import {Router} from "@angular/router";
 export class LoginFormComponent implements OnInit {
 
   loginForm: FormGroup;
-  public submitted = false;
 
+  public submitted = false;
+  hide = true;
+
+  checked = false; // false = SessionStorage; true = localStorage;
   email: string; // login
   password: string;
 
-  hide = true;
+
 
   public apiError: any;
 
@@ -37,8 +40,6 @@ export class LoginFormComponent implements OnInit {
     return this.loginForm.get("password");
   }
 
-
-
   onSubmit() {
     this.submitted = true;
     if (this.loginForm.invalid) {
@@ -46,14 +47,18 @@ export class LoginFormComponent implements OnInit {
     }
 
     const {email, password} = this.loginForm.value;
-
     this.apiError = null;
 
     this.api.login(email, password).subscribe(
       (data: any) => {
-          localStorage.setItem('X-AUTH-TOKEN', data.token);
-          console.log(data);
+        if (this.checked === false) {
+          sessionStorage.setItem("X-AUTH-TOKEN", data.token);
           this.router.navigateByUrl("dashboard");
+        } else {
+          localStorage.setItem('X-AUTH-TOKEN', data.token);
+          this.router.navigateByUrl("dashboard");
+        }
+        console.log(data);
       },
       (err) => {
         if (err?.error?.message) {

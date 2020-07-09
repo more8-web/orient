@@ -6,6 +6,7 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {checkStorage} from "@app/_shared/storages";
 
 @Injectable()
 export class AuthorizationInterceptor implements HttpInterceptor {
@@ -15,7 +16,7 @@ export class AuthorizationInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     request = request.clone({
       setHeaders: {
-        Authorization: `Bearer ${localStorage.getItem("X-AUTH-TOKEN")}`
+        Authorization: `Bearer ${checkStorage()}`
       }
     });
     return next.handle(request);

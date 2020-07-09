@@ -1,5 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
+import {checkStorage} from "@app/_shared/storages";
 
 @Component({
   selector: "app-logout-button",
@@ -15,7 +16,11 @@ export class LogoutButtonComponent implements OnInit {
   }
 
   onSubmit() {
-    localStorage.removeItem("X-AUTH-TOKEN");
+    if (checkStorage() === localStorage.getItem("X-AUTH-TOKEN")) {
+      localStorage.removeItem("X-AUTH-TOKEN");
+    } else {
+      sessionStorage.removeItem("X-AUTH-TOKEN");
+    }
     window.location.reload();
   }
 
