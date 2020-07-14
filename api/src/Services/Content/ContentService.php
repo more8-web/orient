@@ -4,35 +4,26 @@
 namespace App\Services\Content;
 
 
-use App\Repository\NewsRepository;
-use App\Security\TokenService;
+use App\Repository\ContentRepository;
 
 class ContentService
 {
-    /** @var NewsRepository */
+    /** @var ContentRepository */
     protected $repo;
 
-    /**
-     * @var TokenService
-     */
-    protected $token;
-
-    public function __construct(NewsRepository $repo, TokenService $token)
+    public function __construct(ContentRepository $repo)
     {
         $this->repo = $repo;
-        $this->token = $token;
     }
 
-
-    public function getNewsList($filter = null)
+    /**
+     * @param $alias
+     * @param $desc
+     * @param $value
+     */
+    public function createNewContent($alias, $desc, $value)
     {
-        return $this->repo->findAll();
-    }
-
-    public function createNewArticle($parameters)
-    {
-        $status = "status";
-        return $this->repo->createNews($parameters, $status);
+        return $this->repo->createContent($alias, $desc, $value);
     }
 
 }

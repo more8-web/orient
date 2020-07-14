@@ -93,7 +93,6 @@ class ContentCategoriesRepository extends ServiceEntityRepository
         $contentCategory->setContentCategoryParentId($parentId);
         $contentCategory->setContentCategoryAlias($alias);
         $em = $this->getEntityManager();
-        //$em->persist($contentCategory);
         $em->flush();
 
         $contentCategory = $this->findOneBy(['id' => $id]);
@@ -124,6 +123,7 @@ class ContentCategoriesRepository extends ServiceEntityRepository
      */
     public function getOneContentCategoryById($id): ContentCategory
     {
+
        return  $this->findOneBy(['id' => $id]);
     }
 

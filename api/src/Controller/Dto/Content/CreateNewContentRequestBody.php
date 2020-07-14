@@ -13,13 +13,27 @@ class CreateNewContentRequestBody
 {
 
     const
-        CREATE_NEWS_PARAMETERS = "parameters";
+        CONTENT_ALIAS = "content_alias",
+        CONTENT_DESCRIPTION = "content_description",
+        CONTENT_VALUE = "content_value";
 
     /**
-     * @SWG\Property(type="string")
+     * @SWG\Property(property=CreateNewContentRequestBody::CONTENT_ALIAS, type="string")
+     * @Assert\NotBlank()
+     * @Assert\Unique()
+     */
+    private $contentAlias;
+
+    /**
+     * @SWG\Property(property=CreateNewContentRequestBody::CONTENT_DESCRIPTION, type="string")
+     */
+    private $contentDescription;
+
+    /**
+     * @SWG\Property(property=CreateNewContentRequestBody::CONTENT_VALUE, type="string")
      * @Assert\NotBlank()
      */
-    private $parameters;
+    private $contentValue;
 
     /**
      * NewsRequestBody constructor.
@@ -27,18 +41,66 @@ class CreateNewContentRequestBody
      */
     public function __construct(array $data)
     {
-        if (isset($data[self::CREATE_NEWS_PARAMETERS])) {
-            $this->setParameters($data[self::CREATE_NEWS_PARAMETERS]);
+        if (isset($data[self::CONTENT_ALIAS])) {
+            $this->setContentAlias($data[self::CONTENT_ALIAS]);
+        }
+
+        if (isset($data[self::CONTENT_DESCRIPTION])) {
+            $this->setContentDescription($data[self::CONTENT_DESCRIPTION]);
+        }
+
+        if (isset($data[self::CONTENT_VALUE])) {
+            $this->setContentValue($data[self::CONTENT_VALUE]);
         }
     }
 
-    public function getParameters()
+    /**
+     * @return mixed
+     */
+    public function getContentAlias()
     {
-        return $this->parameters;
+        return $this->contentAlias;
     }
 
-    public function setParameters($parameters)
+    /**
+     * @param mixed $contentAlias
+     */
+    public function setContentAlias($contentAlias): void
     {
-        $this->parameters = $parameters;
+        $this->contentAlias = $contentAlias;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getContentDescription()
+    {
+        return $this->contentDescription;
+    }
+
+    /**
+     * @param mixed $contentDescription
+     */
+    public function setContentDescription($contentDescription): void
+    {
+        $this->contentDescription = $contentDescription;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContentValue()
+    {
+        return $this->contentValue;
+    }
+
+    /**
+     * @param mixed $contentValue
+     */
+    public function setContentValue($contentValue): void
+    {
+        $this->contentValue = $contentValue;
+    }
+
+
 }

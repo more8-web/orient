@@ -132,7 +132,6 @@ class ContentCategoryController extends AbstractApiController
      *     @SWG\Response(
      *         response=200,
      *         description="Get content category list",
-     *
      *     ),
      * )
      * @param Request $request
@@ -147,26 +146,14 @@ class ContentCategoryController extends AbstractApiController
     }
 
     /**
-     * @Route("/content/categories/:id", methods={"GET"})
+     * @Route("/content/categories/{id}", methods={"GET"})
      * @SWG\Get(
-     *
      *    tags={"ContentCategory"},
      *    summary="Get one content category by id",
-     *     @SWG\Parameter(
-     *         name="id",
-     *         in="query",
-     *         description="Get one content category by id",
-     *         required=true,
-     *      @SWG\Schema(
-     *              @SWG\Property(
-     *                  property="id",
-     *                  type="integer",
-     *                  description="passing clientId from headers",
-     *                  example=1)
-     *     ),
-     *     @SWG\Response(
+     *
+     *      @SWG\Response(
      *         response=200,
-     *         description="Get content category list",
+     *         description="Get content category by id",
      *         @Model(type=DTO\GetOneContentCategoryByIdResponseBody::class)
      *     ),
      * )
@@ -177,24 +164,17 @@ class ContentCategoryController extends AbstractApiController
     public function getOneContentCategoryById(Request $request, GetOneContentCategoryService $service)
     {
 
-        $categoryContent = $service->getOneContent();
-
+        $categoryContent = $service->getOneContent($request->get('id'));
 
         return $this->json((new DTO\GetOneContentCategoryByIdResponseBody($categoryContent))->asArray());
     }
 
     /**
-     * @Route("/content/categories/:id/content", methods={"GET"})
+     * @Route("/content/categories/{id}/content", methods={"GET"})
      * @SWG\Get(
      *    tags={"ContentCategory"},
      *    summary="Get content of category",
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="Get content of category",
-     *         required=true,
-     *         @Model(type=DTO\GetContentByCategoryRequestBody::class)
-     *     ),
+     *
      *     @SWG\Response(
      *         response=200,
      *         description="Get content of category",
@@ -207,9 +187,7 @@ class ContentCategoryController extends AbstractApiController
      */
     public function getContentByCategory(Request $request, ContentService $service)
     {
-        /** @var DTO\GetContentByCategoryRequestBody $dto */
-        $dto = $this->getDto($request, DTO\GetContentByCategoryRequestBody::class);
-
-        return $this->json(null, Response::HTTP_NO_CONTENT);
+        $idCategory = $request->get('id');
+        return $this->json($idCategory, Response::HTTP_OK);
     }
 }

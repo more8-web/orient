@@ -3,49 +3,116 @@
 
 namespace App\Controller\Dto\Content;
 
+use App\Controller\Dto\ContentCategory\ResponseBodyInterface;
+use App\Entity\Content;
 use Swagger\Annotations as SWG;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @SWG\Definition(type="object")
  */
-class CreateNewContentResponseBody
+class CreateNewContentResponseBody implements ResponseBodyInterface
 {
-    const MESSAGE = "message";
+    const
+        CONTENT_ID = "id",
+        CONTENT_ALIAS = "content_alias",
+        CONTENT_DESCRIPTION = "content_description",
+        CONTENT_VALUE = "content_value";
 
     /**
-     * @SWG\Property(type="string")
-     * @Assert\NotBlank()
+     * @SWG\Property(property=CreateNewContentResponseBody::CONTENT_ID, type="integer")
      */
-    private $message;
+    private $id;
 
-    public function __construct($message)
+    /**
+     * @SWG\Property(property=CreateNewContentResponseBody::CONTENT_ALIAS, type="string")
+     */
+    private $contentAlias;
+
+    /**
+     * @SWG\Property(property=CreateNewContentResponseBody::CONTENT_DESCRIPTION, type="string")
+     */
+    private $contentDescription;
+
+    /**
+     * @SWG\Property(property=CreateNewContentResponseBody::CONTENT_VALUE, type="string")
+     */
+    private $contentValue;
+
+    /**
+     * CreateContentCategoryResponseBody constructor.
+     * @param Content $category
+     */
+    public function __construct(Content $category)
     {
-        $this->setMessage($message);
+        $this->id = $category->getId();
+        $this->setContentAlias($category->getContentAlias());
+        $this->setContentDescription($category->getContentDescription());
+        $this->setContentValue($category->getContentValue());
     }
 
-    public function asArray()
+    public function asArray(): array
     {
         return [
-            self::MESSAGE => $this->getMessage()
+            self::CONTENT_ID => $this->getId(),
+            self::CONTENT_ALIAS => $this->getContentAlias(),
+            self::CONTENT_DESCRIPTION => $this->getContentDescription(),
+            self::CONTENT_VALUE => $this->getContentValue(),
         ];
     }
 
     /**
      * @return mixed
      */
-    public function getMessage()
+    public function getId()
     {
-        return $this->message;
+        return $this->id;
     }
 
     /**
-     * @param mixed $message
+     * @return mixed
      */
-    public function setMessage($message): void
+    public function getContentAlias()
     {
-        $this->message = $message;
+        return $this->contentAlias;
     }
 
+    /**
+     * @param mixed $contentAlias
+     */
+    public function setContentAlias($contentAlias): void
+    {
+        $this->contentAlias = $contentAlias;
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getContentDescription()
+    {
+        return $this->contentDescription;
+    }
+
+    /**
+     * @param mixed $contentDescription
+     */
+    public function setContentDescription($contentDescription): void
+    {
+        $this->contentDescription = $contentDescription;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContentValue()
+    {
+        return $this->contentValue;
+    }
+
+    /**
+     * @param mixed $contentValue
+     */
+    public function setContentValue($contentValue): void
+    {
+        $this->contentValue = $contentValue;
+    }
 }

@@ -12,12 +12,29 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Content[]    findAll()
  * @method Content[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ContentsRepository extends ServiceEntityRepository
+class ContentRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Content::class);
     }
+
+    public function createContent($alias, $desc, $value){
+
+        $content = new Content();
+        $content->setContentAlias($alias);
+        $content->setContentDescription($desc);
+        $content->setContentValue($value);
+
+        $em = $this->getEntityManager();
+        $em->persist($content);
+        $em->flush();
+
+        return $content;
+    }
+
+
+
 
     // /**
     //  * @return Contents[] Returns an array of Contents objects

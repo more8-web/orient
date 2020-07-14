@@ -18,11 +18,6 @@ class Content
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $content_id;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $content_alias;
@@ -40,18 +35,6 @@ class Content
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getContentId(): ?int
-    {
-        return $this->content_id;
-    }
-
-    public function setContentId(int $content_id): self
-    {
-        $this->content_id = $content_id;
-
-        return $this;
     }
 
     public function getContentAlias(): ?string

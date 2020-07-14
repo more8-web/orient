@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Controller\Dto\Content as DTO;
 use App\Services\Content\ContentService;
-use Exception;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,8 +39,12 @@ class ContentController extends AbstractApiController
     {
         /** @var DTO\CreateNewContentRequestBody $dto */
         $dto = $this->getDto($request, DTO\CreateNewContentRequestBody::class);
+        var_dump($dto); die();
+        $content = $service->createNewContent(  $dto->getContentAlias(),
+                                                $dto->getContentDescription(),
+                                                $dto->getContentValue());
 
-        return $this->json(null, Response::HTTP_NO_CONTENT);
+        return $this->json((new DTO\CreateNewContentResponseBody($content))->asArray());
     }
 
     /**
