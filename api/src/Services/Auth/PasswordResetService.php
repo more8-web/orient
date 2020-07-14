@@ -4,9 +4,9 @@
 namespace App\Services\Auth;
 
 use App\Entity\User;
-use App\Exceptions\DatabaseException;
-use App\Exceptions\MailerException;
-use App\Exceptions\NotFoundEmailException;
+use App\Exceptions\Common\DatabaseException;
+use App\Exceptions\Common\MailerException;
+use App\Exceptions\Auth\NotFoundEmailException;
 use App\Repository\UserRepository;
 use Exception;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;

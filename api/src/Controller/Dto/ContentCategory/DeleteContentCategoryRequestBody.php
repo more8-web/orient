@@ -11,34 +11,33 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class DeleteContentCategoryRequestBody
 {
-
     const
-        CREATE_NEWS_PARAMETERS = "parameters";
+        CONTENT_CATEGORY_ID = "id";
 
     /**
-     * @SWG\Property(type="string")
-     * @Assert\NotBlank()
+     * @SWG\Property(property=DeleteContentCategoryRequestBody::CONTENT_CATEGORY_ID, type="integer")
      */
-    private $parameters;
+    private $contentCategoryId;
 
     /**
-     * NewsRequestBody constructor.
+     * EditContentCategoryRequestBody constructor.
      * @param array $data
      */
     public function __construct(array $data)
     {
-        if (isset($data[self::CREATE_NEWS_PARAMETERS])) {
-            $this->setParameters($data[self::CREATE_NEWS_PARAMETERS]);
+        if (isset($data[self::CONTENT_CATEGORY_ID])) {
+            $this->setContentCategoryId($data[self::CONTENT_CATEGORY_ID]);
         }
     }
 
-    public function getParameters()
+    public function getContentCategoryId()
     {
-        return $this->parameters;
+        return $this->contentCategoryId;
     }
 
-    public function setParameters($parameters)
+    public function setContentCategoryId($contentCategoryId)
     {
-        $this->parameters = $parameters;
+        $this->contentCategoryId = $contentCategoryId;
     }
+
 }

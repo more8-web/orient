@@ -2,7 +2,7 @@
 
 namespace App\Services\Auth;
 
-use App\Exceptions\NotFoundEmailException;
+use App\Exceptions\Auth\NotFoundEmailException;
 use App\Repository\UserRepository;
 use App\Security\TokenService;
 use Doctrine\ORM\OptimisticLockException;

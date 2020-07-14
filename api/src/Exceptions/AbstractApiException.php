@@ -32,13 +32,18 @@ abstract class AbstractApiException extends HttpException implements ApiExceptio
      */
     public function toArray()
     {
+        $details = $this->getDetails();
+        $info = $this->getDebugInfo();
+
         return array_merge(
             [
                 "code" => $this->getCode(),
                 "message" => $this->getMessage(),
-                "details" => $this->getDetails(),
             ],
-            $_SERVER['APP_DEBUG'] ? [
+            !empty($details) ? [
+                "details" => $this->getDetails(),
+            ] : [],
+            $_SERVER['APP_DEBUG'] && !empty($info) ? [
                 "debug" => $this->getDebugInfo()
             ] : []
         );

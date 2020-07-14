@@ -4,35 +4,27 @@
 namespace App\Controller\Dto\ContentCategory;
 
 use Swagger\Annotations as SWG;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @SWG\Definition(type="object")
  */
 class DeleteContentCategoryResponseBody
 {
-    const MESSAGE = "message";
-
     /**
-     * @SWG\Property(type="string")
-     * @Assert\NotBlank()
+     * @SWG\Property(property=EditContentCategoryResponseBody::CONTENT_CATEGORY_ID, type="integer")
      */
-    private $message;
+    private string $message;
 
-    public function __construct($message)
+    /**
+     * DeleteContentCategoryResponseBody constructor.
+     */
+    public function __construct()
     {
-        $this->setMessage($message);
-    }
-
-    public function asArray()
-    {
-        return [
-            self::MESSAGE => $this->getMessage()
-        ];
+        $this->message = 'Content category deleted';
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMessage()
     {
@@ -40,12 +32,11 @@ class DeleteContentCategoryResponseBody
     }
 
     /**
-     * @param mixed $message
+     * @param string $message
      */
-    public function setMessage($message): void
+    public function setMessage(string $message): void
     {
         $this->message = $message;
     }
-
 
 }

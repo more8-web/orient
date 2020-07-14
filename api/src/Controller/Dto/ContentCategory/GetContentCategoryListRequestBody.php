@@ -19,7 +19,7 @@ class GetContentCategoryListRequestBody
      * @SWG\Property(type="string")
      * @Assert\NotBlank()
      */
-    private $parameters;
+    private $parameters = [];
 
     /**
      * NewsRequestBody constructor.

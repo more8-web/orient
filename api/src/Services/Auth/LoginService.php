@@ -2,8 +2,7 @@
 
 namespace App\Services\Auth;
 
-use App\Entity\User;
-use App\Exceptions\LoginException;
+use App\Exceptions\Auth\LoginException;
 use App\Repository\UserRepository;
 use App\Security\TokenService;
 use Exception;

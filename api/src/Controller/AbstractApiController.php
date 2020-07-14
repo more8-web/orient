@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Exceptions\BadRequestException;
+use App\Exceptions\Auth\BadRequestException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;

@@ -2,21 +2,21 @@
 
 namespace App\Repository;
 
-use App\Entity\NewsCategories;
+use App\Entity\NewsCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method NewsCategories|null find($id, $lockMode = null, $lockVersion = null)
- * @method NewsCategories|null findOneBy(array $criteria, array $orderBy = null)
- * @method NewsCategories[]    findAll()
- * @method NewsCategories[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method NewsCategory|null find($id, $lockMode = null, $lockVersion = null)
+ * @method NewsCategory|null findOneBy(array $criteria, array $orderBy = null)
+ * @method NewsCategory[]    findAll()
+ * @method NewsCategory[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class NewsCategoriesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, NewsCategories::class);
+        parent::__construct($registry, NewsCategory::class);
     }
 
     // /**

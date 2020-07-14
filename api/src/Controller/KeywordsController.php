@@ -198,28 +198,88 @@ class KeywordsController extends AbstractApiController
      * @Route("/keywords/:id/news/:id", methods={"DELETE"})
      * @SWG\Delete(
      *    tags={"Keywords"},
-     *    summary="Bind keyword to news (news-to-keyword)",
+     *    summary="Delete keywords by id from news by id",
      *     @SWG\Parameter(
      *         name="body",
      *         in="body",
-     *         description="Bind keyword to news (news-to-keyword)",
+     *         description="Delete keywords by id from news by id",
      *         required=true,
-     *         @Model(type=DTO\BindKeywordToNewsRequestBody::class)
+     *         @Model(type=DTO\DeleteKeywordsFromNewsRequestBody::class)
      *     ),
      *     @SWG\Response(
      *         response=200,
-     *         description="Get one keyword by id",
-     *         @Model(type=DTO\BindKeywordToNewsResponseBody::class)
+     *         description="Delete keywords by id from news by id",
+     *         @Model(type=DTO\DeleteKeywordsFromNewsResponseBody::class)
      *     ),
      * )
      * @param Request $request
      * @param KeywordsService $service
      * @return JsonResponse
      */
-    public function tbindKeywordToNews(Request $request, KeywordsService $service)
+    public function deleteKeywordFromNews(Request $request, KeywordsService $service)
     {
-        /** @var DTO\BindKeywordToNewsRequestBody $dto */
-        $dto = $this->getDto($request, DTO\BindKeywordToNewsRequestBody::class);
+        /** @var DTO\DeleteKeywordsFromNewsRequestBody $dto */
+        $dto = $this->getDto($request, DTO\DeleteKeywordsFromNewsRequestBody::class);
+
+        return $this->json(null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @Route("/keywords/:id/contents/:id", methods={"PUT"})
+     * @SWG\Put(
+     *    tags={"Keywords"},
+     *    summary="Bind keyword by id to content by id (keywords-to-content)",
+     *     @SWG\Parameter(
+     *         name="body",
+     *         in="body",
+     *         description="Bind keyword by id to content by id (keywords-to-content)",
+     *         required=true,
+     *         @Model(type=DTO\BindKeywordsToContentRequestBody::class)
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Bind keyword by id to content by id (keywords-to-content)",
+     *         @Model(type=DTO\BindKeywordsToContentResponseBody::class)
+     *     ),
+     * )
+     * @param Request $request
+     * @param KeywordsService $service
+     * @return JsonResponse
+     */
+    public function bindKeywordToContent(Request $request, KeywordsService $service)
+    {
+        /** @var DTO\BindKeywordsToContentRequestBody $dto */
+        $dto = $this->getDto($request, DTO\BindKeywordsToContentRequestBody::class);
+
+        return $this->json(null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @Route("/keywords/:id/contents/:id", methods={"DELETE"})
+     * @SWG\Delete(
+     *    tags={"Keywords"},
+     *    summary="Delete keyword from content by id",
+     *     @SWG\Parameter(
+     *         name="body",
+     *         in="body",
+     *         description="Delete keyword from content by id",
+     *         required=true,
+     *         @Model(type=DTO\DeleteKeywordFromContentByIdRequestBody::class)
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Delete keyword from content by id",
+     *         @Model(type=DTO\DeleteKeywordFromContentByIdResponseBody::class)
+     *     ),
+     * )
+     * @param Request $request
+     * @param KeywordsService $service
+     * @return JsonResponse
+     */
+    public function deleteKeywordFromContentById(Request $request, KeywordsService $service)
+    {
+        /** @var DTO\DeleteKeywordFromContentByIdRequestBody $dto */
+        $dto = $this->getDto($request, DTO\DeleteKeywordFromContentByIdRequestBody::class);
 
         return $this->json(null, Response::HTTP_NO_CONTENT);
     }

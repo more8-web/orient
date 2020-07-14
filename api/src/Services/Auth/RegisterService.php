@@ -3,9 +3,9 @@
 namespace App\Services\Auth;
 
 use App\Entity\User;
-use App\Exceptions\DatabaseException;
-use App\Exceptions\MailerException;
-use App\Exceptions\UserAlreadyRegisteredException;
+use App\Exceptions\Auth\DatabaseException;
+use App\Exceptions\Auth\MailerException;
+use App\Exceptions\Auth\UserAlreadyRegisteredException;
 use App\Repository\UserRepository;
 use Doctrine\ORM\ORMException;
 use Exception;

@@ -13,13 +13,13 @@ class GetOneContentCategoryByIdRequestBody
 {
 
     const
-        CREATE_NEWS_PARAMETERS = "parameters";
+        CONTENT_CATEGORY_ID = "id";
 
     /**
-     * @SWG\Property(type="string")
+     * @SWG\Property(type="integer")
      * @Assert\NotBlank()
      */
-    private $parameters;
+    private $id;
 
     /**
      * NewsRequestBody constructor.
@@ -27,18 +27,18 @@ class GetOneContentCategoryByIdRequestBody
      */
     public function __construct(array $data)
     {
-        if (isset($data[self::CREATE_NEWS_PARAMETERS])) {
-            $this->setParameters($data[self::CREATE_NEWS_PARAMETERS]);
+        if (isset($data[self::CONTENT_CATEGORY_ID])) {
+            $this->setId($data[self::CONTENT_CATEGORY_ID]);
         }
     }
 
-    public function getParameters()
+    public function getId()
     {
-        return $this->parameters;
+        return $this->id;
     }
 
-    public function setParameters($parameters)
+    public function setId($id)
     {
-        $this->parameters = $parameters;
+        $this->id = $id;
     }
 }

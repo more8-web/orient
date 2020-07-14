@@ -3,8 +3,8 @@
 namespace App\Services\Auth;
 
 use App\Entity\UserRole;
-use App\Exceptions\BadConfirmationCodeException;
-use App\Exceptions\DatabaseException;
+use App\Exceptions\Auth\BadConfirmationCodeException;
+use App\Exceptions\Common\DatabaseException;
 use App\Repository\UserRepository;
 use App\Security\TokenService;
 use Doctrine\ORM\ORMException;

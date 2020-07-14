@@ -13,32 +13,72 @@ class EditContentCategoryRequestBody
 {
 
     const
-        CREATE_NEWS_PARAMETERS = "parameters";
+        CONTENT_CATEGORY_ID = "id",
+        CONTENT_CATEGORY_PARENT_ID = "content_category_parent_id",
+        CONTENT_CATEGORY_ALIAS = "content_category_alias";
 
     /**
-     * @SWG\Property(type="string")
+     * @SWG\Property(property=EditContentCategoryRequestBody::CONTENT_CATEGORY_ID, type="integer")
+     */
+    private $contentCategoryId;
+
+    /**
+     * @SWG\Property(property=EditContentCategoryRequestBody::CONTENT_CATEGORY_PARENT_ID, type="integer")
+     */
+    private $contentCategoryParentId = null;
+
+    /**
+     * @SWG\Property(property=EditContentCategoryRequestBody::CONTENT_CATEGORY_ALIAS, type="string")
      * @Assert\NotBlank()
      */
-    private $parameters;
+    private $contentCategoryAlias;
 
     /**
-     * NewsRequestBody constructor.
+     * EditContentCategoryRequestBody constructor.
      * @param array $data
      */
     public function __construct(array $data)
     {
-        if (isset($data[self::CREATE_NEWS_PARAMETERS])) {
-            $this->setParameters($data[self::CREATE_NEWS_PARAMETERS]);
+        if (isset($data[self::CONTENT_CATEGORY_ID])) {
+            $this->setContentCategoryId($data[self::CONTENT_CATEGORY_ID]);
+        }
+
+        if (isset($data[self::CONTENT_CATEGORY_PARENT_ID])) {
+            $this->setContentCategoryParentId($data[self::CONTENT_CATEGORY_PARENT_ID]);
+        }
+
+        if (isset($data[self::CONTENT_CATEGORY_ALIAS])) {
+            $this->setContentCategoryAlias($data[self::CONTENT_CATEGORY_ALIAS]);
         }
     }
 
-    public function getParameters()
+    public function getContentCategoryId()
     {
-        return $this->parameters;
+        return $this->contentCategoryId;
     }
 
-    public function setParameters($parameters)
+    public function setContentCategoryId($contentCategoryId)
     {
-        $this->parameters = $parameters;
+        $this->contentCategoryId = $contentCategoryId;
+    }
+
+    public function getContentCategoryParentId()
+    {
+        return $this->contentCategoryParentId;
+    }
+
+    public function setContentCategoryParentId($contentCategoryParentId)
+    {
+        $this->contentCategoryParentId = $contentCategoryParentId;
+    }
+
+    public function getContentCategoryAlias()
+    {
+        return $this->contentCategoryAlias;
+    }
+
+    public function setContentCategoryAlias($contentCategoryAlias)
+    {
+        $this->contentCategoryAlias = $contentCategoryAlias;
     }
 }
