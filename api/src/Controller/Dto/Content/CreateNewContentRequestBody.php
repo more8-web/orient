@@ -20,7 +20,6 @@ class CreateNewContentRequestBody
     /**
      * @SWG\Property(property=CreateNewContentRequestBody::CONTENT_ALIAS, type="string")
      * @Assert\NotBlank()
-     * @Assert\Unique()
      */
     private $contentAlias;
 

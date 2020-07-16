@@ -13,32 +13,62 @@ class BindContentToContentCategoryRequestBody
 {
 
     const
-        CREATE_NEWS_PARAMETERS = "parameters";
+        CONTENT_ID = "content_id",
+        CONTENT_CATEGORY_ID = "content_category_id";
 
     /**
-     * @SWG\Property(type="string")
-     * @Assert\NotBlank()
+     * @SWG\Property(type="integer")
      */
-    private $parameters;
+    private $contentId;
 
     /**
-     * NewsRequestBody constructor.
+     * @SWG\Property(type="integer")
+     */
+    private $contentCategoryId;
+
+    /**
+     * BindContentToContentCategoryRequestBody constructor.
      * @param array $data
      */
     public function __construct(array $data)
     {
-        if (isset($data[self::CREATE_NEWS_PARAMETERS])) {
-            $this->setParameters($data[self::CREATE_NEWS_PARAMETERS]);
+        if (isset($data[self::CONTENT_ID])) {
+            $this->setContentId($data[self::CONTENT_ID]);
+        }
+        if (isset($data[self::CONTENT_CATEGORY_ID])) {
+            $this->setContentCategoryId($data[self::CONTENT_CATEGORY_ID]);
         }
     }
 
-    public function getParameters()
+    /**
+     * @return mixed
+     */
+    public function getContentId()
     {
-        return $this->parameters;
+        return $this->contentId;
     }
 
-    public function setParameters($parameters)
+    /**
+     * @param mixed $contentId
+     */
+    public function setContentId($contentId): void
     {
-        $this->parameters = $parameters;
+        $this->contentId = $contentId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContentCategoryId()
+    {
+        return $this->contentCategoryId;
+    }
+
+    /**
+     * @param mixed $contentCategoryId
+     */
+    public function setContentCategoryId($contentCategoryId): void
+    {
+        $this->contentCategoryId = $contentCategoryId;
     }
 }

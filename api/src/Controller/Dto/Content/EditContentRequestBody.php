@@ -13,13 +13,32 @@ class EditContentRequestBody
 {
 
     const
-        CREATE_NEWS_PARAMETERS = "parameters";
+        CONTENT_ID = "id",
+        CONTENT_ALIAS = "content_alias",
+        CONTENT_DESCRIPTION = "content_description",
+        CONTENT_VALUE = "content_value";
 
     /**
-     * @SWG\Property(type="string")
+     * @SWG\Property(property=EditContentRequestBody::CONTENT_ID, type="integer")
+     */
+    private $id;
+
+    /**
+     * @SWG\Property(property=EditContentRequestBody::CONTENT_ALIAS, type="string")
      * @Assert\NotBlank()
      */
-    private $parameters;
+    private $contentAlias;
+
+    /**
+     * @SWG\Property(property=EditContentRequestBody::CONTENT_DESCRIPTION, type="string")
+     */
+    private $contentDescription;
+
+    /**
+     * @SWG\Property(property=EditContentRequestBody::CONTENT_VALUE, type="string")
+     * @Assert\NotBlank()
+     */
+    private $contentValue;
 
     /**
      * NewsRequestBody constructor.
@@ -27,18 +46,76 @@ class EditContentRequestBody
      */
     public function __construct(array $data)
     {
-        if (isset($data[self::CREATE_NEWS_PARAMETERS])) {
-            $this->setParameters($data[self::CREATE_NEWS_PARAMETERS]);
+        if (isset($data[self::CONTENT_ID])) {
+            $this->id = $data[self::CONTENT_ID];
+        }
+
+        if (isset($data[self::CONTENT_ALIAS])) {
+            $this->setContentAlias($data[self::CONTENT_ALIAS]);
+        }
+
+        if (isset($data[self::CONTENT_DESCRIPTION])) {
+            $this->setContentDescription($data[self::CONTENT_DESCRIPTION]);
+        }
+
+        if (isset($data[self::CONTENT_VALUE])) {
+            $this->setContentValue($data[self::CONTENT_VALUE]);
         }
     }
 
-    public function getParameters()
+    /**
+     * @return mixed
+     */
+    public function getContentAlias()
     {
-        return $this->parameters;
+        return $this->contentAlias;
     }
 
-    public function setParameters($parameters)
+    /**
+     * @param mixed $contentAlias
+     */
+    public function setContentAlias($contentAlias): void
     {
-        $this->parameters = $parameters;
+        $this->contentAlias = $contentAlias;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContentDescription()
+    {
+        return $this->contentDescription;
+    }
+
+    /**
+     * @param mixed $contentDescription
+     */
+    public function setContentDescription($contentDescription): void
+    {
+        $this->contentDescription = $contentDescription;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContentValue()
+    {
+        return $this->contentValue;
+    }
+
+    /**
+     * @param mixed $contentValue
+     */
+    public function setContentValue($contentValue): void
+    {
+        $this->contentValue = $contentValue;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

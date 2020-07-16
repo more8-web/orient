@@ -4,35 +4,95 @@
 namespace App\Services\NewsCategory;
 
 
-use App\Repository\NewsRepository;
-use App\Security\TokenService;
+use App\Entity\Keyword;
+use App\Entity\NewsCategory;
+use App\Exceptions\Keyword\NotFoundKeywordException;
+use App\Exceptions\NewsCategory\NewsCategoryAlreadyExistsException;
+use App\Repository\NewsCategoryRepository;
+use Doctrine\DBAL\Exception\DatabaseObjectExistsException;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 
 class NewsCategoryService
 {
-    /** @var NewsRepository */
+
+    /** @var NewsCategoryRepository */
     protected $repo;
 
-    /**
-     * @var TokenService
-     */
-    protected $token;
-
-    public function __construct(NewsRepository $repo, TokenService $token)
+    public function __construct(NewsCategoryRepository $repo)
     {
         $this->repo = $repo;
-        $this->token = $token;
     }
 
-
-    public function getNewsList($filter = null)
+    /**
+     * @param $parentId
+     * @param $newsCategoryAlias
+     * @return NewsCategory
+     */
+    public function createNewsCategory($parentId, $newsCategoryAlias)
     {
-        return $this->repo->findAll();
+        if(!$this->repo->isNewsCategoryExists($newsCategoryAlias)) {
+            try {
+                return $this->repo->create($parentId, $newsCategoryAlias);
+            } catch (OptimisticLockException $e) {
+            } catch (ORMException $e) {
+            }
+        }
+        throw new NewsCategoryAlreadyExistsException();
     }
 
-    public function createNewArticle($parameters)
+    /**
+     * @param $id
+     * @param $parentId
+     * @param $alias
+     * @return NewsCategory
+     */
+    public function editNewsCategoryById($id, $parentId, $alias)
     {
-        $status = "status";
-        return $this->repo->createNews($parameters, $status);
+        try {
+            $newsCategory =  $this->repo->edit($id, $parentId, $alias);
+        } catch (OptimisticLockException $e) {
+        } catch (ORMException $e) {
+        }
+
+        /** @var NewsCategory $newsCategory */
+        return $newsCategory;
     }
 
+    /**
+     * @param $id
+     * @return null
+     */
+    public function deleteNewsCategory($id)
+    {
+        try {
+            $this->repo->delete($id);
+        } catch (OptimisticLockException $e) {
+        } catch (ORMException $e) {
+        }
+
+        return null;
+    }
+
+    /**
+     * @return NewsCategory[]
+     */
+    public function getNewsCategoryList()
+    {
+
+        return $this->repo->getNewsCategoryList();
+
+    }
+
+    /**
+     * @param $id
+     * @return NewsCategory|null
+     */
+    public function getOneNewsCategoryById($id)
+    {
+        try {
+            return $this->repo->getOneNewsCategory($id);
+        }catch (DatabaseObjectExistsException $e) {
+        } throw new NotFoundKeywordException();
+    }
 }

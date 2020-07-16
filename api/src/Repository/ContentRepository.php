@@ -3,7 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Content;
+use App\Exceptions\Content\NotFoundContentException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,7 +22,15 @@ class ContentRepository extends ServiceEntityRepository
         parent::__construct($registry, Content::class);
     }
 
-    public function createContent($alias, $desc, $value){
+    /**
+     * @param $alias
+     * @param $desc
+     * @param $value
+     * @return Content
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function create($alias, $desc, $value){
 
         $content = new Content();
         $content->setContentAlias($alias);
@@ -33,7 +44,68 @@ class ContentRepository extends ServiceEntityRepository
         return $content;
     }
 
+    /**
+     * @param $alias
+     * @return bool
+     */
+    public function isContentExists($alias){
 
+        if($this->findOneBy(['content_alias' => $alias])){
+            return true;
+        }
+            return false;
+    }
+
+    /**
+     * @param $id
+     * @param $alias
+     * @param $desc
+     * @param $value
+     * @return Content|null
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function edit($id, $alias, $desc, $value){
+
+        $content = $this->find($id);
+        $content->setContentAlias($alias);
+        $content->setContentDescription($desc);
+        $content->setContentValue($value);
+
+        $em = $this->getEntityManager();
+        $em->flush();
+
+        return $content;
+    }
+
+    /**
+     * @param $id
+     * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function delete($id)
+    {
+
+        $content = $this->find($id);
+        if (!is_null($content)) {
+
+            $em = $this->getEntityManager();
+            $em->remove($content);
+            $em->flush();
+        }
+    }
+
+    /**
+     * @param $id
+     * @return Content
+     */
+    public function getOne($id){
+        /** @var Content $content */
+        $content = $this->find($id);
+
+        return $content;
+    }
 
 
     // /**

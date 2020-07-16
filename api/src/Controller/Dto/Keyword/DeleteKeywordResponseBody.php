@@ -1,19 +1,21 @@
 <?php
 
 
-namespace App\Controller\Dto\Content;
+namespace App\Controller\Dto\Keyword;
 
 use Swagger\Annotations as SWG;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @SWG\Definition(type="object")
  */
-class DeleteContentResponseBody
+class DeleteKeywordResponseBody
 {
     const MESSAGE = "message";
 
     /**
      * @SWG\Property(type="string")
+     * @Assert\NotBlank()
      */
     private $message;
 

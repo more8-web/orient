@@ -39,7 +39,6 @@ class ContentController extends AbstractApiController
     {
         /** @var DTO\CreateNewContentRequestBody $dto */
         $dto = $this->getDto($request, DTO\CreateNewContentRequestBody::class);
-        var_dump($dto); die();
         $content = $service->createNewContent(  $dto->getContentAlias(),
                                                 $dto->getContentDescription(),
                                                 $dto->getContentValue());
@@ -73,8 +72,12 @@ class ContentController extends AbstractApiController
     {
         /** @var DTO\EditContentRequestBody $dto */
         $dto = $this->getDto($request, DTO\EditContentRequestBody::class);
+        $content = $service->editContent($dto->getId(),
+                                            $dto->getContentAlias(),
+                                            $dto->getContentDescription(),
+                                            $dto->getContentValue());
 
-        return $this->json(null, Response::HTTP_NO_CONTENT);
+        return $this->json((new DTO\EditContentResponseBody($content))->asArray());
     }
 
     /**
@@ -101,27 +104,22 @@ class ContentController extends AbstractApiController
      */
     public function deleteContent(Request $request, ContentService $service)
     {
-        /** @var DTO\EditContentRequestBody $dto */
-        $dto = $this->getDto($request, DTO\EditContentRequestBody::class);
+        /** @var DTO\DeleteContentRequestBody $dto */
+        $dto = $this->getDto($request, DTO\DeleteContentRequestBody::class);
+        $service->deleteContent($dto->getId());
 
         return $this->json(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
-     * @Route("/contents/:id", methods={"GET"})
+     * @Route("/contents/{id}", methods={"GET"})
      * @SWG\Get(
      *    tags={"Content"},
-     *    summary="Get one content",
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="Get one content",
-     *         required=true,
-     *         @Model(type=DTO\GetOneContentRequestBody::class)
+     *    summary="Get one content by id",
      *     ),
      *     @SWG\Response(
      *         response=200,
-     *         description="Get one content",
+     *         description="Get one content by id",
      *         @Model(type=DTO\GetOneContentResponseBody::class)
      *     ),
      * )
@@ -131,10 +129,10 @@ class ContentController extends AbstractApiController
      */
     public function getOneContent(Request $request, ContentService $service)
     {
-        /** @var DTO\GetOneContentRequestBody $dto */
-        $dto = $this->getDto($request, DTO\GetOneContentRequestBody::class);
 
-        return $this->json(null, Response::HTTP_NO_CONTENT);
+        $content = $service->getOneContentById($request->get('id'));
+
+        return $this->json((new DTO\GetOneContentResponseBody($content))->asArray());
     }
 
     /**
@@ -143,11 +141,12 @@ class ContentController extends AbstractApiController
      *    tags={"Content"},
      *    summary="Bind content to content category (content-to-content-category)",
      *     @SWG\Parameter(
-     *         name="body",
+     *         name="content_category_id",
      *         in="body",
-     *         description="Bind content to content category (content-to-content-category)",
+     *         description="Bind to content  (content-to-content-category)",
      *         required=true,
      *         @Model(type=DTO\BindContentToContentCategoryRequestBody::class)
+     *
      *     ),
      *     @SWG\Response(
      *         response=200,
@@ -168,16 +167,10 @@ class ContentController extends AbstractApiController
     }
 
     /**
-     * @Route("/news/:id/contents", methods={"GET"})
+     * @Route("/news/{id}/contents", methods={"GET"})
      * @SWG\Get(
      *    tags={"Content"},
      *    summary="Get all content of news",
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="Get all content of news",
-     *         required=true,
-     *         @Model(type=DTO\GetAllContentOfNewsRequestBody::class)
      *     ),
      *     @SWG\Response(
      *         response=200,

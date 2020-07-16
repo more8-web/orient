@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\KeywordsRepository;
+use App\Repository\KeywordRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=KeywordsRepository::class)
+ * @ORM\Entity(repositoryClass=KeywordRepository::class)
  */
 class Keyword
 {
@@ -18,11 +18,6 @@ class Keyword
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $keyword_id;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $keyword_value;
@@ -30,18 +25,6 @@ class Keyword
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getKeywordId(): ?int
-    {
-        return $this->keyword_id;
-    }
-
-    public function setKeywordId(int $keyword_id): self
-    {
-        $this->keyword_id = $keyword_id;
-
-        return $this;
     }
 
     public function getKeywordValue(): ?string

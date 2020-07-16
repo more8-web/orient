@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Controller\Dto\Content;
+namespace App\Controller\Dto\Keyword;
 
 use Swagger\Annotations as SWG;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -9,25 +9,26 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @SWG\Definition(type="object")
  */
-class DeleteContentRequestBody
+class DeleteKeywordRequestBody
 {
 
     const
-        CONTENT_ID = "id";
+        KEYWORD_ID = "id";
 
     /**
-     * @SWG\Property(type="integer")
+     * @SWG\Property(property=DeleteKeywordRequestBody::KEYWORD_ID, type="integer")
+     * @Assert\NotBlank()
      */
     private $id;
 
     /**
-     * DeleteContentRequestBody constructor.
+     * DeleteKeywordRequestBody constructor.
      * @param array $data
      */
     public function __construct(array $data)
     {
-        if (isset($data[self::CONTENT_ID])) {
-            $this->id = $data[self::CONTENT_ID];
+        if (isset($data[self::KEYWORD_ID])) {
+            $this->id = ($data[self::KEYWORD_ID]);
         }
     }
 

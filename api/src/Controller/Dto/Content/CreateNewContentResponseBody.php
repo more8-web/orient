@@ -3,7 +3,7 @@
 
 namespace App\Controller\Dto\Content;
 
-use App\Controller\Dto\ContentCategory\ResponseBodyInterface;
+use App\Controller\Dto\ResponseBodyInterface;
 use App\Entity\Content;
 use Swagger\Annotations as SWG;
 

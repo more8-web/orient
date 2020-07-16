@@ -2,6 +2,7 @@
 
 namespace App\Controller\Dto\ContentCategory;
 
+use App\Controller\Dto\ResponseBodyInterface;
 use App\Entity\ContentCategory;
 use Swagger\Annotations as SWG;
 use Symfony\Component\Validator\Constraints as Assert;

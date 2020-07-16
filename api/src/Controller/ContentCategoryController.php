@@ -130,8 +130,12 @@ class ContentCategoryController extends AbstractApiController
      *    summary="Get content category list",
      *
      *     @SWG\Response(
-     *         response=200,
-     *         description="Get content category list",
+     *          response=200,
+     *          @SWG\Schema(
+     *             type="array",
+     *             @Model(type=DTO\GetContentCategoryListResponseBody::class)
+     *          ),
+     *          description="Get content category list",
      *     ),
      * )
      * @param Request $request

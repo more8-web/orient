@@ -17,19 +17,13 @@ class NewsCategoryController extends AbstractApiController
     /**
      * @Route("/news/categories", methods={"GET"})
      * @SWG\Get(
-     *    tags={"Categories"},
+     *    tags={"News Categories"},
      *    summary="get category list",
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="Get category list",
-     *         required=true,
-     *         @Model(type=DTO\GetCategoryListRequestBody::class)
      *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Get category list",
-     *         @Model(type=DTO\GetCategoryListResponseBody::class)
+     *         @Model(type=DTO\GetNewsCategoryListResponseBody::class)
      *     ),
      * )
      * @param Request $request
@@ -38,28 +32,20 @@ class NewsCategoryController extends AbstractApiController
      */
     public function getCategoryList(Request $request, NewsCategoryService $service)
     {
-        /** @var DTO\GetCategoryListRequestBody $dto */
-        $dto = $this->getDto($request, DTO\GetCategoryListRequestBody::class);
-
-        return $this->json(null, Response::HTTP_NO_CONTENT);
+        $newsCategoryList = $service->getNewsCategoryList();
+        return $this->json($newsCategoryList, Response::HTTP_OK);
     }
 
     /**
-     * @Route("/news/categories/:id", methods={"GET"})
+     * @Route("/news/categories/{id}", methods={"GET"})
      * @SWG\Get(
-     *    tags={"Categories"},
+     *    tags={"News Categories"},
      *    summary="get one category by id",
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="get one category by id",
-     *         required=true,
-     *         @Model(type=DTO\GetOneCategoryRequestBody::class)
      *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Get category list",
-     *         @Model(type=DTO\GetOneCategoryResponseBody::class)
+     *         @Model(type=DTO\GetOneNewsCategoryByIdResponseBody::class)
      *     ),
      * )
      * @param Request $request
@@ -68,16 +54,15 @@ class NewsCategoryController extends AbstractApiController
      */
     public function getOneCategory(Request $request, NewsCategoryService $service)
     {
-        /** @var DTO\GetOneCategoryRequestBody $dto */
-        $dto = $this->getDto($request, DTO\GetOneCategoryRequestBody::class);
+        $newsCategory = $service->getOneNewsCategoryById($request->get('id'));
 
-        return $this->json(null, Response::HTTP_NO_CONTENT);
+        return $this->json((new DTO\GetOneNewsCategoryByIdResponseBody($newsCategory))->asArray());
     }
 
     /**
      * @Route("/news/categories/:id/news", methods={"GET"})
      * @SWG\Get(
-     *    tags={"Categories"},
+     *    tags={"News Categories"},
      *    summary="get news of category",
      *     @SWG\Parameter(
      *         name="body",
@@ -107,79 +92,86 @@ class NewsCategoryController extends AbstractApiController
     /**
      * @Route("/news/category", methods={"PUT"})
      * @SWG\Put(
-     *    tags={"Categories"},
+     *    tags={"News Categories"},
      *    summary="create new category",
      *     @SWG\Parameter(
      *         name="body",
      *         in="body",
      *         description="create new category",
      *         required=true,
-     *         @Model(type=DTO\CreateNewCategoryRequestBody::class)
+     *         @Model(type=DTO\CreateNewsCategoryRequestBody::class)
      *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Get category list",
-     *         @Model(type=DTO\CreateNewCategoryResponseBody::class)
+     *         @Model(type=DTO\CreateNewsCategoryResponseBody::class)
      *     ),
      * )
      * @param Request $request
      * @param NewsCategoryService $service
      * @return JsonResponse
      */
-    public function createNewCategory(Request $request, NewsCategoryService $service)
+    public function createNewsCategory(Request $request, NewsCategoryService $service)
     {
-        /** @var DTO\CreateNewCategoryRequestBody $dto */
-        $dto = $this->getDto($request, DTO\CreateNewCategoryRequestBody::class);
+        /** @var DTO\CreateNewsCategoryRequestBody $dto */
+        $dto = $this->getDto($request, DTO\CreateNewsCategoryRequestBody::class);
+        $newsCategory = $service->createNewsCategory(
+                                                        $dto->getNewsCategoryParentId(),
+                                                        $dto->getNewsCategoryAlias());
 
-        return $this->json(null, Response::HTTP_NO_CONTENT);
+        return $this->json((new DTO\CreateNewsCategoryResponseBody($newsCategory))->asArray());
     }
 
     /**
      * @Route("/news/categories/:id", methods={"POST"})
      * @SWG\Post(
-     *    tags={"Categories"},
+     *    tags={"News Categories"},
      *    summary="edit category",
      *     @SWG\Parameter(
      *         name="body",
      *         in="body",
      *         description="edit category",
      *         required=true,
-     *         @Model(type=DTO\EditCategoryRequestBody::class)
+     *         @Model(type=DTO\EditNewsCategoryRequestBody::class)
      *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="edit category",
-     *         @Model(type=DTO\EditCategoryResponseBody::class)
+     *         @Model(type=DTO\EditNewsCategoryResponseBody::class)
      *     ),
      * )
      * @param Request $request
      * @param NewsCategoryService $service
      * @return JsonResponse
      */
-    public function editCategory(Request $request, NewsCategoryService $service)
+    public function editNewsCategory(Request $request, NewsCategoryService $service)
     {
-        /** @var DTO\EditCategoryRequestBody $dto */
-        $dto = $this->getDto($request, DTO\EditCategoryRequestBody::class);
+        /** @var DTO\EditNewsCategoryRequestBody $dto */
+        $dto = $this->getDto($request, DTO\EditNewsCategoryRequestBody::class);
+        $newsCategory = $service->editNewsCategoryById(
+                                                        $dto->getId(),
+                                                        $dto->getNewsCategoryParentId(),
+                                                        $dto->getNewsCategoryAlias());
 
-        return $this->json(null, Response::HTTP_NO_CONTENT);
+        return $this->json((new DTO\EditNewsCategoryResponseBody($newsCategory))->asArray());
     }
 
     /**
      * @Route("/news/categories/:id", methods={"DELETE"})
      * @SWG\Delete(
-     *    tags={"Categories"},
+     *    tags={"News Categories"},
      *    summary="delete category",
      *     @SWG\Parameter(
      *         name="body",
      *         in="body",
      *         description="delete category",
      *         required=true,
-     *         @Model(type=DTO\DeleteCategoryRequestBody::class)
+     *         @Model(type=DTO\DeleteNewsCategoryRequestBody::class)
      *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="edit category",
-     *         @Model(type=DTO\DeleteCategoryResponseBody::class)
+     *         @Model(type=DTO\DeleteNewsCategoryResponseBody::class)
      *     ),
      * )
      * @param Request $request
@@ -188,8 +180,9 @@ class NewsCategoryController extends AbstractApiController
      */
     public function deleteCategory(Request $request, NewsCategoryService $service)
     {
-        /** @var DTO\DeleteCategoryRequestBody $dto */
-        $dto = $this->getDto($request, DTO\DeleteCategoryRequestBody::class);
+        /** @var DTO\DeleteNewsCategoryRequestBody $dto */
+        $dto = $this->getDto($request, DTO\DeleteNewsCategoryRequestBody::class);
+        $service->deleteNewsCategory($dto->getId());
 
         return $this->json(null, Response::HTTP_NO_CONTENT);
     }

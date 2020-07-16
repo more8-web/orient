@@ -3,6 +3,7 @@
 
 namespace App\Controller\Dto\Content;
 
+use App\Entity\Content;
 use Swagger\Annotations as SWG;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -11,41 +12,108 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class GetOneContentResponseBody
 {
-    const MESSAGE = "message";
+    const
+        CONTENT_ID = "id",
+        CONTENT_ALIAS = "content_alias",
+        CONTENT_DESCRIPTION = "content_description",
+        CONTENT_VALUE = "content_value";
 
     /**
-     * @SWG\Property(type="string")
+     * @SWG\Property(property=GetOneContentResponseBody::CONTENT_ID, type="integer")
      * @Assert\NotBlank()
      */
-    private $message;
+    private $id;
 
-    public function __construct($message)
+    /**
+     * @SWG\Property(property=GetOneContentResponseBody::CONTENT_ALIAS, type="string")
+     */
+    private $contentAlias;
+
+    /**
+     * @SWG\Property(property=GetOneContentResponseBody::CONTENT_DESCRIPTION, type="string")
+     */
+    private $contentDescription;
+
+    /**
+     * @SWG\Property(property=GetOneContentResponseBody::CONTENT_VALUE, type="string")
+     */
+    private $contentValue;
+
+    /**
+     * GetOneContentResponseBody constructor.
+     * @param Content $content
+     */
+    public function __construct(Content $content)
     {
-        $this->setMessage($message);
+        $this->id = ($content->getId());
+        $this->setContentAlias($content->getContentAlias());
+        $this->setContentDescription($content->getContentDescription());
+        $this->setContentValue($content->getContentValue());
     }
 
-    public function asArray()
+    public function asArray(): array
     {
         return [
-            self::MESSAGE => $this->getMessage()
+            self::CONTENT_ID => $this->getId(),
+            self::CONTENT_ALIAS => $this->getContentAlias(),
+            self::CONTENT_DESCRIPTION => $this->getContentDescription(),
+            self::CONTENT_VALUE => $this->getContentValue(),
         ];
     }
 
     /**
      * @return mixed
      */
-    public function getMessage()
+    public function getId()
     {
-        return $this->message;
+        return $this->id;
     }
 
     /**
-     * @param mixed $message
+     * @return mixed
      */
-    public function setMessage($message): void
+    public function getContentAlias()
     {
-        $this->message = $message;
+        return $this->contentAlias;
     }
 
+    /**
+     * @param mixed $contentAlias
+     */
+    public function setContentAlias($contentAlias): void
+    {
+        $this->contentAlias = $contentAlias;
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getContentDescription()
+    {
+        return $this->contentDescription;
+    }
+
+    /**
+     * @param mixed $contentDescription
+     */
+    public function setContentDescription($contentDescription): void
+    {
+        $this->contentDescription = $contentDescription;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContentValue()
+    {
+        return $this->contentValue;
+    }
+
+    /**
+     * @param mixed $contentValue
+     */
+    public function setContentValue($contentValue): void
+    {
+        $this->contentValue = $contentValue;
+    }
 }
