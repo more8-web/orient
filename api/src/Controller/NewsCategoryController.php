@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Controller\Dto\NewsCategory as DTO;
 use App\Services\NewsCategory\NewsCategoryService;
-use Exception;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,11 +25,10 @@ class NewsCategoryController extends AbstractApiController
      *         @Model(type=DTO\GetNewsCategoryListResponseBody::class)
      *     ),
      * )
-     * @param Request $request
      * @param NewsCategoryService $service
      * @return JsonResponse
      */
-    public function getCategoryList(Request $request, NewsCategoryService $service)
+    public function getCategoryList(NewsCategoryService $service)
     {
         $newsCategoryList = $service->getNewsCategoryList();
         return $this->json($newsCategoryList, Response::HTTP_OK);

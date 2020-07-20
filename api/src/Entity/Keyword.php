@@ -22,16 +22,26 @@ class Keyword
      */
     private $keyword_value;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getKeywordValue(): ?string
     {
         return $this->keyword_value;
     }
 
+    /**
+     * @param string $keyword_value
+     * @return $this
+     */
     public function setKeywordValue(string $keyword_value): self
     {
         $this->keyword_value = $keyword_value;

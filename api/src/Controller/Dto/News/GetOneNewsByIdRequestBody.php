@@ -9,14 +9,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @SWG\Definition(type="object")
  */
-class BindNewsToCategoryRequestBody
+class GetOneNewsByIdRequestBody
 {
 
     const
-        CREATE_NEWS_PARAMETERS = "parameters";
+        NEWS_ = "parameters";
 
     /**
-     * @SWG\Property(type="string")
+     * @SWG\Property(property=GetOneNewsByIdRequestBody::KEYWORD_VALUE, type="string")
      * @Assert\NotBlank()
      */
     private $parameters;
@@ -27,8 +27,8 @@ class BindNewsToCategoryRequestBody
      */
     public function __construct(array $data)
     {
-        if (isset($data[self::CREATE_NEWS_PARAMETERS])) {
-            $this->setParameters($data[self::CREATE_NEWS_PARAMETERS]);
+        if (isset($data[self::GET_NEWS_PARAMETERS])) {
+            $this->setParameters($data[self::GET_NEWS_PARAMETERS]);
         }
     }
 

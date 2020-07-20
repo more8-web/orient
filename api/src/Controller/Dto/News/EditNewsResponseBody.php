@@ -5,28 +5,30 @@ namespace App\Controller\Dto\News;
 
 use App\Entity\News;
 use Swagger\Annotations as SWG;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @SWG\Definition(type="object")
  */
-class CreateNewsResponseBody
+class EditNewsResponseBody
 {
-    const   NEWS_ID = "id",
+    const
+            NEWS_ID = "id",
             NEWS_ALIAS = "news_alias",
             NEWS_STATUS = "news_status";
 
     /**
-     * @SWG\Property(property=CreateNewsResponseBody::NEWS_ID, type="integer")
+     * @SWG\Property(property=EditNewsResponseBody::NEWS_ID, type="integer")
      */
     private $id;
 
     /**
-     * @SWG\Property(property=CreateNewsResponseBody::NEWS_ALIAS, type="string")
+     * @SWG\Property(property=EditNewsResponseBody::NEWS_ALIAS, type="string")
      */
     private $newsAlias;
 
     /**
-     * @SWG\Property(property=CreateNewsResponseBody::NEWS_STATUS, type="string")
+     * @SWG\Property(property=EditNewsResponseBody::NEWS_STATUS, type="string")
      */
     private $newsStatus;
 
@@ -55,13 +57,19 @@ class CreateNewsResponseBody
     }
 
     /**
-     * @param mixed $newsAlias
-     * @return CreateNewsResponseBody
+     * @return mixed
      */
-    public function setNewsAlias($newsAlias)
+    public function getNewsAlias()
+    {
+        return $this->newsAlias;
+    }
+
+    /**
+     * @param mixed $newsAlias
+     */
+    public function setNewsAlias($newsAlias): void
     {
         $this->newsAlias = $newsAlias;
-        return $this;
     }
 
     /**
@@ -78,13 +86,5 @@ class CreateNewsResponseBody
     public function setNewsStatus($newsStatus): void
     {
         $this->newsStatus = $newsStatus;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNewsAlias()
-    {
-        return $this->newsAlias;
     }
 }

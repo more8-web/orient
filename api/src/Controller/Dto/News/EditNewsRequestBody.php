@@ -9,21 +9,28 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @SWG\Definition(type="object")
  */
-class CreateNewsRequestBody
+class EditNewsRequestBody
 {
 
     const
+        NEWS_ID = "id",
         NEWS_ALIAS = "news_alias",
         NEWS_STATUS = "news_status";
 
     /**
-     * @SWG\Property(property=CreateNewsRequestBody::NEWS_ALIAS, type="string")
+     * @SWG\Property(property=EditNewsRequestBody::NEWS_ID, type="integer")
+     * @Assert\NotBlank()
+     */
+    private $id;
+
+    /**
+     * @SWG\Property(property=EditNewsRequestBody::NEWS_ALIAS, type="string")
      * @Assert\NotBlank()
      */
     private $newsAlias;
 
     /**
-     * @SWG\Property(property=CreateNewsRequestBody::NEWS_STATUS, type="string")
+     * @SWG\Property(property=EditNewsRequestBody::NEWS_STATUS, type="string")
      * @Assert\NotBlank()
      */
     private $newsStatus;
@@ -34,6 +41,10 @@ class CreateNewsRequestBody
      */
     public function __construct(array $data)
     {
+        if (isset($data[self::NEWS_ID])) {
+            $this->id = $data[self::NEWS_ID];
+        }
+
         if (isset($data[self::NEWS_ALIAS])) {
             $this->setNewsAlias($data[self::NEWS_ALIAS]);
         }
@@ -73,5 +84,13 @@ class CreateNewsRequestBody
     public function setNewsStatus($newsStatus): void
     {
         $this->newsStatus = $newsStatus;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

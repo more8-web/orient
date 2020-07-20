@@ -9,17 +9,17 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @SWG\Definition(type="object")
  */
-class UnbindNewsToCategoryRequestBody
+class GetNewsListRequestBody
 {
 
     const
-        CREATE_NEWS_PARAMETERS = "parameters";
+        NEWS_LIST_FILTER = "filter";
 
     /**
      * @SWG\Property(type="string")
      * @Assert\NotBlank()
      */
-    private $parameters;
+    private $filter;
 
     /**
      * NewsRequestBody constructor.
@@ -27,18 +27,18 @@ class UnbindNewsToCategoryRequestBody
      */
     public function __construct(array $data)
     {
-        if (isset($data[self::CREATE_NEWS_PARAMETERS])) {
-            $this->setParameters($data[self::CREATE_NEWS_PARAMETERS]);
+        if (isset($data[self::NEWS_LIST_FILTER])) {
+            $this->setFilter($data[self::NEWS_LIST_FILTER]);
         }
     }
 
-    public function getParameters()
+    public function getFilter()
     {
-        return $this->parameters;
+        return $this->filter;
     }
 
-    public function setParameters($parameters)
+    public function setFilter($filter)
     {
-        $this->parameters = $parameters;
+        $this->filter = $filter;
     }
 }

@@ -5,31 +5,37 @@ namespace App\Controller\Dto\News;
 
 use App\Entity\News;
 use Swagger\Annotations as SWG;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @SWG\Definition(type="object")
  */
-class CreateNewsResponseBody
+class GetOneNewsByIdResponseBody
 {
-    const   NEWS_ID = "id",
+    const
+            NEWS_ID = "id",
             NEWS_ALIAS = "news_alias",
             NEWS_STATUS = "news_status";
 
     /**
-     * @SWG\Property(property=CreateNewsResponseBody::NEWS_ID, type="integer")
+     * @SWG\Property(property=GetOneNewsByIdResponseBody::NEWS_ID, type="integer")
      */
     private $id;
 
     /**
-     * @SWG\Property(property=CreateNewsResponseBody::NEWS_ALIAS, type="string")
+     * @SWG\Property(property=GetOneNewsByIdResponseBody::NEWS_ALIAS, type="string")
      */
     private $newsAlias;
 
     /**
-     * @SWG\Property(property=CreateNewsResponseBody::NEWS_STATUS, type="string")
+     * @SWG\Property(property=GetOneNewsByIdResponseBody::NEWS_STATUS, type="string")
      */
     private $newsStatus;
 
+    /**
+     * GetOneNewsByIdResponseBody constructor.
+     * @param News $news
+     */
     public function __construct(News $news)
     {
         $this->id = $news->getId();
@@ -42,7 +48,7 @@ class CreateNewsResponseBody
         return [
             self::NEWS_ID => $this->getId(),
             self::NEWS_ALIAS => $this->getNewsAlias(),
-            self::NEWS_STATUS => $this->getNewsStatus(),
+            self::NEWS_STATUS => $this->getNewsStatus()
         ];
     }
 
@@ -55,13 +61,19 @@ class CreateNewsResponseBody
     }
 
     /**
-     * @param mixed $newsAlias
-     * @return CreateNewsResponseBody
+     * @return mixed
      */
-    public function setNewsAlias($newsAlias)
+    public function getNewsAlias()
+    {
+        return $this->newsAlias;
+    }
+
+    /**
+     * @param mixed $newsAlias
+     */
+    public function setNewsAlias($newsAlias): void
     {
         $this->newsAlias = $newsAlias;
-        return $this;
     }
 
     /**
@@ -78,13 +90,5 @@ class CreateNewsResponseBody
     public function setNewsStatus($newsStatus): void
     {
         $this->newsStatus = $newsStatus;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNewsAlias()
-    {
-        return $this->newsAlias;
     }
 }

@@ -15,7 +15,6 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
  *            columns={"content_category_parent_id", "content_category_alias"})
  *    }
  * )
- * @ORM\HasLifecycleCallbacks
  */
 class ContentCategory
 {

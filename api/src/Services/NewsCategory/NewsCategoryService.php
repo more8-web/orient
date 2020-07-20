@@ -4,14 +4,13 @@
 namespace App\Services\NewsCategory;
 
 
-use App\Entity\Keyword;
 use App\Entity\NewsCategory;
 use App\Exceptions\Keyword\NotFoundKeywordException;
 use App\Exceptions\NewsCategory\NewsCategoryAlreadyExistsException;
 use App\Repository\NewsCategoryRepository;
-use Doctrine\DBAL\Exception\DatabaseObjectExistsException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class NewsCategoryService
 {
@@ -92,7 +91,7 @@ class NewsCategoryService
     {
         try {
             return $this->repo->getOneNewsCategory($id);
-        }catch (DatabaseObjectExistsException $e) {
+        }catch (BadRequestHttpException $e) {
         } throw new NotFoundKeywordException();
     }
 }
