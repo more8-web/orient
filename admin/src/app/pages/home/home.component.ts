@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthorizationApiService} from "@app/api/authorization";
+import { TokenService } from "@app/guards";
+
 
 @Component({
   selector: 'app-home',
@@ -10,10 +11,10 @@ export class HomeComponent implements OnInit {
 
   public auth: boolean;
 
-  constructor(private api: AuthorizationApiService) { }
+  constructor(private tokenService: TokenService) { }
 
   ngOnInit(): void {
-    this.auth = this.api.authenticated;
+    this.auth = this.tokenService.authenticated;
   }
 
 }

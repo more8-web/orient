@@ -1,27 +1,40 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-
-import { PagesModule } from "@app/pages";
+import { PagesModule } from "./pages";
 import { ComponentsModule } from "./components";
-import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {AuthorizationInterceptor} from "@app/api/authorization/authorization.interceptor";
+import { AuthorizationInterceptor } from "./api/authorization";
+import { LayoutsModule } from "./layouts";
+
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { AuthenticatedLayoutModule } from "@app/layouts/authenticated";
+import { GuestLayoutModule } from "@app/layouts/guest";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    PagesModule,
-    ComponentsModule
-  ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthorizationInterceptor, multi: true }
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        PagesModule,
+        ComponentsModule,
+        LayoutsModule,
+        AuthenticatedLayoutModule,
+        GuestLayoutModule
+    ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthorizationInterceptor,
+            multi: true
+        }
+    ],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
+
+

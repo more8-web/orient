@@ -58,7 +58,6 @@ export class LoginFormComponent implements OnInit {
           localStorage.setItem('X-AUTH-TOKEN', data.token);
           this.router.navigateByUrl("dashboard");
         }
-        console.log(data);
       },
       (err) => {
         if (err?.error?.message) {
