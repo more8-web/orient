@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 
-import {AuthorizationModule} from "./authorization/authorization.module";
+import {AuthorizationModule} from "@pages/authorization";
 import {DashboardModule} from "@pages/dashboard";
 import {HomeModule} from "@pages/home";
 

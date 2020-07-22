@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ResetPasswordComponent } from './reset-password.component';
-import {AppRoutingModule} from "@app/app-routing.module";
 import {AuthorizationModule} from "@components/authorization";
 import {MatButtonModule} from "@angular/material/button";
 
@@ -11,7 +10,6 @@ import {MatButtonModule} from "@angular/material/button";
   declarations: [ResetPasswordComponent],
     imports: [
         CommonModule,
-        AppRoutingModule,
         AuthorizationModule,
         MatButtonModule
     ]

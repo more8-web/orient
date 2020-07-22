@@ -2,7 +2,6 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { AppRoutingModule } from "@app/app-routing.module";
 
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
@@ -35,7 +34,6 @@ import { ConfirmRegistrationComponent } from "./confirm-registration/confirm-reg
         MatButtonModule,
         ReactiveFormsModule,
         MatIconModule,
-        AppRoutingModule
     ],
     providers: [
         AuthorizationApiService

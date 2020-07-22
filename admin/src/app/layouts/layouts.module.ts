@@ -14,6 +14,7 @@ import { GuestLayoutModule } from "./guest";
     imports: [
         AuthenticatedLayoutModule,
         GuestLayoutModule,
+
         MatSidenavModule,
         MatToolbarModule,
         MatListModule,
