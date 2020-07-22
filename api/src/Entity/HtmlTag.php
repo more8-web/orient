@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\KeywordRepository;
+use App\Repository\HtmlTagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=KeywordRepository::class)
+ * @ORM\Entity(repositoryClass=HtmlTagRepository::class)
  */
-class Keyword
+class HtmlTag
 {
     /**
      * @ORM\Id()
@@ -21,24 +21,17 @@ class Keyword
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $keyword_value;
+    private $htmlTagValue;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Content", mappedBy="keywords")
-     * @ORM\JoinTable(name="keyword_to_content")
+     * @ORM\ManyToMany(targetEntity="content", inversedBy="html_tags")
+     * @ORM\JoinTable(name="content_to_html_tag")
      */
     private $contents;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="News", mappedBy="keywords")
-     * @ORM\JoinTable(name="keyword_to_content")
-     */
-    private $news;
 
     public function __construct()
     {
         $this->contents = new ArrayCollection();
-        $this->news = new ArrayCollection();
     }
 
     /**
@@ -52,36 +45,39 @@ class Keyword
     /**
      * @return string|null
      */
-    public function getKeywordValue(): ?string
+    public function getHtmlTagValue(): ?string
     {
-        return $this->keyword_value;
+        return $this->htmlTagValue;
     }
 
     /**
-     * @param string $keyword_value
+     * @param string $htmlTagValue
      * @return $this
      */
-    public function setKeywordValue(string $keyword_value): self
+    public function setHtmlTagValue(string $htmlTagValue): self
     {
-        $this->keyword_value = $keyword_value;
+        $this->htmlTagValue = $htmlTagValue;
 
         return $this;
     }
 
     /**
-     * @param News $news
+     * @return string|null
      */
-    public function addNews(News $news)
+    public function getContents(): ?string
     {
-        $this->news->add($news);
+        return $this->contents;
     }
 
     /**
-     * @param News $news
+     * @param string $contents
+     * @return $this
      */
-    public function removeNews(News $news)
+    public function setContents(string $contents): self
     {
-        $this->news->removeElement($news);
+        $this->contents = $contents;
+
+        return $this;
     }
 
     /**
@@ -89,6 +85,7 @@ class Keyword
      */
     public function addContent(Content $content)
     {
+        $content->addHtmlTags($this);
         $this->contents->add($content);
     }
 
@@ -97,6 +94,7 @@ class Keyword
      */
     public function removeContent(Content $content)
     {
+        $content->removeHtmlTags($this);
         $this->contents->removeElement($content);
     }
 }

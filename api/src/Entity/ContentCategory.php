@@ -3,18 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\ContentCategoriesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
  * @ORM\Entity(repositoryClass=ContentCategoriesRepository::class)
- * @Table(name="content_category",
- *    uniqueConstraints={
- *        @UniqueConstraint(name="category_unique",
- *            columns={"content_category_parent_id", "content_category_alias"})
- *    }
- * )
  */
 class ContentCategory
 {
@@ -23,17 +16,28 @@ class ContentCategory
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private ?int $id;
+    private $id;
 
     /**
      * @ORM\Column(type="integer", name="content_category_parent_id")
      */
-    private ?int $contentCategoryParentId;
+    private $contentCategoryParentId;
 
     /**
      * @ORM\Column(type="string", length=255, name="content_category_alias")
      */
-    private ?string $contentCategoryAlias;
+    private $contentCategoryAlias;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Content", mappedBy="categories")
+     * @ORM\JoinTable(name="content_to_content_category")
+     */
+    private $content;
+
+    public function __construct()
+    {
+        $this->content = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -62,5 +66,21 @@ class ContentCategory
         $this->contentCategoryAlias = $contentCategoryAlias;
 
         return $this;
+    }
+
+    /**
+     * @param Content $content
+     */
+    public function addContent(Content $content)
+    {
+        $this->content->add($content);
+    }
+
+    /**
+     * @param Content $content
+     */
+    public function removeContent(Content $content)
+    {
+        $this->content->removeElement($content);
     }
 }
