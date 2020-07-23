@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-
 import { StoreModule } from "@context/store";
 
 import { NewsComponent } from "./news.component";
@@ -12,7 +11,7 @@ import { NewsComponent } from "./news.component";
         CommonModule,
         StoreModule
     ],
-    exports: [NewsComponent]
+    exports: [NewsComponent],
 })
 export class NewsModule {
 }

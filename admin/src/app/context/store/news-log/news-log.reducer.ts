@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { newsLogActions as actions } from "./news-log.actions";
+import * as actions from "./news-log.actions";
 import { initialState } from "./news-log.state";
 
 export const reducer = createReducer(
@@ -20,5 +20,14 @@ export const reducer = createReducer(
     on(
         actions.select,
         (state, {id}) => ({...state, selected: id})
+    ),
+    on(
+        actions.update,
+        (state, {logs}) => {
+            if (logs.id) {
+                return {...state, entities: {...state.entities, [logs.id]: logs}};
+            }
+            return state;
+        }
     ),
 );

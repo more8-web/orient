@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NewsCategory, NewsCategoryList } from "../../context/models";
-import { select, Store } from "@ngrx/store";
-import { newsCategoryActions, selectNewsCategoryList } from "../../context/store";
+
+import { NewsCategory } from "@context/models";
+import { NewsCategoryDispatcher, NewsCategorySelectors, } from "../../context/store";
 
 @Component({
   selector: 'app-news-category',
@@ -12,16 +12,14 @@ export class NewsCategoryComponent implements OnInit {
 
     categories: NewsCategory[];
 
-    constructor(private store: Store) {
+    constructor(private selector: NewsCategorySelectors,
+                private dispatcher: NewsCategoryDispatcher) {
     }
 
     ngOnInit(): void {
-        this.store.dispatch(newsCategoryActions.load());
-        this.store.pipe(
-            select(selectNewsCategoryList)
-        ).subscribe(
-            data => this.categories = {...data}
-        );
+        this.dispatcher.load();
+        this.selector.list().subscribe(data => this.categories = [...data]);
+
     }
 
 }

@@ -3,8 +3,10 @@ import { CommonModule } from "@angular/common";
 
 import { NewsComponent } from "./news.component";
 import { NewsModule as NewsComponentModule } from "@containers/news";
-import { NewsCategoryModule } from "@app/containers";
-import { NewsLogModule } from "@containers/news-log/news-log.module";
+import {
+    ContentCategoryModule, ContentModule, KeywordModule,
+    NewsCategoryModule, NewsLogModule
+} from "@app/containers";
 
 
 @NgModule({
@@ -14,6 +16,9 @@ import { NewsLogModule } from "@containers/news-log/news-log.module";
         NewsComponentModule,
         NewsCategoryModule,
         NewsLogModule,
+        ContentModule,
+        ContentCategoryModule,
+        KeywordModule,
     ],
     exports: [
         NewsComponent

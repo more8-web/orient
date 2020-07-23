@@ -1,0 +1,163 @@
+{
+    "news": [
+        {
+            "news_id": 1,
+            "news_alias": "First some news",
+            "news_status": "Public"
+        },
+        {
+            "news_id": 2,
+            "news_alias": "Second some news",
+            "news_status": "Public"
+        },
+        {
+            "news_id": 3,
+            "news_alias": "Third some news",
+            "news_status": "Public"
+        },
+        {
+            "news_id": 4,
+            "news_alias": "Fourth some news",
+            "news_status": "Public"
+        },
+        {
+            "news_id": 5,
+            "news_alias": "Fifth some news",
+            "news_status": "Public"
+        }
+    ],
+    "news-categories": [
+        {
+            "news_category_id": 1,
+            "news_category_parent_id": 1,
+            "news_category_alias": "Music"
+        },
+        {
+            "news_category_id": 2,
+            "news_category_parent_id": 1,
+            "news_category_alias": "Comics"
+        },
+        {
+            "news_category_id": 3,
+            "news_category_parent_id": 2,
+            "news_category_alias": "Law"
+        },
+        {
+            "news_category_id": 4,
+            "news_category_parent_id": 2,
+            "news_category_alias": "Economics"
+        },
+        {
+            "news_category_id": 5,
+            "news_category_parent_id": 4,
+            "news_category_alias": "Nature"
+        }
+    ],
+    "news-logs": [
+        {
+            "news_log_id": 1,
+            "news_id": 2,
+            "user_id": 3,
+            "news_log_event": "Load",
+            "news_log_comment": "Success",
+            "news_log_created_at": "23-07-2020"
+        },
+        {
+            "news_log_id": 2,
+            "news_id": 3,
+            "user_id": 1,
+            "news_log_event": "Load",
+            "news_log_comment": "Failed",
+            "news_log_created_at": "24-07-2020"
+        },
+        {
+            "news_log_id": 3,
+            "news_id": 4,
+            "user_id": 2,
+            "news_log_event": "Select",
+            "news_log_comment": "Success",
+            "news_log_created_at": "21-07-2020"
+        }
+    ],
+    "contents": [
+        {
+            "content_id": 1,
+            "content_alias": "Photo",
+            "content_description": "Mem",
+            "content_value": "Ogo Maesh klasnyi kod"
+        },
+        {
+            "content_id": 2,
+            "content_alias": "Video",
+            "content_description": "10-hour version",
+            "content_value": "Never Gonna Give You Up"
+        },
+        {
+            "content_id": 3,
+            "content_alias": "Gif",
+            "content_description": "Illusion",
+            "content_value": "Recursive room"
+        },
+        {
+            "content_id": 4,
+            "content_alias": "Audio",
+            "content_description": "Anthem",
+            "content_value": "Anthem of Ukraine"
+        },
+        {
+            "content_id": 5,
+            "content_alias": "Photo",
+            "content_description": "Advice",
+            "content_value": "How to read books fast"
+        }
+    ],
+    "content-categories": [
+        {
+            "content_category_id": 1,
+            "content_category_parent_id": 1,
+            "content_category_alias": "Music"
+        },
+        {
+            "content_category_id": 2,
+            "content_category_parent_id": 1,
+            "content_category_alias": "Rock"
+        },
+        {
+            "content_category_id": 3,
+            "content_category_parent_id": 1,
+            "content_category_alias": "Rap"
+        },
+        {
+            "content_category_id": 4,
+            "content_category_parent_id": 3,
+            "content_category_alias": "Mumble-Rap"
+        },
+        {
+            "content_category_id": 5,
+            "content_category_parent_id": 2,
+            "content_category_alias": "Alternative"
+        }
+    ],
+    "keywords": [
+        {
+            "keyword_id": 1,
+            "keyword_value": "Shock"
+        },
+        {
+            "keyword_id": 2,
+            "keyword_value": "Ukraine"
+        },
+        {
+            "keyword_id": 3,
+            "keyword_value": "Marvel"
+        },
+        {
+            "keyword_id": 4,
+            "keyword_value": "Explode"
+        },
+        {
+            "keyword_id": 5,
+            "keyword_value": "Flowers"
+        }
+    ]
+}

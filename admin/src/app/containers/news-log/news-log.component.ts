@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NewsLog } from "../../context/models";
-import { select, Store } from "@ngrx/store";
-import { newsLogActions, selectNewsLogList } from "../../context/store/news-log";
+
+import { NewsLog } from "@context/models";
+import { NewsLogDispatcher, NewsLogSelector } from "@context/store/news-log";
+
 
 @Component({
   selector: 'app-news-log',
@@ -12,16 +13,14 @@ export class NewsLogComponent implements OnInit {
 
     logs: NewsLog[];
 
-    constructor(private store: Store) {
+    constructor(private selector: NewsLogSelector,
+                private dispatcher: NewsLogDispatcher) {
     }
 
     ngOnInit(): void {
-        this.store.dispatch(newsLogActions.load());
-        this.store.pipe(
-            select(selectNewsLogList)
-        ).subscribe(
-            data => this.logs = {...data}
-        );
+        this.dispatcher.load();
+        this.selector.list().subscribe(data => this.logs = [...data]);
+
     }
 
 }

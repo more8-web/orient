@@ -1,4 +1,6 @@
-import { createSelector } from "@ngrx/store";
+import { createSelector, Store } from "@ngrx/store";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 
 import { newsFeatureKey } from "./news-category.state";
 import { NewsCategory } from "@app/context";
@@ -9,24 +11,37 @@ const stateSelected = state => state[newsFeatureKey].selected;
 const stateIsLoading = state => state[newsFeatureKey].isLoading;
 
 
-export const selectNewsCategoryList = createSelector(
-    stateEntities,
-    stateIds,
-    (entities, ids): NewsCategory[] => ids.map(id => entities[id])
-);
+@Injectable()
+export class NewsCategorySelectors {
+    constructor(private store: Store) {
+    }
 
-export const selectSelectedNewsCategoryId = createSelector(
-    stateSelected,
-    selected => selected
-);
+    list(): Observable<NewsCategory[]> {
+        return this.store.select(
+            createSelector(
+                stateEntities,
+                stateIds,
+                (entities, ids) => ids.map(id => entities[id])
+            )
+        );
+    }
 
-export const selectSelectedNewsCategory = createSelector(
-    stateEntities,
-    stateSelected,
-    (entities, id) => entities[id]
-);
+    selected(): Observable<NewsCategory> {
+        return this.store.select(
+            createSelector(
+                stateEntities,
+                stateSelected,
+                (entities, id) => entities[id]
+            )
+        );
+    }
 
-export const selectNewsCategoriesIsLoading = createSelector(
-    stateIsLoading,
-    isLoading => isLoading
-);
+    isLoading(): Observable<boolean> {
+        return this.store.select(
+            createSelector(
+                stateIsLoading,
+                isLoading => isLoading
+            )
+        );
+    }
+}

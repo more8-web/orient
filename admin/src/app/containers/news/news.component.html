@@ -1,7 +1,7 @@
 <table>
-    <tr *ngFor="let news of newsList | keyvalue">
-        <td>{{ news.value.id }}</td>
-        <td>{{ news.value.alias }}</td>
-        <td>{{ news.value.status }}</td>
+    <tr *ngFor="let news of newsList">
+        <td>{{ news.id }}</td>
+        <td>{{ news.alias }}</td>
+        <td>{{ news.status }}</td>
     </tr>
 </table>

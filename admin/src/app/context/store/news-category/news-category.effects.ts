@@ -4,7 +4,7 @@ import { catchError, map, switchMap } from "rxjs/operators";
 import { EMPTY } from "rxjs";
 
 import { NewsCategoryApiService } from "src/app/api";
-import { newsCategoryActions as actions } from "./news-category.actions";
+import * as actions from "./news-category.actions";
 
 @Injectable()
 export class NewsCategoryEffects {

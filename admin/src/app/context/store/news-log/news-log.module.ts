@@ -5,6 +5,8 @@ import { EffectsModule } from "@ngrx/effects";
 import { newsFeatureKey } from "./news-log.state";
 import { reducer } from "./news-log.reducer";
 import { NewsLogEffects } from "./news-log.effects";
+import { NewsLogSelector } from "./news-log.selectors";
+import { NewsLogDispatcher } from "./news-log.dispatcher";
 
 
 
@@ -14,6 +16,7 @@ import { NewsLogEffects } from "./news-log.effects";
   imports: [
       StoreModule.forFeature(newsFeatureKey, reducer),
       EffectsModule.forFeature([NewsLogEffects])
-  ]
+  ],
+    providers: [NewsLogSelector, NewsLogDispatcher]
 })
 export class NewsLogModule { }

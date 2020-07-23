@@ -1,7 +1,10 @@
 import { NgModule } from "@angular/core";
 
 import { AuthorizationApiService } from "./authorization";
-import { NewsApiService, NewsCategoryApiService, NewsLogApiService } from "./news";
+import {
+    NewsApiService, NewsCategoryApiService, NewsLogApiService,
+    ContentApiService, ContentCategoryApiService, KeywordApiService
+} from "./news";
 
 @NgModule({
     providers: [
@@ -9,6 +12,9 @@ import { NewsApiService, NewsCategoryApiService, NewsLogApiService } from "./new
         NewsApiService,
         NewsCategoryApiService,
         NewsLogApiService,
+        ContentApiService,
+        ContentCategoryApiService,
+        KeywordApiService,
     ],
 })
 export class ApiModule {
