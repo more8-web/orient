@@ -4,3 +4,4 @@ export * from "./newsLog.model";
 export * from "./content.model";
 export * from "./contentCategory.model";
 export * from "./keyword.model";
+export * from "./page.model";

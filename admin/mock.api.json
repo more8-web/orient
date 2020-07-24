@@ -159,5 +159,25 @@
             "keyword_id": 5,
             "keyword_value": "Flowers"
         }
+    ],
+    "pages": [
+        {
+            "page_id": 1,
+            "page_alias": "NewsList",
+            "page_url": "/news",
+            "page_template": "<ul></ul>"
+        },
+        {
+            "page_id": 2,
+            "page_alias": "CategoryList",
+            "page_url": "/categories",
+            "page_template": "<table></table>"
+        },
+        {
+            "page_id": 3,
+            "page_alias": "Content",
+            "page_url": "/contents",
+            "page_template": "<ol></ol>"
+        }
     ]
 }

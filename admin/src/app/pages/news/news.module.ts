@@ -5,7 +5,7 @@ import { NewsComponent } from "./news.component";
 import { NewsModule as NewsComponentModule } from "@containers/news";
 import {
     ContentCategoryModule, ContentModule, KeywordModule,
-    NewsCategoryModule, NewsLogModule
+    NewsCategoryModule, NewsLogModule, PageModule
 } from "@app/containers";
 
 
@@ -19,6 +19,7 @@ import {
         ContentModule,
         ContentCategoryModule,
         KeywordModule,
+        PageModule,
     ],
     exports: [
         NewsComponent

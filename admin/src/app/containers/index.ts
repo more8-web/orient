@@ -5,3 +5,4 @@ export * from "./news-log";
 export * from "./content";
 export * from "./content-category";
 export * from "./keyword";
+export * from "./page";

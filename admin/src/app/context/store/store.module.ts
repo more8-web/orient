@@ -4,7 +4,8 @@ import { NewsCategoryModule } from "./news-category";
 import { NewsLogModule } from "./news-log";
 import { ContentModule } from "./content";
 import { ContentCategoryModule } from "./content-category";
-import { KeywordModule } from "@context/store/keyword";
+import { KeywordModule } from "./keyword";
+import { PageModule } from "./page";
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { KeywordModule } from "@context/store/keyword";
         NewsLogModule,
         ContentModule,
         ContentCategoryModule,
-        KeywordModule
+        KeywordModule,
+        PageModule
     ]
 })
 export class StoreModule {

@@ -28,7 +28,6 @@ const routes: Routes = [
             {path: "password/reset/complete/:code", component: ConfirmResetPasswordFormComponent},
             {path: "password/reset", component: ResetPasswordComponent},
             {path: "login", component: LoginComponent},
-            {path: "news", component: NewsComponent},
             {path: "", component: HomeComponent}
         ],
         canActivate: [ForAuthorizatedGuard]
@@ -37,9 +36,12 @@ const routes: Routes = [
         path: "",
         component: AuthenticatedLayoutComponent,
         children: [
-            {path: "dashboard", component: DashboardComponent},
+            {path: "pages", component: NewsComponent},
+            {path: "news", component: NewsComponent},
+            {path: "contents", component: NewsComponent},
+            {path: "keywords", component: NewsComponent},
         ],
-        canActivate: [AuthorizationGuard]
+        // canActivate: [AuthorizationGuard]
     },
 
 ];
