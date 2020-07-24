@@ -48,11 +48,18 @@ class News
      */
     private $keywords;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Log", inversedBy="news")
+     * @ORM\JoinTable(name="log_to_news")
+     */
+    private $logs;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->contents = new ArrayCollection();
         $this->keywords = new ArrayCollection();
+        $this->logs = new ArrayCollection();
     }
 
     /**
@@ -155,5 +162,23 @@ class News
     {
         $keyword->removeNews($this);
         $this->keywords->removeElement($keyword);
+    }
+
+    /**
+     * @param Log $log
+     */
+    public function addLog(Log $log)
+    {
+        $log->addNews($this);
+        $this->logs->add($log);
+    }
+
+    /**
+     * @param Log $log
+     */
+    public function removeLog(Log $log)
+    {
+        $log->removeNews($this);
+        $this->logs->removeElement($log);
     }
 }

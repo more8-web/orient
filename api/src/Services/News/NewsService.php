@@ -6,11 +6,11 @@ namespace App\Services\News;
 
 use App\Entity\News;
 use App\Exceptions\Common\DatabaseException;
+use App\Repository\LogRepository;
 use App\Repository\NewsCategoryRepository;
 use App\Repository\NewsRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class NewsService
 {
@@ -20,10 +20,22 @@ class NewsService
     /** @var NewsCategoryRepository */
     protected $repoCategory;
 
-    public function __construct(NewsRepository $repo, NewsCategoryRepository $repoCategory)
+    /** @var LogRepository */
+    protected $logRepository;
+
+    /**
+     * NewsService constructor.
+     * @param NewsRepository $repo
+     * @param NewsCategoryRepository $repoCategory
+     * @param LogRepository $logRepository
+     */
+    public function __construct(NewsRepository $repo,
+                                NewsCategoryRepository $repoCategory,
+                                LogRepository $logRepository)
     {
         $this->repo = $repo;
         $this->repoCategory = $repoCategory;
+        $this->logRepository = $logRepository;
     }
 
     /**

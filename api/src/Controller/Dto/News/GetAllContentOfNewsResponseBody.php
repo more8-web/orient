@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Controller\Dto\ContentCategory;
+namespace App\Controller\Dto\News;
 
 use App\Entity\Content;
 use Swagger\Annotations as SWG;
@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @SWG\Definition(type="object")
  */
-class GetContentByCategoryResponseBody
+class GetAllContentOfNewsResponseBody
 {
     const
         CONTENT_ID = "id",
@@ -19,28 +19,28 @@ class GetContentByCategoryResponseBody
         CONTENT_VALUE = "content_value";
 
     /**
-     * @SWG\Property(property=GetContentByCategoryResponseBody::CONTENT_ID, type="integer")
+     * @SWG\Property(property=GetAllContentOfNewsResponseBody::CONTENT_ID, type="integer")
      * @Assert\NotBlank()
      */
     private $id;
 
     /**
-     * @SWG\Property(property=GetContentByCategoryResponseBody::CONTENT_ALIAS, type="string")
+     * @SWG\Property(property=GetAllContentOfNewsResponseBody::CONTENT_ALIAS, type="string")
      */
     private $contentAlias;
 
     /**
-     * @SWG\Property(property=GetContentByCategoryResponseBody::CONTENT_DESCRIPTION, type="string")
+     * @SWG\Property(property=GetAllContentOfNewsResponseBody::CONTENT_DESCRIPTION, type="string")
      */
     private $contentDescription;
 
     /**
-     * @SWG\Property(property=GetContentByCategoryResponseBody::CONTENT_VALUE, type="string")
+     * @SWG\Property(property=GetAllContentOfNewsResponseBody::CONTENT_VALUE, type="string")
      */
     private $contentValue;
 
     /**
-     * GetOneContentResponseBody constructor.
+     * GetAllContentOfNewsResponseBody constructor.
      * @param Content $content
      */
     public function __construct(Content $content)

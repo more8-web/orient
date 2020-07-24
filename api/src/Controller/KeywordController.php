@@ -80,28 +80,18 @@ class KeywordController extends AbstractApiController
      * @SWG\Delete(
      *    tags={"Keywords"},
      *    summary="Delete keyword",
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="Delete keyword",
-     *         required=true,
-     *         @Model(type=DTO\DeleteKeywordRequestBody::class)
-     *     ),
      *     @SWG\Response(
-     *         response=200,
-     *         description="Delete keyword",
-     *         @Model(type=DTO\DeleteKeywordResponseBody::class)
+     *         response=204,
+     *         description="Delete keyword success",
      *     ),
      * )
-     * @param Request $request
+     * @param int $id
      * @param KeywordService $service
      * @return JsonResponse
      */
-    public function deleteKeyword(Request $request, KeywordService $service)
+    public function deleteKeyword(int $id, KeywordService $service)
     {
-        /** @var DTO\DeleteKeywordRequestBody $dto */
-        $dto = $this->getDto($request, DTO\DeleteKeywordRequestBody::class);
-        $service->deleteKeyword($dto->getId());
+        $service->deleteKeyword($id);
 
         return $this->json(null, Response::HTTP_NO_CONTENT);
     }

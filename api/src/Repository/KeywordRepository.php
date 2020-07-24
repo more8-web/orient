@@ -69,6 +69,11 @@ class KeywordRepository extends ServiceEntityRepository
         return $content;
     }
 
+    /**
+     * @param $id
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
     public function delete($id)
     {
 
@@ -86,7 +91,6 @@ class KeywordRepository extends ServiceEntityRepository
      */
     public function getKeywordList()
     {
-
         return $this->findAll();
     }
 

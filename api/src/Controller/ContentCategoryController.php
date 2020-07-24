@@ -102,9 +102,8 @@ class ContentCategoryController extends AbstractApiController
      *         @Model(type=DTO\DeleteContentCategoryRequestBody::class)
      *     ),
      *     @SWG\Response(
-     *         response=200,
+     *         response=204,
      *         description="Delete content category",
-     *         @Model(type=DTO\DeleteContentCategoryResponseBody::class)
      *     ),
      * )
      * @param Request $request

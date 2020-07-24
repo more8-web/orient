@@ -81,8 +81,6 @@ class NewsCategoryController extends AbstractApiController
      */
     public function getNewsOfCategory(Request $request, NewsCategoryService $service)
     {
-        /** @var DTO\GetNewsOfCategoryRequestBody $dto */
-        $dto = $this->getDto($request, DTO\GetNewsOfCategoryRequestBody::class);
 
         return $this->json(null, Response::HTTP_NO_CONTENT);
     }
@@ -167,9 +165,8 @@ class NewsCategoryController extends AbstractApiController
      *         @Model(type=DTO\DeleteNewsCategoryRequestBody::class)
      *     ),
      *     @SWG\Response(
-     *         response=200,
+     *         response=204,
      *         description="edit category",
-     *         @Model(type=DTO\DeleteNewsCategoryResponseBody::class)
      *     ),
      * )
      * @param Request $request

@@ -1,40 +1,41 @@
 <?php
 
-
-namespace App\Controller\Dto\Keyword;
+namespace App\Controller\Dto\Entities;
 
 use App\Entity\Keyword;
 use Swagger\Annotations as SWG;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @SWG\Definition(type="object")
  */
-class GetOneKeywordByIdResponseBody
+class KeywordResponse
 {
     const
-        KEYWORD_ID = "id",
+        KEYWORD_ID = "keyword_id",
         KEYWORD_VALUE = "keyword_value";
 
     /**
-     * @SWG\Property(property=GetOneKeywordByIdResponseBody::KEYWORD_ID, type="integer")
+     * @SWG\Property(property=KeywordResponse::KEYWORD_ID, type="integer")
      */
-    private $id;
+    private $keywordId;
 
     /**
-     * @SWG\Property(property=GetOneKeywordByIdResponseBody::KEYWORD_VALUE, type="string")
+     * @SWG\Property(property=KeywordResponse::KEYWORD_VALUE, type="string")
+     * @Assert\NotBlank()
      */
     private $keywordValue;
 
     public function __construct(Keyword $keyword)
     {
-        $this->id = $keyword->getId();
+        $this->setKeywordId($keyword->getId());
         $this->setKeywordValue($keyword->getKeywordValue());
     }
 
     public function asArray(): array
     {
         return [
-            self::KEYWORD_ID => $this->getId(),
+            self::KEYWORD_ID => $this->getKeywordId(),
             self::KEYWORD_VALUE => $this->getKeywordValue(),
         ];
     }
@@ -42,9 +43,17 @@ class GetOneKeywordByIdResponseBody
     /**
      * @return int|null
      */
-    public function getId(): ?int
+    public function getKeywordId(): ?int
     {
-        return $this->id;
+        return $this->keywordId;
+    }
+
+    /**
+     * @param mixed $keywordId
+     */
+    public function setKeywordId($keywordId): void
+    {
+        $this->keywordId = $keywordId;
     }
 
     /**

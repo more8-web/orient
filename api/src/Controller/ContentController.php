@@ -93,9 +93,8 @@ class ContentController extends AbstractApiController
      *         @Model(type=DTO\DeleteContentRequestBody::class)
      *     ),
      *     @SWG\Response(
-     *         response=200,
+     *         response=204,
      *         description="Delete content",
-     *         @Model(type=DTO\DeleteContentResponseBody::class)
      *     ),
      * )
      * @param Request $request
@@ -136,116 +135,23 @@ class ContentController extends AbstractApiController
     }
 
     /**
-     * @Route("/content/categories/:id/contents/:id", methods={"PUT"})
+     * @Route("/content/categories/{id}/contents/{contentId}", methods={"PUT"})
      * @SWG\Put(
      *    tags={"Content"},
      *    summary="Bind content to content category (content-to-content-category)",
-     *     @SWG\Parameter(
-     *         name="content_category_id",
-     *         in="body",
-     *         description="Bind to content  (content-to-content-category)",
-     *         required=true,
-     *         @Model(type=DTO\BindContentToContentCategoryRequestBody::class)
-     *
      *     ),
-     *     @SWG\Response(
+     * @SWG\Response(
      *         response=200,
      *         description="Bind content to content category (content-to-content-category)",
-     *         @Model(type=DTO\BindContentToContentCategoryResponseBody::class)
      *     ),
      * )
-     * @param Request $request
+     * @param int $id
+     * @param int $contentId
      * @param ContentService $service
      * @return JsonResponse
      */
-    public function bindContentToContentCategory(Request $request, ContentService $service)
+    public function bindContentToContentCategory(int $id, int $contentId, ContentService $service)
     {
-        /** @var DTO\BindContentToContentCategoryRequestBody $dto */
-        $dto = $this->getDto($request, DTO\BindContentToContentCategoryRequestBody::class);
-
-        return $this->json(null, Response::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @Route("/news/{id}/contents", methods={"GET"})
-     * @SWG\Get(
-     *    tags={"Content"},
-     *    summary="Get all content of news",
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="Get all content of news",
-     *         @Model(type=DTO\GetAllContentOfNewsResponseBody::class)
-     *     ),
-     * )
-     * @param Request $request
-     * @param ContentService $service
-     * @return JsonResponse
-     */
-    public function getAllContentOfNews(Request $request, ContentService $service)
-    {
-        /** @var DTO\GetAllContentOfNewsRequestBody $dto */
-        $dto = $this->getDto($request, DTO\GetAllContentOfNewsRequestBody::class);
-
-        return $this->json(null, Response::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @Route("/news/:id/contents/:id", methods={"GET"})
-     * @SWG\Get(
-     *    tags={"Content"},
-     *    summary="Get one content of news",
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="Get one content of news",
-     *         required=true,
-     *         @Model(type=DTO\GetOneContentOfNewsRequestBody::class)
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="Get one content of news",
-     *         @Model(type=DTO\GetOneContentOfNewsResponseBody::class)
-     *     ),
-     * )
-     * @param Request $request
-     * @param ContentService $service
-     * @return JsonResponse
-     */
-    public function getOneContentOfNews(Request $request, ContentService $service)
-    {
-        /** @var DTO\GetOneContentOfNewsRequestBody $dto */
-        $dto = $this->getDto($request, DTO\GetOneContentOfNewsRequestBody::class);
-
-        return $this->json(null, Response::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @Route("/news/:id/contents/:id", methods={"PUT"})
-     * @SWG\Put(
-     *    tags={"Content"},
-     *    summary="Bind content to news (news-content-to-news)",
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="Bind content to news (news-content-to-news)",
-     *         required=true,
-     *         @Model(type=DTO\BindContentToNewsRequestBody::class)
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="Bind content to news (news-content-to-news)",
-     *         @Model(type=DTO\BindContentToNewsResponseBody::class)
-     *     ),
-     * )
-     * @param Request $request
-     * @param ContentService $service
-     * @return JsonResponse
-     */
-    public function bindContentToNews(Request $request, ContentService $service)
-    {
-        /** @var DTO\BindContentToNewsRequestBody $dto */
-        $dto = $this->getDto($request, DTO\BindContentToNewsRequestBody::class);
 
         return $this->json(null, Response::HTTP_NO_CONTENT);
     }
