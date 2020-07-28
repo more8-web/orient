@@ -70,7 +70,7 @@ class LogController extends AbstractApiController
     /**
      * @Route("/log/{id}", methods={"GET"})
      * @SWG\Get(
-     *    tags={"HtmlTags"},
+     *    tags={"Logs"},
      *    summary="Get log by id",
      *     ),
      * @SWG\Response(
@@ -88,51 +88,5 @@ class LogController extends AbstractApiController
         $log = $service->getOneLogById($id);
 
         return $this->json((new DTO\GetLogByIdResponseBody($log))->asArray());
-    }
-
-    /**
-     * @Route("/log/{log}/content/{content}", methods={"PUT"})
-     * @SWG\Put(
-     *    tags={"HtmlTags"},
-     *    summary="Bind log to content",
-     *     ),
-     * @SWG\Response(
-     *         response=Response::HTTP_NO_CONTENT,
-     *         description="Bind log to content (content-to-html_tag)",
-     *     ),
-     * )
-     * @param $log
-     * @param $contentId
-     * @param LogService $service
-     * @return JsonResponse
-     */
-    public function bindLogToContent($log, $contentId, LogService $service)
-    {
-        $service->bindHtmlTagToContent($log, $contentId);
-
-        return $this->json(null, Response::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @Route("/log/{log}/content/{content}", methods={"DELETE"})
-     * @SWG\Delete(
-     *    tags={"Logs"},
-     *    summary="Unbind log to content",
-     *     ),
-     * @SWG\Response(
-     *         response=Response::HTTP_NO_CONTENT,
-     *         description="Unbind log to content",
-     *     ),
-     * )
-     * @param $log
-     * @param $contentId
-     * @param LogService $service
-     * @return JsonResponse
-     */
-    public function unbindLogToContent($log, $contentId, LogService $service)
-    {
-        $service->unbindLogToContent($log, $contentId);
-
-        return $this->json(null, Response::HTTP_NO_CONTENT);
     }
 }

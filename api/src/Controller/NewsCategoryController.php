@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Swagger\Annotations as SWG;
+use App\Controller\Dto\Response\NewsCategoryResponse;
 
 class NewsCategoryController extends AbstractApiController
 {
@@ -62,27 +63,22 @@ class NewsCategoryController extends AbstractApiController
      * @SWG\Get(
      *    tags={"News Categories"},
      *    summary="get news of category",
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="get news of category",
-     *         required=true,
-     *         @Model(type=DTO\GetNewsOfCategoryRequestBody::class)
      *     ),
-     *     @SWG\Response(
+     * @SWG\Response(
      *         response=200,
      *         description="Get category list",
-     *         @Model(type=DTO\GetNewsOfCategoryResponseBody::class)
+     *         @Model(type=NewsCategoryResponse::class)
      *     ),
      * )
-     * @param Request $request
+     * @param int $newsCategoryId
      * @param NewsCategoryService $service
      * @return JsonResponse
      */
-    public function getNewsOfCategory(Request $request, NewsCategoryService $service)
+    public function getNewsOfCategory(int $newsCategoryId, NewsCategoryService $service)
     {
+        $service->getOneNewsCategoryById($newsCategoryId);
 
-        return $this->json(null, Response::HTTP_NO_CONTENT);
+        return $this->json(null, Response::HTTP_OK);
     }
 
     /**

@@ -3,9 +3,9 @@
 
 namespace App\Controller;
 
-use App\Controller\Dto\News as DTO;
+use App\Controller\Dto\Request\News as NewsRequest;
+use App\Controller\Dto\Response\News as NewsResponse;
 use App\Services\Content\ContentService;
-use App\Services\Log\LogService;
 use App\Services\News\NewsService;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,28 +18,6 @@ use Nelmio\ApiDocBundle\Annotation\Model;
 class NewsController extends AbstractApiController
 {
     /**
-     * @Route("/news", methods={"GET"})
-     * @SWG\Get(
-     *    tags={"News"},
-     *    summary="Get news list",
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="Show news list",
-     *         @Model(type=DTO\GetNewsListResponseBody::class)
-     *     ),
-     * )
-     * @param NewsService $service
-     * @return JsonResponse
-     */
-    public function getNewsList(NewsService $service)
-    {
-        $newsList = $service->getNewsList();
-
-        return $this->json($newsList, Response::HTTP_OK);
-    }
-
-    /**
      * @Route("/news", methods={"PUT"})
      * @SWG\Put(
      *    tags={"News"},
@@ -49,30 +27,29 @@ class NewsController extends AbstractApiController
      *         in="body",
      *         description="Request create news ",
      *         required=true,
-     *         @Model(type=DTO\CreateNewsRequestBody::class)
+     *         @Model(type=NewsRequest::class)
      *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Show news list",
-     *         @Model(type=DTO\CreateNewsResponseBody::class)
+     *         @Model(type=NewsResponse::class)
      *     ),
      * )
      * @param Request $request
      * @param NewsService $service
      * @return JsonResponse
      */
-    public function createNewArticle(Request $request, NewsService $service)
+    public function createNews(Request $request, NewsService $service)
     {
-        /** @var DTO\CreateNewsRequestBody $dto */
-        $dto = $this->getDto($request, DTO\CreateNewsRequestBody::class);
+        /** @var NewsRequest $dto */
+        $dto = $this->getDto($request, NewsRequest::class);
         $news = $service->createNews($dto->getNewsAlias(), $dto->getNewsStatus());
 
-        return $this->json((new DTO\CreateNewsResponseBody($news))->asArray());
+        return $this->json((new NewsResponse($news))->asArray());
     }
 
-
     /**
-     * @Route("/news/:id", methods={"POST"})
+     * @Route("/news/{id}", methods={"POST"})
      * @SWG\POST(
      *    tags={"News"},
      *    summary="Edit news from id",
@@ -81,25 +58,26 @@ class NewsController extends AbstractApiController
      *         in="body",
      *         description="Request edit news from id",
      *         required=true,
-     *         @Model(type=DTO\EditNewsRequestBody::class)
+     *         @Model(type=NewsRequest::class)
      *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Edit news",
-     *         @Model(type=DTO\EditNewsResponseBody::class)
+     *         @Model(type=NewsResponse::class)
      *     ),
      * )
+     * @param int $id
      * @param Request $request
      * @param NewsService $service
      * @return JsonResponse
      */
-    public function editNews(Request $request, NewsService $service)
+    public function editNews(int $id, Request $request, NewsService $service)
     {
-        /** @var DTO\EditNewsRequestBody $dto */
-        $dto = $this->getDto($request, DTO\EditNewsRequestBody::class);
-        $news = $service->editNews($dto->getId(), $dto->getNewsAlias(), $dto->getNewsStatus());
+        /** @var NewsRequest $dto */
+        $dto = $this->getDto($request, NewsRequest::class);
+        $news = $service->editNews($id, $dto->getNewsAlias(), $dto->getNewsStatus());
 
-        return $this->json((new DTO\EditNewsResponseBody($news))->asArray());
+        return $this->json((new NewsResponse($news))->asArray());
     }
 
     /**
@@ -120,7 +98,37 @@ class NewsController extends AbstractApiController
     {
         $service->deleteNews($id);
 
-        return $this->json($id, Response::HTTP_NO_CONTENT);
+        return $this->json(null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @Route("/news", methods={"GET"})
+     * @SWG\Get(
+     *    tags={"News"},
+     *    summary="Get news list",
+     *     ),
+     *     @SWG\Response(
+     *          response=200,
+     *          @SWG\Schema(
+     *             type="array",
+     *             @Model(type=NewsResponse::class)
+     *          ),
+     *          description="Show news list",
+     *     ),
+     * )
+     * @param NewsService $service
+     * @return JsonResponse
+     */
+    public function getNewsList(NewsService $service)
+    {
+        $listNews = $service->getNewsList();
+        $listResponse = [];
+
+        foreach ($listNews as $news) {
+            $listResponse[] = (new NewsResponse($news))->asArray();
+        }
+
+        return $this->json($listResponse, Response::HTTP_OK);
     }
 
     /**
@@ -129,22 +137,67 @@ class NewsController extends AbstractApiController
      *    tags={"News"},
      *    summary="Get news from id",
      *     ),
-     *     @SWG\Response(
+     * @SWG\Response(
      *         response=200,
-     *         description="Update news",
-     *         @Model(type=DTO\GetOneNewsByIdResponseBody::class)
+     *         description="Get one news",
+     *         @Model(type=NewsResponse::class)
      *     ),
      * )
-     * @param Request $request
+     * @param int $id
      * @param NewsService $service
      * @return JsonResponse
      */
-    public function getOneNews(Request $request, NewsService $service)
+    public function getOneNews(int $id, NewsService $service)
     {
-            $news = $service->getNewsById($request->get('id'));
-
+            $news = $service->getNewsById($id);
 
             return $this->json($news, Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/news/{id}/contents", methods={"GET"})
+     * @SWG\Get(
+     *    tags={"Content"},
+     *    summary="Get all content of news",
+     *     ),
+     * @SWG\Response(
+     *         response=200,
+     *         description="Get all content of news",
+     *         @Model(type=ContentResponse::class)
+     *     ),
+     * )
+     * @param int $id
+     * @param ContentService $service
+     * @return JsonResponse
+     */
+    public function getAllContentOfNews(int $id, ContentService $service)
+    {
+        $contentList = $service->getContentListByNews($id);
+
+        return $this->json($contentList, Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/news/{newsId}/content/{contentId}", methods={"GET"})
+     * @SWG\Get(
+     *    tags={"Content"},
+     *    summary="Get one content by news",
+     *     ),
+     * @SWG\Response(
+     *         response=200,
+     *         description="Get one content by news",
+     *         @Model(type=DTO\GetContentByNewsResponseBody::class)
+     *     ),
+     * )
+     * @param int $newsId
+     * @param int $contentId
+     * @param ContentService $service
+     * @return JsonResponse
+     */
+    public function getOneContentOfNews(int $newsId, int $contentId, ContentService $service)
+    {
+        $content = $service->getContentByNews($newsId, $contentId);
+        return $this->json(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -170,90 +223,6 @@ class NewsController extends AbstractApiController
     }
 
     /**
-     * @Route("/news/{id}/contents", methods={"GET"})
-     * @SWG\Get(
-     *    tags={"Content"},
-     *    summary="Get all content of news",
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="Get all content of news",
-     *         @Model(type=DTO\GetAllContentOfNewsResponseBody::class)
-     *     ),
-     * )
-     * @param Request $request
-     * @param ContentService $service
-     * @return JsonResponse
-     */
-    public function getAllContentOfNews(Request $request, ContentService $service)
-    {
-        /** @var DTO\GetAllContentOfNewsRequestBody $dto */
-        $dto = $this->getDto($request, DTO\GetAllContentOfNewsRequestBody::class);
-
-        return $this->json(null, Response::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @Route("/news/:id/contents/:id", methods={"GET"})
-     * @SWG\Get(
-     *    tags={"Content"},
-     *    summary="Get one content of news",
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="Get one content of news",
-     *         required=true,
-     *         @Model(type=DTO\GetOneContentOfNewsRequestBody::class)
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="Get one content of news",
-     *         @Model(type=DTO\GetOneContentOfNewsResponseBody::class)
-     *     ),
-     * )
-     * @param Request $request
-     * @param ContentService $service
-     * @return JsonResponse
-     */
-    public function getOneContentOfNews(Request $request, ContentService $service)
-    {
-        /** @var DTO\GetOneContentOfNewsRequestBody $dto */
-        $dto = $this->getDto($request, DTO\GetOneContentOfNewsRequestBody::class);
-
-        return $this->json(null, Response::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @Route("/news/:id/contents/:id", methods={"PUT"})
-     * @SWG\Put(
-     *    tags={"Content"},
-     *    summary="Bind content to news (news-content-to-news)",
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="Bind content to news (news-content-to-news)",
-     *         required=true,
-     *         @Model(type=DTO\BindContentToNewsRequestBody::class)
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="Bind content to news (news-content-to-news)",
-     *         @Model(type=DTO\BindContentToNewsResponseBody::class)
-     *     ),
-     * )
-     * @param Request $request
-     * @param ContentService $service
-     * @return JsonResponse
-     */
-    public function bindContentToNews(Request $request, ContentService $service)
-    {
-        /** @var DTO\BindContentToNewsRequestBody $dto */
-        $dto = $this->getDto($request, DTO\BindContentToNewsRequestBody::class);
-
-        return $this->json(null, Response::HTTP_NO_CONTENT);
-    }
-
-    /**
      * @Route("/news/categories/{category}/news/{news}", methods={"DELETE"})
      * @SWG\Delete(
      *    tags={"News"},
@@ -273,59 +242,5 @@ class NewsController extends AbstractApiController
         $service->unbindNewsToCategory($news, $category);
 
         return $this->json(null, Response::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @Route("/news/{newsId}/log/{logId}", methods={"PUT"})
-     * @SWG\Put(
-     *    tags={"Bind log to news"},
-     *    summary="Bind log to news",
-     *     ),
-     * @SWG\Response(
-     *         response=Response::HTTP_NO_CONTENT,
-     *         description="Bind log to news",
-     *     ),
-     * )
-     * @param int $newsId
-     * @param int $logId
-     * @param LogService $service
-     * @return JsonResponse
-     */
-    public function createNewLog(int $newsId, int $logId, LogService $service)
-    {
-        $service->bindLogToNews($newsId, $logId);
-
-        return $this->json(null, Response::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @Route("/news/:id/log", methods={"GET"})
-     * @SWG\Get(
-     *    tags={"News"},
-     *    summary="get log of news",
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="get log of news",
-     *         required=true,
-     *         @Model(type=DTO\GetNewsLogRequestBody::class)
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="get log of news",
-     *         @Model(type=DTO\GetNewsLogResponseBody::class)
-     *     ),
-     * )
-     * @param Request $request
-     * @param NewsService $service
-     * @return JsonResponse
-     */
-    public function getNewsLog(Request $request, NewsService $service)
-    {
-        /** @var DTO\GetNewsLogRequestBody $dto */
-        $dto = $this->getDto($request, DTO\GetNewsLogRequestBody::class);
-
-
-        return $this->json($dto, Response::HTTP_OK);
     }
 }

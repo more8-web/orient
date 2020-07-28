@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\LogRepository;
-use Doctrine\Common\Collections\ArrayCollection;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,26 +29,25 @@ class Log
     private $createdAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="News", mappedBy="logs")
-     * @ORM\JoinTable(name="log_to_news")
+     * @return int|null
      */
-    private $news;
-
-    public function __construct()
-    {
-        $this->news = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getLogValue(): ?string
     {
         return $this->logValue;
     }
 
+    /**
+     * @param string $logValue
+     * @return $this
+     */
     public function setLogValue(string $logValue): self
     {
         $this->logValue = $logValue;
@@ -56,31 +55,19 @@ class Log
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt): void
     {
         $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * @param News $news
-     */
-    public function addNews(News $news)
-    {
-        $this->news->add($news);
-    }
-
-    /**
-     * @param News $news
-     */
-    public function removeNews(News $news)
-    {
-        $this->news->removeElement($news);
     }
 }

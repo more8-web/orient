@@ -161,17 +161,10 @@ class ContentController extends AbstractApiController
      * @SWG\Put(
      *    tags={"Content"},
      *    summary="Bind content to html tag (news-content-to-html-tag)",
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="Bind content to html tag (news-content-to-html-tag)",
-     *         required=true,
-     *         @Model(type=DTO\BindContentToHtmlTagRequestBody::class)
      *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Bind content to html tag (news-content-to-html-tag)",
-     *         @Model(type=DTO\BindContentToHtmlTagResponseBody::class)
      *     ),
      * )
      * @param Request $request
@@ -180,8 +173,52 @@ class ContentController extends AbstractApiController
      */
     public function bindContentToHtmlTag(Request $request, ContentService $service)
     {
-        /** @var DTO\BindContentToHtmlTagRequestBody $dto */
-        $dto = $this->getDto($request, DTO\BindContentToHtmlTagRequestBody::class);
+
+        return $this->json(null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @Route("/news/{news}/content/{content}", methods={"PUT"})
+     * @SWG\Put(
+     *    tags={"Content"},
+     *    summary="Bind content to news (content-to-news)",
+     *     ),
+     * @SWG\Response(
+     *         response=Response::HTTP_NO_CONTENT,
+     *         description="Bind content to news (content-to-news)",
+     *     ),
+     * )
+     * @param int $news
+     * @param int $content
+     * @param ContentService $service
+     * @return JsonResponse
+     */
+    public function bindContentToNews(int $news, int $content, ContentService $service)
+    {
+        $service->bindContentToNews($news, $content);
+
+        return $this->json(null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @Route("/news/{newsId}/content/{contentId}", methods={"PUT"})
+     * @SWG\Put(
+     *    tags={"Content"},
+     *    summary="Unbind content to news (content-to-news)",
+     *     ),
+     * @SWG\Response(
+     *         response=Response::HTTP_NO_CONTENT,
+     *         description="Unbind content to news (content-to-news)",
+     *     ),
+     * )
+     * @param int $news
+     * @param int $content
+     * @param ContentService $service
+     * @return JsonResponse
+     */
+    public function unbindContentToNews(int $news, int $content, ContentService $service)
+    {
+        $service->unbindContentToNews($news, $content);
 
         return $this->json(null, Response::HTTP_NO_CONTENT);
     }

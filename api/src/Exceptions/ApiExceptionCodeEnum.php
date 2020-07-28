@@ -37,6 +37,8 @@ class ApiExceptionCodeEnum
         HTML_TAG_ALREADY_BOUND_TO_CONTENT = 1023,
 
         LOG_ALREADY_EXISTS = 10024,
-        LOG_NOT_FOUND = 10025
+        LOG_NOT_FOUND = 10025,
+
+        CONTENT_ALREADY_BOUND_TO_NEWS = 10026
     ;
 }

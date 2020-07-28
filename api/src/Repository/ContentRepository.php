@@ -3,7 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Content;
+use App\Entity\News;
+use App\Exceptions\Common\DatabaseException;
+use App\Exceptions\Content\ContentAlreadyBoundToNewsException;
 use App\Exceptions\Content\NotFoundContentException;
+use App\Exceptions\News\NewsNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -107,6 +111,74 @@ class ContentRepository extends ServiceEntityRepository
         return $content;
     }
 
+    /**
+     * @param $newsId
+     * @return Content[]
+     */
+    public function getContentListByNews($newsId)
+    {
+        return $this->findBy(['news_id'=>$newsId]);
+    }
+
+    /**
+     * @param $newsId
+     * @param $contentId
+     * @return Content|null
+     */
+    public function getContentByNews($newsId, $contentId)
+    {
+        return $this->findOneBy(['news_id'=>$newsId, 'content_id' => $contentId]);
+    }
+
+    /**
+     * @param $id
+     * @param News|null $news
+     */
+    public function bindToNews($id, News $news = null)
+    {
+        if (!$news) {
+            throw new NewsNotFoundException();
+        }
+
+        $content = $this->find($id);
+
+        if (!$content) {
+            throw new NotFoundContentException();
+        }
+
+        $content->addNews($news);
+
+        try {
+            $this->getEntityManager()->flush();
+        } catch (ORMException $e) {
+            throw new ContentAlreadyBoundToNewsException();
+        }
+    }
+
+    /**
+     * @param $id
+     * @param News|null $news
+     */
+    public function unbindToNews($id, News $news = null)
+    {
+        if (!$news) {
+            throw new NewsNotFoundException();
+        }
+
+        $content = $this->find($id);
+
+        if (!$content) {
+            throw new NotFoundContentException();
+        }
+
+        $content->removeNews($news);
+
+        try {
+            $this->getEntityManager()->flush();
+        } catch (ORMException $e) {
+            throw new DatabaseException();
+        }
+    }
 
     // /**
     //  * @return Contents[] Returns an array of Contents objects

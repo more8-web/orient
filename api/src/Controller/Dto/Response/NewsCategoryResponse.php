@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Controller\Dto\Entities;
+namespace App\Controller\Dto\Response;
 
 use App\Entity\News;
 use App\Entity\NewsCategory;
@@ -28,7 +28,7 @@ class NewsCategoryResponse
     private $newsCategoryParentId;
 
     /**
-     * @SWG\Property(property=GetNewsListResponseBody::NEWS_CATEGORY_ALIAS, type="string")
+     * @SWG\Property(property=NewsCategoryResponse::NEWS_CATEGORY_ALIAS, type="string")
      */
     private $newsCategoryAlias;
 

@@ -82,4 +82,18 @@ class ContentService
         }
         return $content;
     }
+
+    /**
+     * @param $newsId
+     * @return Content[]
+     */
+    public function getContentListByNews($newsId)
+    {
+        return $this->repo->getContentListByNews($newsId);
+    }
+
+    public function getContentByNews($newsId, $contentId)
+    {
+        return $this->repo->getContentByNews($newsId);
+    }
 }

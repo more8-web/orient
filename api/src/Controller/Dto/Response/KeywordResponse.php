@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Dto\Entities;
+namespace App\Controller\Dto\Response;
 
 use App\Entity\Keyword;
 use Swagger\Annotations as SWG;

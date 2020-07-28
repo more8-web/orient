@@ -1,41 +1,44 @@
 <?php
 
-namespace App\Controller\Dto\Entities;
+
+namespace App\Controller\Dto\Log;
 
 use App\Entity\Log;
+use DateTime;
 use Swagger\Annotations as SWG;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @SWG\Definition(type="object")
  */
-class LogResponse
+class GetLogByIdResponseBody
 {
     const
-        LOG_ID = "log_id",
+        LOG_ID = "id",
         LOG_VALUE = "log_value",
         LOG_CREATED_AT = "log_created_at";
 
     /**
-     * @SWG\Property(property=LogResponse::LOG_ID, type="integer")
+     * @SWG\Property(property=GetLogByIdResponseBody::LOG_ID, type="integer")
      */
-    private $logId;
+    private $id;
 
     /**
-     * @SWG\Property(property=LogResponse::LOG_VALUE, type="text")
-     * @Assert\NotBlank()
+     * @SWG\Property(property=GetLogByIdResponseBody::LOG_VALUE, type="text")
      */
     private $logValue;
 
     /**
-     * @SWG\Property(property=LogResponse::LOG_CREATED_AT, type="datetime")
-     * @Assert\NotBlank()
+     * @SWG\Property(property=GetLogByIdResponseBody::LOG_CREATED_AT, type="datetime")
      */
     private $log_created_at;
 
+    /**
+     * GetLogByIdResponseBody constructor.
+     * @param Log $log
+     */
     public function __construct(Log $log)
     {
-        $this->setLogId($log->getId());
+        $this->id = $log->getId();
         $this->setLogValue($log->getLogValue());
         $this->setLogCreatedAt($log->getCreatedAt());
     }
@@ -46,7 +49,7 @@ class LogResponse
     public function asArray(): array
     {
         return [
-            self::LOG_ID => $this->getLogId(),
+            self::LOG_ID => $this->getId(),
             self::LOG_VALUE => $this->getLogValue(),
             self::LOG_CREATED_AT => $this->getLogCreatedAt()
         ];
@@ -55,17 +58,9 @@ class LogResponse
     /**
      * @return int|null
      */
-    public function getLogId(): ?int
+    public function getId(): ?int
     {
-        return $this->logId;
-    }
-
-    /**
-     * @param mixed $logId
-     */
-    public function setLogId($logId): void
-    {
-        $this->logId = $logId;
+        return $this->id;
     }
 
     /**
@@ -77,7 +72,7 @@ class LogResponse
     }
 
     /**
-     * @param mixed $logValue
+     * @param string $logValue
      */
     public function setLogValue($logValue): void
     {
@@ -85,7 +80,7 @@ class LogResponse
     }
 
     /**
-     * @return mixed
+     * @return DateTime
      */
     public function getLogCreatedAt()
     {
@@ -93,7 +88,7 @@ class LogResponse
     }
 
     /**
-     * @param mixed $log_created_at
+     * @param DateTime $log_created_at
      */
     public function setLogCreatedAt($log_created_at): void
     {

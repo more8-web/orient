@@ -1,39 +1,41 @@
 <?php
 
-
-namespace App\Controller\Dto\Log;
+namespace App\Controller\Dto\Response;
 
 use App\Entity\Log;
 use Swagger\Annotations as SWG;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @SWG\Definition(type="object")
  */
-class GetLogByIdResponseBody
+class LogResponse
 {
     const
-        LOG_ID = "id",
+        LOG_ID = "log_id",
         LOG_VALUE = "log_value",
         LOG_CREATED_AT = "log_created_at";
 
     /**
-     * @SWG\Property(property=GetLogByIdResponseBody::LOG_ID, type="integer")
+     * @SWG\Property(property=LogResponse::LOG_ID, type="integer")
      */
-    private $id;
+    private $logId;
 
     /**
-     * @SWG\Property(property=GetLogByIdResponseBody::LOG_VALUE, type="text")
+     * @SWG\Property(property=LogResponse::LOG_VALUE, type="text")
+     * @Assert\NotBlank()
      */
     private $logValue;
 
     /**
-     * @SWG\Property(property=GetLogByIdResponseBody::LOG_CREATED_AT, type="datetime")
+     * @SWG\Property(property=LogResponse::LOG_CREATED_AT, type="datetime")
+     * @Assert\NotBlank()
      */
     private $log_created_at;
 
     public function __construct(Log $log)
     {
-        $this->id = $log->getId();
+        $this->setLogId($log->getId());
         $this->setLogValue($log->getLogValue());
         $this->setLogCreatedAt($log->getCreatedAt());
     }
@@ -44,10 +46,26 @@ class GetLogByIdResponseBody
     public function asArray(): array
     {
         return [
-            self::LOG_ID => $this->getId(),
+            self::LOG_ID => $this->getLogId(),
             self::LOG_VALUE => $this->getLogValue(),
             self::LOG_CREATED_AT => $this->getLogCreatedAt()
         ];
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getLogId(): ?int
+    {
+        return $this->logId;
+    }
+
+    /**
+     * @param mixed $logId
+     */
+    public function setLogId($logId): void
+    {
+        $this->logId = $logId;
     }
 
     /**
@@ -80,13 +98,5 @@ class GetLogByIdResponseBody
     public function setLogCreatedAt($log_created_at): void
     {
         $this->log_created_at = $log_created_at;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 }

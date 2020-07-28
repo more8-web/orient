@@ -1,40 +1,45 @@
 <?php
 
 
-namespace App\Controller\Dto\News;
+namespace App\Controller\Dto\Response;
 
-use App\Entity\News;
 use Swagger\Annotations as SWG;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @SWG\Definition(type="object")
  */
-class EditNewsResponseBody
+class News
 {
     const
-            NEWS_ID = "id",
+            NEWS_ID = "news_id",
             NEWS_ALIAS = "news_alias",
             NEWS_STATUS = "news_status";
 
     /**
-     * @SWG\Property(property=EditNewsResponseBody::NEWS_ID, type="integer")
+     * @SWG\Property(property=NewsResponse::NEWS_ID, type="integer")
      */
-    private $id;
+    private $newsId;
 
     /**
-     * @SWG\Property(property=EditNewsResponseBody::NEWS_ALIAS, type="string")
+     * @SWG\Property(property=NewsResponse::NEWS_ALIAS, type="string")
+     * @Assert\NotBlank()
      */
     private $newsAlias;
 
     /**
-     * @SWG\Property(property=EditNewsResponseBody::NEWS_STATUS, type="string")
+     * @SWG\Property(property=NewsResponse::NEWS_STATUS, type="string")
+     * @Assert\NotBlank()
      */
     private $newsStatus;
 
-    public function __construct(News $news)
+    /**
+     * NewsResponse constructor.
+     * @param \App\Entity\News $news
+     */
+    public function __construct(\App\Entity\News $news)
     {
-        $this->id = $news->getId();
+        $this->setNewsId($news->getId());
         $this->setNewsAlias($news->getNewsAlias());
         $this->setNewsStatus($news->getNewsStatus());
     }
@@ -42,18 +47,26 @@ class EditNewsResponseBody
     public function asArray()
     {
         return [
-            self::NEWS_ID => $this->getId(),
+            self::NEWS_ID => $this->getNewsId(),
             self::NEWS_ALIAS => $this->getNewsAlias(),
-            self::NEWS_STATUS => $this->getNewsStatus(),
+            self::NEWS_STATUS => $this->getNewsStatus()
         ];
     }
 
     /**
      * @return mixed
      */
-    public function getId()
+    public function getNewsId()
     {
-        return $this->id;
+        return $this->newsId;
+    }
+
+    /**
+     * @param $newsId
+     */
+    public function setNewsId($newsId): void
+    {
+        $this->newsId = $newsId;
     }
 
     /**

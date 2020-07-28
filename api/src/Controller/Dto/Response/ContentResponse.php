@@ -1,7 +1,6 @@
 <?php
 
-
-namespace App\Controller\Dto\News;
+namespace App\Controller\Dto\Response;
 
 use App\Entity\Content;
 use Swagger\Annotations as SWG;
@@ -10,42 +9,42 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @SWG\Definition(type="object")
  */
-class GetAllContentOfNewsResponseBody
+class ContentResponse
 {
     const
-        CONTENT_ID = "id",
+        CONTENT_ID = "content_id",
         CONTENT_ALIAS = "content_alias",
         CONTENT_DESCRIPTION = "content_description",
         CONTENT_VALUE = "content_value";
 
     /**
-     * @SWG\Property(property=GetAllContentOfNewsResponseBody::CONTENT_ID, type="integer")
+     * @SWG\Property(property=ContentResponse::CONTENT_ID, type="integer")
      * @Assert\NotBlank()
      */
-    private $id;
+    private $contentId;
 
     /**
-     * @SWG\Property(property=GetAllContentOfNewsResponseBody::CONTENT_ALIAS, type="string")
+     * @SWG\Property(property=ContentResponse::CONTENT_ALIAS, type="string")
      */
     private $contentAlias;
 
     /**
-     * @SWG\Property(property=GetAllContentOfNewsResponseBody::CONTENT_DESCRIPTION, type="string")
+     * @SWG\Property(property=ContentResponse::CONTENT_DESCRIPTION, type="string")
      */
     private $contentDescription;
 
     /**
-     * @SWG\Property(property=GetAllContentOfNewsResponseBody::CONTENT_VALUE, type="string")
+     * @SWG\Property(property=ContentResponse::CONTENT_VALUE, type="string")
      */
     private $contentValue;
 
     /**
-     * GetAllContentOfNewsResponseBody constructor.
+     * Content constructor.
      * @param Content $content
      */
     public function __construct(Content $content)
     {
-        $this->id = ($content->getId());
+        $this->setContentId($content->getId());
         $this->setContentAlias($content->getContentAlias());
         $this->setContentDescription($content->getContentDescription());
         $this->setContentValue($content->getContentValue());
@@ -54,7 +53,7 @@ class GetAllContentOfNewsResponseBody
     public function asArray(): array
     {
         return [
-            self::CONTENT_ID => $this->getId(),
+            self::CONTENT_ID => $this->getContentId(),
             self::CONTENT_ALIAS => $this->getContentAlias(),
             self::CONTENT_DESCRIPTION => $this->getContentDescription(),
             self::CONTENT_VALUE => $this->getContentValue(),
@@ -64,9 +63,17 @@ class GetAllContentOfNewsResponseBody
     /**
      * @return mixed
      */
-    public function getId()
+    public function getContentId()
     {
-        return $this->id;
+        return $this->contentId;
+    }
+
+    /**
+     * @param mixed $contentId
+     */
+    public function setContentId($contentId): void
+    {
+        $this->contentId = $contentId;
     }
 
     /**

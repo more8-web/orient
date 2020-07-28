@@ -1,16 +1,15 @@
 <?php
 
 
-namespace App\Controller\Dto\Entities;
+namespace App\Controller\Dto\Response;
 
-use App\Entity\ContentCategory;
 use Swagger\Annotations as SWG;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @SWG\Definition(type="object")
  */
-class ContentCategoryResponse
+class ContentCategory
 {
     const
         CONTENT_CATEGORY_ID = "content_category_id",
@@ -36,13 +35,22 @@ class ContentCategoryResponse
 
     /**
      * ContentCategoryResponse constructor.
-     * @param ContentCategory $category
+     * @param \App\Entity\ContentCategory $category
      */
-    public function __construct(ContentCategory $category)
+    public function __construct(\App\Entity\ContentCategory $category)
     {
         $this->setContentCategoryId($category->getId());
         $this->setContentCategoryParentId($category->getContentCategoryParentId());
         $this->setContentCategoryAlias($category->getContentCategoryAlias());
+    }
+
+    public function asArray(): array
+    {
+        return [
+            self::CONTENT_CATEGORY_ID => $this->getContentCategoryId(),
+            self::CONTENT_CATEGORY_PARENT_ID => $this->getContentCategoryParentId(),
+            self::CONTENT_CATEGORY_ALIAS => $this->getContentCategoryAlias(),
+        ];
     }
 
     /**
@@ -79,14 +87,5 @@ class ContentCategoryResponse
     public function setContentCategoryAlias($contentCategoryAlias)
     {
         $this->contentCategoryAlias = $contentCategoryAlias;
-    }
-
-    public function asArray(): array
-    {
-        return [
-            self::CONTENT_CATEGORY_ID => $this->getContentCategoryId(),
-            self::CONTENT_CATEGORY_PARENT_ID => $this->getContentCategoryParentId(),
-            self::CONTENT_CATEGORY_ALIAS => $this->getContentCategoryAlias(),
-        ];
     }
 }

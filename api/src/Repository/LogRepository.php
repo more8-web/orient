@@ -23,18 +23,6 @@ class LogRepository extends ServiceEntityRepository
 
     /**
      * @param $value
-     * @return bool
-     */
-    public function isLogExists($value){
-
-        if($this->findOneBy(['log_value' => $value])){
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * @param $value
      * @return Log
      * @throws ORMException
      * @throws OptimisticLockException
