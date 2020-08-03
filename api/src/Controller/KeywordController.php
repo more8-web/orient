@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Controller\Dto\Keyword as DTO;
+use App\Controller\Dto\Request\Keyword as KeywordRequest;
+use App\Controller\Dto\Response\Keyword as KeywordResponse;
 use App\Services\Keyword\KeywordService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,29 +24,29 @@ class KeywordController extends AbstractApiController
      *         in="body",
      *         description="Create new keyword",
      *         required=true,
-     *         @Model(type=DTO\CreateNewKeywordRequestBody::class)
+     *         @Model(type=KeywordRequest::class)
      *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Create new keyword",
-     *         @Model(type=DTO\CreateNewKeywordResponseBody::class)
+     *         @Model(type=KeywordResponse::class)
      *     ),
      * )
      * @param Request $request
      * @param KeywordService $service
      * @return JsonResponse
      */
-    public function createNewKeywordCategory(Request $request, KeywordService $service)
+    public function createKeyword(Request $request, KeywordService $service)
     {
-        /** @var DTO\CreateNewKeywordRequestBody $dto */
-        $dto = $this->getDto($request, DTO\CreateNewKeywordRequestBody::class);
+        /** @var KeywordRequest $dto */
+        $dto = $this->getDto($request, KeywordRequest::class);
         $keyword = $service->createKeyword($dto->getKeywordValue());
 
-        return $this->json((new DTO\CreateNewKeywordResponseBody($keyword))->asArray());
+        return $this->json((new KeywordResponse($keyword))->asArray());
     }
 
     /**
-     * @Route("/keyword/:id", methods={"POST"})
+     * @Route("/keyword/{id}", methods={"POST"})
      * @SWG\Post(
      *    tags={"Keywords"},
      *    summary="Edit keyword",
@@ -54,29 +55,30 @@ class KeywordController extends AbstractApiController
      *         in="body",
      *         description="Edit keyword",
      *         required=true,
-     *         @Model(type=DTO\EditKeywordRequestBody::class)
+     *         @Model(type=KeywordRequest::class)
      *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Edit keyword",
-     *         @Model(type=DTO\EditKeywordResponseBody::class)
+     *         @Model(type=KeywordResponse::class)
      *     ),
      * )
+     * @param int $id
      * @param Request $request
      * @param KeywordService $service
      * @return JsonResponse
      */
-    public function editKeyword(Request $request, KeywordService $service)
+    public function editKeyword(int $id, Request $request, KeywordService $service)
     {
-        /** @var DTO\EditKeywordRequestBody $dto */
-        $dto = $this->getDto($request, DTO\EditKeywordRequestBody::class);
-        $keyword = $service->editKeyword($dto->getId(), $dto->getKeywordValue());
+        /** @var KeywordRequest $dto */
+        $dto = $this->getDto($request, KeywordRequest::class);
+        $keyword = $service->editKeyword($id, $dto->getKeywordValue());
 
-        return $this->json((new DTO\EditKeywordResponseBody($keyword))->asArray());
+        return $this->json((new KeywordResponse($keyword))->asArray());
     }
 
     /**
-     * @Route("/keywords/:id", methods={"DELETE"})
+     * @Route("/keywords/{id}", methods={"DELETE"})
      * @SWG\Delete(
      *    tags={"Keywords"},
      *    summary="Delete keyword",
@@ -102,18 +104,24 @@ class KeywordController extends AbstractApiController
      *    tags={"Keywords"},
      *    summary="Get keywords list",
      *     ),
-     *     @SWG\Response(
+     * @SWG\Response(
      *         response=200,
      *         description="Get keywords list",
-     *         @Model(type=DTO\GetKeywordsListResponseBody::class)
+     *         @Model(type=KeywordResponse::class)
      *     ),
      * )
      * @param KeywordService $service
      * @return JsonResponse
      */
-    public function getKeywordsList(KeywordService $service)
+    public function getKeywordList(KeywordService $service)
     {
-        $keywordList = $service->getKeywordList();
+        $keywords = $service->getKeywordList();
+        $keywordList = [];
+
+        foreach ($keywords as $keyword){
+            $keywordList[] = (new KeywordResponse($keyword))->asArray();
+        }
+
         return $this->json($keywordList, Response::HTTP_OK);
     }
 
@@ -123,104 +131,113 @@ class KeywordController extends AbstractApiController
      *    tags={"Keywords"},
      *    summary="Get one keyword by id",
      *     ),
-     *     @SWG\Response(
+     * @SWG\Response(
      *         response=200,
      *         description="Get one keyword by id",
-     *         @Model(type=DTO\GetOneKeywordByIdResponseBody::class)
+     *         @Model(type=KeywordResponse::class)
      *     ),
      * )
-     * @param Request $request
+     * @param int $id
      * @param KeywordService $service
      * @return JsonResponse
      */
-    public function getOneKeywordById(Request $request, KeywordService $service)
+    public function getOneKeywordById(int $id, KeywordService $service)
     {
-        $keyword = $service->getOneKeywordById($request->get('id'));
+        $keyword = $service->getOneKeywordById($id);
 
-        return $this->json((new DTO\GetOneKeywordByIdResponseBody($keyword))->asArray());
+        return $this->json((new KeywordResponse($keyword))->asArray());
     }
 
     /**
-     * @Route("/keywords/:id/news/:id", methods={"PUT"})
+     * @Route("/keywords/{keyword}/news/{news}", methods={"PUT"})
      * @SWG\Put(
      *    tags={"Keywords"},
      *    summary="Bind keyword to news (news-to-keyword)",
      *     ),
-     *     @SWG\Response(
-     *         response=200,
+     * @SWG\Response(
+     *         response=Response::HTTP_NO_CONTENT,
      *         description="Get one keyword by id",
      *     ),
      * )
-     * @param Request $request
+     * @param $keyword
+     * @param $news
      * @param KeywordService $service
      * @return JsonResponse
      */
-    public function bindKeywordToNews(Request $request, KeywordService $service)
+    public function bindKeywordToNews($keyword, $news, KeywordService $service)
     {
+        $service->bindKeywordToNews($keyword, $news);
 
         return $this->json(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
-     * @Route("/keywords/:id/news/:id", methods={"DELETE"})
+     * @Route("/keywords/{keyword}/news/{news}", methods={"DELETE"})
      * @SWG\Delete(
      *    tags={"Keywords"},
-     *    summary="Unbind keywords by id from news by id",
+     *    summary="Unbind keywords by id to news by id",
      *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="Unbind keywords by id from news by id",
+     * @SWG\Response(
+     *         response=Response::HTTP_NO_CONTENT,
+     *         description="Unbind keywords by id to news by id",
      *     ),
      * )
-     * @param Request $request
+     * @param int $keyword
+     * @param int $news
      * @param KeywordService $service
      * @return JsonResponse
      */
-    public function deleteKeywordFromNews(Request $request, KeywordService $service)
+    public function unbindKeywordToNews(int $keyword, int $news, KeywordService $service)
     {
+        $service->unbindKeywordToNews($keyword, $news);
 
         return $this->json(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
-     * @Route("/keywords/:id/contents/:id", methods={"PUT"})
+     * @Route("/keywords/{keyword}/contents/{content}", methods={"PUT"})
      * @SWG\Put(
      *    tags={"Keywords"},
      *    summary="Bind keyword by id to content by id (keywords-to-content)",
      *     ),
-     *     @SWG\Response(
-     *         response=200,
+     * @SWG\Response(
+     *         response=Response::HTTP_NO_CONTENT,
      *         description="Bind keyword by id to content by id (keywords-to-content)",
      *     ),
      * )
-     * @param Request $request
+     * @param $keyword
+     * @param $content
      * @param KeywordService $service
      * @return JsonResponse
      */
-    public function bindKeywordToContent(Request $request, KeywordService $service)
+    public function bindKeywordToContent($keyword, $content, KeywordService $service)
     {
+        $service->bindKeywordToContent($keyword, $content);
 
         return $this->json(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
-     * @Route("/keywords/:id/contents/:id", methods={"DELETE"})
+     * @Route("/keywords/{keyword}/contents/{content}", methods={"DELETE"})
      * @SWG\Delete(
      *    tags={"Keywords"},
      *    summary="Unbind keyword from content by id",
      *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="Delete keyword from content by id",
+     * @SWG\Response(
+     *         response=Response::HTTP_NO_CONTENT,
+     *         description="Unbind keyword from content by id",
      *     ),
      * )
-     * @param Request $request
+     * @param $keyword
+     * @param $content
      * @param KeywordService $service
      * @return JsonResponse
      */
-    public function deleteKeywordFromContentById(Request $request, KeywordService $service)
+    public function unbindKeywordToContent($keyword, $content, KeywordService $service)
     {
+        $service->unbindKeywordToContent($keyword, $content);
 
         return $this->json(null, Response::HTTP_NO_CONTENT);
     }
+
 }

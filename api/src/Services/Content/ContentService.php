@@ -7,6 +7,7 @@ namespace App\Services\Content;
 use App\Entity\Content;
 use App\Exceptions\Content\ContentAlreadyExistsException;
 use App\Exceptions\Content\NotFoundContentException;
+use App\Repository\ContentCategoriesRepository;
 use App\Repository\ContentRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -16,9 +17,16 @@ class ContentService
     /** @var ContentRepository */
     protected $repo;
 
-    public function __construct(ContentRepository $repo)
+    /**
+     * @var ContentCategoriesRepository
+     */
+    protected $categoryRepo;
+
+    public function __construct(ContentRepository $repo,
+                                ContentCategoriesRepository $categoryRepo)
     {
         $this->repo = $repo;
+        $this->categoryRepo = $categoryRepo;
     }
 
     /**
@@ -73,6 +81,10 @@ class ContentService
         return null;
     }
 
+    /**
+     * @param $id
+     * @return Content
+     */
     public function getOneContentById($id)
     {
 
@@ -84,6 +96,35 @@ class ContentService
     }
 
     /**
+     * @return Content[]
+     */
+    public function getContentList()
+    {
+        return $this->repo->getContentList();
+    }
+
+
+
+    /**
+     * @param $id
+     * @return Content[]
+     */
+    public function getContentListByCategory($id)
+    {
+        return $this->repo->getContentListByCategory($id);
+    }
+
+    /**
+     * @param $category
+     * @param $content
+     * @return Content|null
+     */
+    public function getContentByCategory($category, $content)
+    {
+        return $this->repo->getContentByCategory($category, $content);
+    }
+
+    /**
      * @param $newsId
      * @return Content[]
      */
@@ -92,8 +133,14 @@ class ContentService
         return $this->repo->getContentListByNews($newsId);
     }
 
-    public function getContentByNews($newsId, $contentId)
+    /**
+     * @param $newsId
+     * @param $content
+     * @return Content|null
+     */
+    public function getContentByNews($newsId, $content)
     {
-        return $this->repo->getContentByNews($newsId);
+        /** @var ContentRepository $newsId */
+        return $this->repo->getContentByNews($newsId, $content);
     }
 }

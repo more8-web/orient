@@ -4,10 +4,12 @@
 namespace App\Services\NewsCategory;
 
 
+use App\Entity\News;
 use App\Entity\NewsCategory;
 use App\Exceptions\Keyword\NotFoundKeywordException;
 use App\Exceptions\NewsCategory\NewsCategoryAlreadyExistsException;
 use App\Repository\NewsCategoryRepository;
+use App\Repository\NewsRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -18,9 +20,12 @@ class NewsCategoryService
     /** @var NewsCategoryRepository */
     protected $repo;
 
-    public function __construct(NewsCategoryRepository $repo)
+    protected $newsRepo;
+
+    public function __construct(NewsCategoryRepository $repo, NewsRepository $newsRepo)
     {
         $this->repo = $repo;
+        $this->newsRepo = $newsRepo;
     }
 
     /**
@@ -78,9 +83,7 @@ class NewsCategoryService
      */
     public function getNewsCategoryList()
     {
-
         return $this->repo->getNewsCategoryList();
-
     }
 
     /**
@@ -93,5 +96,38 @@ class NewsCategoryService
             return $this->repo->getOneNewsCategory($id);
         }catch (BadRequestHttpException $e) {
         } throw new NotFoundKeywordException();
+    }
+
+    /**
+     * @param $id
+     * @return NewsCategory|null
+     */
+    public function getReference($id)
+    {
+        return $this->repo->getReference($id);
+    }
+
+    /**
+     * @param $newsId
+     * @param $categoryId
+     */
+    public function bindNewsToCategory($categoryId, $newsId)
+    {
+        $this->repo->bindToNews(
+            $categoryId,
+            $this->newsRepo->find($newsId)
+        );
+    }
+
+    /**
+     * @param $newsId
+     * @param $categoryId
+     */
+    public function unbindNewsToCategory($categoryId, $newsId)
+    {
+        $this->repo->unbindToNews(
+            $categoryId,
+            $this->newsRepo->find($newsId)
+        );
     }
 }

@@ -35,13 +35,11 @@ class HtmlTagService
      */
     public function createHtmlTag($value)
     {
-        if(!$this->repo->isHtmlTagExists($value)) {
             try {
                 return $this->repo->create($value);
             } catch (OptimisticLockException $e) {
             } catch (ORMException $e) {
             }
-        }
         throw new HtmlTagAlreadyExistsException();
     }
 

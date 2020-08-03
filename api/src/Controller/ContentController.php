@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
-use App\Controller\Dto\Content as DTO;
+use App\Controller\Dto\Request\Content as ContentRequest;
+use App\Controller\Dto\Response\Content as ContentResponse;
+use App\Controller\Dto\Response\Keyword as KeywordResponse;
+use App\Controller\Dto\Response\News as NewsResponse;
 use App\Services\Content\ContentService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,12 +26,12 @@ class ContentController extends AbstractApiController
      *         in="body",
      *         description="Create new content",
      *         required=true,
-     *         @Model(type=DTO\CreateNewContentRequestBody::class)
+     *         @Model(type=ContentRequest::class)
      *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Create new content",
-     *         @Model(type=DTO\CreateNewContentResponseBody::class)
+     *         @Model(type=ContentResponse::class)
      *     ),
      * )
      * @param Request $request
@@ -37,17 +40,17 @@ class ContentController extends AbstractApiController
      */
     public function createNewContent(Request $request, ContentService $service)
     {
-        /** @var DTO\CreateNewContentRequestBody $dto */
-        $dto = $this->getDto($request, DTO\CreateNewContentRequestBody::class);
+        /** @var ContentRequest $dto */
+        $dto = $this->getDto($request, ContentRequest::class);
         $content = $service->createNewContent(  $dto->getContentAlias(),
                                                 $dto->getContentDescription(),
                                                 $dto->getContentValue());
 
-        return $this->json((new DTO\CreateNewContentResponseBody($content))->asArray());
+        return $this->json((new ContentResponse($content))->asArray());
     }
 
     /**
-     * @Route("/contents/:id", methods={"POST"})
+     * @Route("/contents/{id}", methods={"POST"})
      * @SWG\Post(
      *    tags={"Content"},
      *    summary="Edit content",
@@ -56,56 +59,48 @@ class ContentController extends AbstractApiController
      *         in="body",
      *         description="Edit content",
      *         required=true,
-     *         @Model(type=DTO\EditContentRequestBody::class)
+     *         @Model(type=ContentRequest::class)
      *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Edit content",
-     *         @Model(type=DTO\EditContentResponseBody::class)
+     *         @Model(type=ContentResponse::class)
      *     ),
      * )
+     * @param int $id
      * @param Request $request
      * @param ContentService $service
      * @return JsonResponse
      */
-    public function editContent(Request $request, ContentService $service)
+    public function editContent(int $id, Request $request, ContentService $service)
     {
-        /** @var DTO\EditContentRequestBody $dto */
-        $dto = $this->getDto($request, DTO\EditContentRequestBody::class);
-        $content = $service->editContent($dto->getId(),
-                                            $dto->getContentAlias(),
-                                            $dto->getContentDescription(),
-                                            $dto->getContentValue());
+        /** @var ContentRequest $dto */
+        $dto = $this->getDto($request, ContentRequest::class);
+        $content = $service->editContent($id,   $dto->getContentAlias(),
+                                                $dto->getContentDescription(),
+                                                $dto->getContentValue());
 
-        return $this->json((new DTO\EditContentResponseBody($content))->asArray());
+        return $this->json((new ContentResponse($content))->asArray());
     }
 
     /**
-     * @Route("/contents/:id", methods={"DELETE"})
+     * @Route("/contents/{id}", methods={"DELETE"})
      * @SWG\Delete(
      *    tags={"Content"},
      *    summary="Delete content",
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="Delete content",
-     *         required=true,
-     *         @Model(type=DTO\DeleteContentRequestBody::class)
      *     ),
      *     @SWG\Response(
      *         response=204,
      *         description="Delete content",
      *     ),
      * )
-     * @param Request $request
+     * @param int $id
      * @param ContentService $service
      * @return JsonResponse
      */
-    public function deleteContent(Request $request, ContentService $service)
+    public function deleteContent(int $id, ContentService $service)
     {
-        /** @var DTO\DeleteContentRequestBody $dto */
-        $dto = $this->getDto($request, DTO\DeleteContentRequestBody::class);
-        $service->deleteContent($dto->getId());
+        $service->deleteContent($id);
 
         return $this->json(null, Response::HTTP_NO_CONTENT);
     }
@@ -116,110 +111,78 @@ class ContentController extends AbstractApiController
      *    tags={"Content"},
      *    summary="Get one content by id",
      *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="Get one content by id",
-     *         @Model(type=DTO\GetOneContentResponseBody::class)
-     *     ),
-     * )
-     * @param Request $request
-     * @param ContentService $service
-     * @return JsonResponse
-     */
-    public function getOneContent(Request $request, ContentService $service)
-    {
-
-        $content = $service->getOneContentById($request->get('id'));
-
-        return $this->json((new DTO\GetOneContentResponseBody($content))->asArray());
-    }
-
-    /**
-     * @Route("/content/categories/{id}/contents/{contentId}", methods={"PUT"})
-     * @SWG\Put(
-     *    tags={"Content"},
-     *    summary="Bind content to content category (content-to-content-category)",
-     *     ),
      * @SWG\Response(
      *         response=200,
-     *         description="Bind content to content category (content-to-content-category)",
+     *         description="Get one content by id",
+     *         @Model(type=ContentResponse::class)
      *     ),
      * )
      * @param int $id
-     * @param int $contentId
      * @param ContentService $service
      * @return JsonResponse
      */
-    public function bindContentToContentCategory(int $id, int $contentId, ContentService $service)
+    public function getOneContent(int $id, ContentService $service)
     {
 
-        return $this->json(null, Response::HTTP_NO_CONTENT);
+        $content = $service->getOneContentById($id);
+
+        return $this->json((new ContentResponse($content))->asArray());
     }
 
     /**
-     * @Route("/contents/:id/tags/:string_id", methods={"PUT"})
-     * @SWG\Put(
+     * @Route("/contents", methods={"GET"})
+     * @SWG\Get(
      *    tags={"Content"},
-     *    summary="Bind content to html tag (news-content-to-html-tag)",
+     *    summary="Get content list",
      *     ),
-     *     @SWG\Response(
+     * @SWG\Response(
+     *          response=200,
+     *          @SWG\Schema(
+     *             type="array",
+     *             @Model(type=NewsResponse::class)
+     *          ),
+     *          description="Show news list",
+     *     ),
+     * )
+     * @param ContentService $service
+     * @return JsonResponse
+     */
+    public function getContentList(ContentService $service)
+    {
+        $contentList = $service->getContentList();
+        $listResponse = [];
+
+        foreach ($contentList as $content) {
+            $listResponse[] = (new ContentResponse($content))->asArray();
+        }
+
+        return $this->json($listResponse, Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/content/{id}/keywords", methods={"GET"})
+     * @SWG\Get(
+     *    tags={"Content"},
+     *    summary="Get all keywords by content",
+     *     ),
+     * @SWG\Response(
      *         response=200,
-     *         description="Bind content to html tag (news-content-to-html-tag)",
+     *         description="Get all keywords by content",
+     *         @Model(type=KeywordResponse::class)
      *     ),
      * )
-     * @param Request $request
+     * @param int $id
      * @param ContentService $service
      * @return JsonResponse
      */
-    public function bindContentToHtmlTag(Request $request, ContentService $service)
+    public function getKeywordsByContent(int $id, ContentService $service)
     {
+        $content = $service->getOneContentById($id);
+        $keywords = [];
 
-        return $this->json(null, Response::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @Route("/news/{news}/content/{content}", methods={"PUT"})
-     * @SWG\Put(
-     *    tags={"Content"},
-     *    summary="Bind content to news (content-to-news)",
-     *     ),
-     * @SWG\Response(
-     *         response=Response::HTTP_NO_CONTENT,
-     *         description="Bind content to news (content-to-news)",
-     *     ),
-     * )
-     * @param int $news
-     * @param int $content
-     * @param ContentService $service
-     * @return JsonResponse
-     */
-    public function bindContentToNews(int $news, int $content, ContentService $service)
-    {
-        $service->bindContentToNews($news, $content);
-
-        return $this->json(null, Response::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @Route("/news/{newsId}/content/{contentId}", methods={"PUT"})
-     * @SWG\Put(
-     *    tags={"Content"},
-     *    summary="Unbind content to news (content-to-news)",
-     *     ),
-     * @SWG\Response(
-     *         response=Response::HTTP_NO_CONTENT,
-     *         description="Unbind content to news (content-to-news)",
-     *     ),
-     * )
-     * @param int $news
-     * @param int $content
-     * @param ContentService $service
-     * @return JsonResponse
-     */
-    public function unbindContentToNews(int $news, int $content, ContentService $service)
-    {
-        $service->unbindContentToNews($news, $content);
-
-        return $this->json(null, Response::HTTP_NO_CONTENT);
+        foreach ($content->getKeywords() as $keyword) {
+            $keywords[] = (new KeywordResponse($keyword))->asArray();
+        }
+        return $this->json($keywords, Response::HTTP_OK);
     }
 }

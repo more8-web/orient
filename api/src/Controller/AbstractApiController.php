@@ -11,6 +11,10 @@ use Symfony\Component\Validator\ConstraintViolation;
 
 abstract class AbstractApiController extends AbstractController
 {
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     protected function getJson(Request $request)
     {
         $data = json_decode($request->getContent(), true);

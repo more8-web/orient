@@ -2,8 +2,17 @@
 
 namespace App\Repository;
 
+use App\Entity\Content;
 use App\Entity\Keyword;
+use App\Entity\News;
+use App\Exceptions\Common\DatabaseException;
+use App\Exceptions\Content\NotFoundContentException;
+use App\Exceptions\Keyword\KeywordAlreadyBoundToContentException;
+use App\Exceptions\Keyword\KeywordAlreadyBoundToNewsException;
+use App\Exceptions\Keyword\NotFoundKeywordException;
+use App\Exceptions\News\NewsNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -101,6 +110,148 @@ class KeywordRepository extends ServiceEntityRepository
     public function getOneKeyword($id)
     {
         return $this->find($id);
+    }
+
+    /**
+     * @param $id
+     * @param News|null $news
+     */
+    public function bindToNews($id, News $news = null)
+    {
+        if (!$news) {
+            throw new NewsNotFoundException();
+        }
+
+        $keyword = $this->find($id);
+
+        if(!$keyword) {
+            throw new NotFoundKeywordException();
+        }
+
+        $keyword->addNews($news);
+
+        try {
+            $this->getEntityManager()->flush();
+        } catch (UniqueConstraintViolationException $e) {
+            throw new KeywordAlreadyBoundToNewsException();
+        } catch (ORMException $e) {
+            throw new DatabaseException();
+            }
+    }
+
+    /**
+     * @param $id
+     * @param News|null $news
+     */
+    public function unbindKeywordToNews($id, News $news = null)
+    {
+        if(!$news){
+            throw new NewsNotFoundException();
+        }
+
+        $keyword = $this->find($id);
+
+        if (!$keyword){
+            throw new NotFoundKeywordException();
+        }
+
+        $keyword->removeNews($news);
+
+        try {
+            $this->getEntityManager()->flush();
+        } catch (ORMException $e) {
+            throw new DatabaseException();
+        }
+    }
+
+    /**
+     * @param $id
+     * @return Keyword[]
+     */
+    public function getKeywordListByNews($id)
+    {
+        return $this->findBy(['new_id'=>$id]);
+    }
+
+    /**
+     * @param $keywordId
+     * @param $newsId
+     * @return Keyword|null
+     */
+    public function getKeywordByNews($keywordId, $newsId)
+    {
+        return $this->findOneBy(['keyword_id'=>$keywordId, 'news_id'=>$newsId]);
+    }
+
+    /**
+     * @param $keywordId
+     * @param Content $content
+     */
+    public function bindToContent($keywordId, Content $content = null)
+    {
+        if (!$content) {
+            throw new NotFoundContentException();
+        }
+
+        $keyword = $this->find($keywordId);
+
+        if (!$keyword) {
+            throw new NotFoundKeywordException();
+        }
+
+        $keyword->addContent($content);
+
+        try {
+            $this->getEntityManager()->flush();
+        } catch (UniqueConstraintViolationException $e) {
+            throw new KeywordAlreadyBoundToContentException();
+        } catch (ORMException $e) {
+            throw new DatabaseException();
+        }
+    }
+
+    /**
+     * @param $keywordId
+     * @param Content $content
+     */
+    public function unbindToContent($keywordId, Content $content = null)
+    {
+        if (!$content) {
+            throw new NotFoundContentException();
+        }
+
+        $keyword = $this->find($keywordId);
+
+        if (!$keyword) {
+            throw new NotFoundKeywordException();
+        }
+
+        $keyword->removeContent($content);
+
+        try {
+            $this->getEntityManager()->flush();
+        } catch (ORMException $e) {
+            throw new DatabaseException();
+        }
+    }
+
+    /**
+     * @param $id
+     * @return Keyword[]
+     */
+    public function getKeywordListByContent($id)
+        {
+            return $this->findBy(['content_id' => $id]);
+        }
+
+    /**
+     * @param $keywordId
+     * @param $newsId
+     * @return Keyword|null
+     */
+    public function getKeywordByContent($keywordId, $newsId)
+    {
+        return $this->findOneBy(['keyword_id'=>$keywordId, 'content_id'=>$newsId]);
     }
 
 

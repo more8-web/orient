@@ -24,17 +24,12 @@ class LogService
     /**
      * @param $value
      * @return Log
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function createLog($value)
     {
-        if(!$this->repo->isLogExists($value)) {
-            try {
-                return $this->repo->create($value);
-            } catch (OptimisticLockException $e) {
-            } catch (ORMException $e) {
-            }
-        }
-        throw new LogAlreadyExistsException();
+         return $this->repo->create($value);
     }
 
     /**

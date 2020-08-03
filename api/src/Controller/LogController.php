@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
-use App\Controller\Dto\Log as DTO;
-use App\Entity\Log;
+use App\Controller\Dto\Request\Log as LogRequest;
+use App\Controller\Dto\Response\Log as LogResponse;
 use App\Services\Log\LogService;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,12 +26,12 @@ class LogController extends AbstractApiController
      *         in="body",
      *         description="Create new log",
      *         required=true,
-     *         @Model(type=DTO\CreateLogRequestBody::class)
+     *         @Model(type=LogRequest::class)
      *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Create new html_tag",
-     *         @Model(type=DTO\CreateLogResponseBody::class)
+     *         @Model(type=LogResponse::class)
      *     ),
      * )
      * @param Request $request
@@ -38,11 +40,15 @@ class LogController extends AbstractApiController
      */
     public function createLog(Request $request, LogService $service)
     {
-        /** @var DTO\CreateLogRequestBody $dto */
-        $dto = $this->getDto($request, DTO\CreateLogRequestBody::class);
-        $log = $service->createLog($dto->getLogValue());
+        /** @var LogRequest $dto */
+        $dto = $this->getDto($request, LogRequest::class);
+        try {
+            $log = $service->createLog($dto->getLogValue());
+        } catch (OptimisticLockException $e) {
+        } catch (ORMException $e) {
+        }
 
-        return $this->json((new DTO\CreateLogResponseBody($log))->asArray());
+        return $this->json((new LogResponse($log))->asArray());
     }
 
     /**
@@ -54,7 +60,7 @@ class LogController extends AbstractApiController
      * @SWG\Response(
      *         response=200,
      *         description="Get log list",
-     *         @Model(type=DTO\GetLogListResponseBody::class)
+     *         @Model(type=LogResponse::class)
      *     ),
      * )
      * @param LogService $service
@@ -62,9 +68,14 @@ class LogController extends AbstractApiController
      */
     public function getLogList(LogService $service)
     {
-        $log = $service->getLogList();
+        $logs = $service->getLogList();
+        $logList = [];
 
-        return $this->json($log, Response::HTTP_OK);
+        foreach ($logs as $log){
+            $logList[] = (new LogResponse($log))->asArray();
+        }
+
+        return $this->json($logList, Response::HTTP_OK);
     }
 
     /**
@@ -76,7 +87,7 @@ class LogController extends AbstractApiController
      * @SWG\Response(
      *         response=200,
      *         description="Get log by id",
-     *         @Model(type=DTO\GetLogByIdResponseBody::class)
+     *         @Model(type=LogResponse::class)
      *     ),
      * )
      * @param int $id
@@ -87,6 +98,6 @@ class LogController extends AbstractApiController
     {
         $log = $service->getOneLogById($id);
 
-        return $this->json((new DTO\GetLogByIdResponseBody($log))->asArray());
+        return $this->json((new LogResponse($log))->asArray());
     }
 }

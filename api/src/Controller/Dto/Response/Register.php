@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Controller\Dto\Response;
 
 use Swagger\Annotations as SWG;
@@ -8,9 +9,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @SWG\Definition(type="object")
  */
-class Token
+class Register
 {
-    const PROPERTY_TOKEN = "token";
+const PROPERTY_TOKEN = "token";
 
     /**
      * @SWG\Property(type="string")
@@ -18,37 +19,32 @@ class Token
      */
     private $token;
 
-    /**
-     * Token constructor.
-     * @param $token
-     */
     public function __construct($token)
-    {
-        $this->setToken($token);
-    }
+{
+    $this->setToken($token);
+}
 
     public function asArray()
-    {
-        return [
-            self::PROPERTY_TOKEN => $this->getToken()
-        ];
-    }
+{
+    return [
+        self::PROPERTY_TOKEN => $this->getToken()
+    ];
+}
 
     /**
      * @return mixed
      */
     public function getToken()
-    {
-        return $this->token;
-    }
+{
+    return $this->token;
+}
 
     /**
      * @param mixed $token
      */
     public function setToken($token): void
-    {
-        $this->token = $token;
-    }
-
+{
+    $this->token = $token;
+}
 
 }

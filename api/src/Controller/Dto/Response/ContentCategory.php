@@ -17,24 +17,24 @@ class ContentCategory
         CONTENT_CATEGORY_ALIAS = "content_category_alias";
 
     /**
-     * @SWG\Property(property=ContentCategoryResponse::CONTENT_CATEGORY_ID, type="integer")
+     * @SWG\Property(property=ContentCategory::CONTENT_CATEGORY_ID, type="integer")
      * @Assert\NotBlank()
      */
     private $contentCategoryId;
 
     /**
-     * @SWG\Property(property=ContentCategoryResponse::CONTENT_CATEGORY_PARENT_ID, type="integer")
+     * @SWG\Property(property=ContentCategory::CONTENT_CATEGORY_PARENT_ID, type="integer")
      */
     private $contentCategoryParentId = null;
 
     /**
-     * @SWG\Property(property=ContentCategoryResponse::CONTENT_CATEGORY_ALIAS, type="string")
+     * @SWG\Property(property=ContentCategory::CONTENT_CATEGORY_ALIAS, type="string")
      * @Assert\NotBlank()
      */
     private $contentCategoryAlias;
 
     /**
-     * ContentCategoryResponse constructor.
+     * ContentCategory constructor.
      * @param \App\Entity\ContentCategory $category
      */
     public function __construct(\App\Entity\ContentCategory $category)

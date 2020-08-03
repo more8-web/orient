@@ -2,10 +2,14 @@
 
 namespace App\Repository;
 
+use App\Entity\Content;
 use App\Entity\ContentCategory;
+use App\Exceptions\Common\DatabaseException;
+use App\Exceptions\Content\NotFoundContentException;
+use App\Exceptions\ContentCategory\ContentAlreadyBoundToContentCategoryException;
+use App\Exceptions\ContentCategory\NotFoundContentCategoryException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -24,49 +28,13 @@ class ContentCategoriesRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $alias
-     * @param null $parentId
-     * @return int|mixed|string
-     * @throws NoResultException
-     * @throws NonUniqueResultException
-     */
-    public function isCategoryExists($alias, $parentId = null): bool
-    {
-
-
-        $idColumn = "c.id";
-        $parentIdColumn = "c.contentCategoryParentId";
-        $aliasColumn = "c.contentCategoryAlias";
-
-        $qb = $this->createQueryBuilder("c");
-        $qb->select($qb->expr()->count($idColumn));
-
-        if (is_null($parentId)) {
-            $qb->where(
-                $qb->expr()->isNull($parentIdColumn)
-            );
-        } else {
-            $qb
-                ->where("{$parentIdColumn} = :parentId")
-                ->setParameter("parentId", $parentId)
-            ;
-        }
-        $qb
-            ->andWhere("{$aliasColumn} = :alias")
-            ->setParameter("alias", $alias)
-        ;
-
-        return $qb->getQuery()->getSingleScalarResult() > 0;
-    }
-
-    /**
      * @param $parentId
      * @param $alias
      * @return ContentCategory
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function addContentCategory($parentId, $alias): ContentCategory
+    public function create($parentId, $alias): ContentCategory
     {
         $contentCategory = new ContentCategory();
         $contentCategory->setContentCategoryParentId($parentId);
@@ -87,17 +55,20 @@ class ContentCategoriesRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function setContentCategory($id, $parentId = null, $alias): ContentCategory
+    public function edit($id, $parentId, $alias): ContentCategory
     {
-        $contentCategory = $this->findOneBy(['id' => $id]);
+
+           if(!$contentCategory = $this->find($id)){
+            throw new NotFoundContentCategoryException();
+        }
+
         $contentCategory->setContentCategoryParentId($parentId);
         $contentCategory->setContentCategoryAlias($alias);
         $em = $this->getEntityManager();
         $em->flush();
 
-        $contentCategory = $this->findOneBy(['id' => $id]);
+        return $contentCategory = $this->find($id);
 
-        return $contentCategory;
     }
 
     /**
@@ -106,9 +77,9 @@ class ContentCategoriesRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function deleteContentCategory($id): bool
+    public function delete($id)
     {
-        $contentCategory = $this->findOneBy(['id' => $id]);
+        $contentCategory = $this->find($id);
 
         $em = $this->getEntityManager();
         $em->remove($contentCategory);
@@ -121,10 +92,69 @@ class ContentCategoriesRepository extends ServiceEntityRepository
      * @param $id
      * @return ContentCategory
      */
-    public function getOneContentCategoryById($id): ContentCategory
+    public function getOne($id): ContentCategory
     {
+       return  $this->find($id);
+    }
 
-       return  $this->findOneBy(['id' => $id]);
+    /**
+     * @return ContentCategory[]
+     */
+    public function getContentCategoryList()
+    {
+        return  $this->findAll();
+    }
+
+    /**
+     * @param $id
+     * @param Content|null $content
+     */
+    public function bindToContent($id, Content $content = null)
+    {
+        if (!$content) {
+            throw new NotFoundContentException();
+        }
+
+        $contentCategory = $this->find($id);
+
+        if (!$contentCategory) {
+            throw new NotFoundContentCategoryException();
+        }
+
+        $content->addCategories($contentCategory);
+
+        try {
+            $this->getEntityManager()->flush();
+        } catch (UniqueConstraintViolationException $e) {
+            throw new ContentAlreadyBoundToContentCategoryException();
+        } catch (ORMException $e) {
+            throw new DatabaseException();
+        }
+    }
+
+    /**
+     * @param $id
+     * @param Content|null $content
+     */
+    public function unbindToContent($id, Content $content = null)
+    {
+        if (!$content) {
+            throw new NotFoundContentException();
+        }
+
+        $contentCategory = $this->find($id);
+
+        if (!$contentCategory) {
+            throw new NotFoundContentCategoryException();
+        }
+
+        $content->removeCategories($contentCategory);
+
+        try {
+            $this->getEntityManager()->flush();
+        } catch (ORMException $e) {
+            throw new DatabaseException();
+        }
     }
 
     // /**

@@ -3,10 +3,10 @@
 
 namespace App\Services\News;
 
-
+use App\Entity\Content;
 use App\Entity\News;
 use App\Exceptions\Common\DatabaseException;
-use App\Repository\NewsCategoryRepository;
+use App\Repository\ContentRepository;
 use App\Repository\NewsRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -16,18 +16,18 @@ class NewsService
     /** @var NewsRepository */
     protected $repo;
 
-    /** @var NewsCategoryRepository */
-    protected $repoCategory;
+    /** @var ContentRepository */
+    protected $contentRepo;
 
     /**
      * NewsService constructor.
      * @param NewsRepository $repo
-     * @param NewsCategoryRepository $repoCategory
+     * @param ContentRepository $contentRepo
      */
-    public function __construct(NewsRepository $repo, NewsCategoryRepository $repoCategory)
+    public function __construct(NewsRepository $repo, ContentRepository $contentRepo)
     {
         $this->repo = $repo;
-        $this->repoCategory = $repoCategory;
+        $this->contentRepo = $contentRepo;
     }
 
     /**
@@ -45,6 +45,15 @@ class NewsService
     public function getNewsById($id)
     {
         return $this->repo->getOne($id);
+    }
+
+    /**
+     * @param $id
+     * @return News|null
+     */
+    public function getReference($id)
+    {
+        return $this->repo->getReference($id);
     }
 
     /**
@@ -73,7 +82,7 @@ class NewsService
      * @param $id
      * @param $alias
      * @param $status
-     * @return News
+     * @return News|null
      */
     public function editNews($id, $alias, $status)
     {
@@ -85,26 +94,27 @@ class NewsService
     }
 
     /**
+     * @param $contentId
      * @param $newsId
-     * @param $categoryId
      */
-    public function bindNewsToCategory($newsId, $categoryId)
+    public function bindContentToNews($newsId, $contentId)
     {
-        $this->repo->bindToCategory(
+        $this->repo->bindToContent(
             $newsId,
-            $this->repoCategory->find($categoryId)
+            $this->contentRepo->find($contentId)
         );
     }
 
     /**
+     * @param $contentId
      * @param $newsId
-     * @param $categoryId
      */
-    public function unbindNewsToCategory($newsId, $categoryId)
+    public function unbindContentToNews($newsId, $contentId)
     {
-        $this->repo->unbindToCategory(
+        $this->repo->unbindToContent(
             $newsId,
-            $this->repoCategory->find($categoryId)
+            $this->contentRepo->find($contentId)
         );
     }
+
 }

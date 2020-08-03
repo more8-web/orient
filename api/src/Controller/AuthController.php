@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Controller\Dto\Auth as DTO;
+use App\Controller\Dto\Request as RequestAuth;
+use App\Controller\Dto\Response as ResponseAuth;
 use App\Services\Auth\LoginService;
 use App\Services\Auth\LogoutService;
 use App\Services\Auth\PasswordResetCompleteService;
@@ -29,12 +30,12 @@ class AuthController extends AbstractApiController
      *         in="body",
      *         description="Request with user email",
      *         required=true,
-     *         @Model(type=DTO\RegisterRequestBody::class)
+     *         @Model(type=RequestAuth\Register::class)
      *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Start registration proccess",
-     *         @Model(type=DTO\RegisterResponseBody::class)
+     *         @Model(type=ResponseAuth\Register::class)
      *     ),
      * )
      * @param Request $request
@@ -44,8 +45,8 @@ class AuthController extends AbstractApiController
      */
     public function register(Request $request, RegisterService $service)
     {
-        /** @var DTO\RegisterRequestBody $dto */
-        $dto = $this->getDto($request, DTO\RegisterRequestBody::class);
+        /** @var RequestAuth\Register $dto */
+        $dto = $this->getDto($request, RequestAuth\Register::class);
         $service->register($dto->getEmail(), $dto->getPassword());
 
         return $this->json(null, Response::HTTP_NO_CONTENT);
@@ -61,13 +62,13 @@ class AuthController extends AbstractApiController
      *         in="body",
      *         description="Request complete registration",
      *         required=true,
-     *         @Model(type=DTO\RegisterCompleteRequestBody::class)
+     *         @Model(type=RequestAuth\RegisterComplete::class)
      *         )
      *     ),
      * @SWG\Response(
      *         response=200,
      *         description="Complete registration proccess",
-     *         @Model(type=DTO\RegisterCompleteResponseBody::class)
+     *         @Model(type=ResponseAuth\RegisterComplete::class)
      *     ),
      * )
      * @param Request $request
@@ -77,11 +78,11 @@ class AuthController extends AbstractApiController
      */
     public function registerComplete(Request $request, RegisterCompleteService $service)
     {
-        /** @var DTO\RegisterCompleteRequestBody $dto */
-        $dto = $this->getDto($request, DTO\RegisterCompleteRequestBody::class);
+        /** @var RequestAuth\RegisterComplete $dto */
+        $dto = $this->getDto($request, RequestAuth\RegisterComplete::class);
         $token = $service->registerComplete($dto->getConfirmationCode());
 
-        return $this->json((new DTO\RegisterCompleteResponseBody($token))->asArray());
+        return $this->json((new ResponseAuth\RegisterComplete($token))->asArray());
     }
 
     /**
@@ -94,13 +95,13 @@ class AuthController extends AbstractApiController
      *         in="body",
      *         description="Request body with email and password",
      *         required=true,
-     *         @Model(type=DTO\LoginRequestBody::class)
+     *         @Model(type=RequestAuth\Login::class)
      *         )
      *     ),
      * @SWG\Response(
      *         response=200,
      *         description="Start login-form proccess",
-     *         @Model(type=DTO\LoginResponseBody::class)
+     *         @Model(type=ResponseAuth\Login::class)
      *     ),
      * )
      * @param Request $request
@@ -110,10 +111,10 @@ class AuthController extends AbstractApiController
      */
     public function login(Request $request, LoginService $service)
     {
-        $dto = $this->getDto($request, DTO\LoginRequestBody::class);
+        $dto = $this->getDto($request, RequestAuth\Login::class);
         $token = $service->login($dto->getEmail(), $dto->getPassword());
 
-        return $this->json((new DTO\LoginResponseBody($token)));
+        return $this->json((new ResponseAuth\Login($token)));
     }
 
     /**
@@ -126,13 +127,13 @@ class AuthController extends AbstractApiController
      *         in="body",
      *         description="Request body with email",
      *         required=true,
-     *         @Model(type=DTO\LogoutRequestBody::class)
+     *         @Model(type=RequestAuth\Logout::class)
      *         )
      *     ),
      * @SWG\Response(
      *         response=200,
      *         description="Start logout proccess",
-     *         @Model(type=DTO\LogoutResponseBody::class)
+     *         @Model(type=ResponseAuth\Logout::class)
      *     ),
      * )
      * @param Request $request
@@ -141,8 +142,7 @@ class AuthController extends AbstractApiController
      */
     public function logout(Request $request, LogoutService $service)
     {
-        //var_dump($request); die();
-        $dto = $this->getDto($request, DTO\LogoutRequestBody::class);
+        $dto = $this->getDto($request, RequestAuth\Logout::class);
         $service->logout($dto->getEmail());
 
         return $this->json([
@@ -160,13 +160,12 @@ class AuthController extends AbstractApiController
      *         in="body",
      *         description="Request for password reset",
      *         required=true,
-     *         @Model(type=DTO\PasswordResetRequestBody::class)
+     *         @Model(type=RequestAuth\PasswordReset::class)
      *         )
      *     ),
      * @SWG\Response(
-     *         response=200,
+     *         response=204,
      *         description="Start login-form proccess",
-     *         @Model(type=DTO\PasswordResetResponseBody::class)
      *     ),
      * )
      * @param Request $request
@@ -175,7 +174,7 @@ class AuthController extends AbstractApiController
      */
     public function passwordReset(Request $request, PasswordResetService $service): JsonResponse
     {
-        $dto = $this->getDto($request, DTO\PasswordResetRequestBody::class);
+        $dto = $this->getDto($request, RequestAuth\PasswordReset::class);
         $service->passwordReset($dto->getEmail());
 
         return $this->json(null, Response::HTTP_NO_CONTENT);
@@ -191,13 +190,13 @@ class AuthController extends AbstractApiController
      *         in="body",
      *         description="Request for password reset complete",
      *         required=true,
-     *         @Model(type=DTO\PasswordResetCompleteRequestBody::class)
+     *         @Model(type=RequestAuth\PasswordResetComplete::class)
      *         )
      *     ),
      * @SWG\Response(
      *         response=200,
      *         description="Response password reset complete",
-     *         @Model(type=DTO\PasswordResetCompleteResponseBody::class)
+     *         @Model(type=ResponseAuth\PasswordResetComplete::class)
      *     ),
      * )
      * @param Request $request
@@ -207,9 +206,9 @@ class AuthController extends AbstractApiController
      */
     public function passwordResetComplete(Request $request, PasswordResetCompleteService $service)
     {
-        $dto = $this->getDto($request, DTO\PasswordResetCompleteRequestBody::class);
+        $dto = $this->getDto($request, RequestAuth\PasswordResetComplete::class);
         $token = $service->passwordResetComplete($dto->getConfirmationCode(), $dto->getNewPassword());
 
-        return $this->json((new DTO\PasswordResetCompleteResponseBody($token))->asArray());
+        return $this->json((new ResponseAuth\PasswordResetComplete($token))->asArray());
     }
 }

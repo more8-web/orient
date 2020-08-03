@@ -15,19 +15,19 @@ class News
         NEWS_STATUS = "news_status";
 
     /**
-     * @SWG\Property(property=CreateNewsRequestBody::NEWS_ALIAS, type="string")
+     * @SWG\Property(property=News::NEWS_ALIAS, type="string")
      * @Assert\NotBlank()
      */
     private $newsAlias;
 
     /**
-     * @SWG\Property(property=CreateNewsRequestBody::NEWS_STATUS, type="string")
+     * @SWG\Property(property=News::NEWS_STATUS, type="string")
      * @Assert\NotBlank()
      */
     private $newsStatus;
 
     /**
-     * NewsRequestBody constructor.
+     * News constructor.
      * @param array $data
      */
     public function __construct(array $data)

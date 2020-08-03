@@ -4,8 +4,9 @@
 namespace App\Controller;
 
 use App\Controller\Dto\Request\News as NewsRequest;
+use App\Controller\Dto\Response\Content as ContentResponse;
+use App\Controller\Dto\Response\Keyword as KeywordResponse;
 use App\Controller\Dto\Response\News as NewsResponse;
-use App\Services\Content\ContentService;
 use App\Services\News\NewsService;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -106,20 +107,20 @@ class NewsController extends AbstractApiController
      * @SWG\Get(
      *    tags={"News"},
      *    summary="Get news list",
-     *     ),
-     *     @SWG\Response(
-     *          response=200,
-     *          @SWG\Schema(
-     *             type="array",
-     *             @Model(type=NewsResponse::class)
-     *          ),
-     *          description="Show news list",
-     *     ),
      * )
+     * @SWG\Response(
+     *    response=200,
+     *    description="Show news list",
+     *    @SWG\Schema(
+     *        type="array",
+     *        @Model(type=NewsResponse::class),
+     *    )
+     * )
+     *
      * @param NewsService $service
      * @return JsonResponse
      */
-    public function getNewsList(NewsService $service)
+    public function getList(NewsService $service)
     {
         $listNews = $service->getNewsList();
         $listResponse = [];
@@ -135,7 +136,7 @@ class NewsController extends AbstractApiController
      * @Route("/news/{id}", methods={"GET"})
      * @SWG\GET(
      *    tags={"News"},
-     *    summary="Get news from id",
+     *    summary="Get news by id",
      *     ),
      * @SWG\Response(
      *         response=200,
@@ -147,17 +148,63 @@ class NewsController extends AbstractApiController
      * @param NewsService $service
      * @return JsonResponse
      */
-    public function getOneNews(int $id, NewsService $service)
+    public function getNewsById(int $id, NewsService $service)
     {
             $news = $service->getNewsById($id);
 
-            return $this->json($news, Response::HTTP_OK);
+            return $this->json((new NewsResponse($news))->asArray());
+    }
+
+    /**
+     * @Route("/news/{news}/content/{content}", methods={"PUT"})
+     * @SWG\Put(
+     *    tags={"News"},
+     *    summary="Bind content to news (content-to-news)",
+     *     ),
+     * @SWG\Response(
+     *         response=Response::HTTP_NO_CONTENT,
+     *         description="Bind content to news (content-to-news)",
+     *     ),
+     * )
+     * @param int $content
+     * @param int $news
+     * @param NewsService $service
+     * @return JsonResponse
+     */
+    public function bindContentToNews(int $news, int $content, NewsService $service)
+    {
+        $service->bindContentToNews($news, $content);
+
+        return $this->json(null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @Route("/news/{news}/content/{content}", methods={"DELETE"})
+     * @SWG\Delete(
+     *    tags={"News"},
+     *    summary="Unbind content to news (content-to-news)",
+     *     ),
+     * @SWG\Response(
+     *         response=Response::HTTP_NO_CONTENT,
+     *         description="Unbind content to news (content-to-news)",
+     *     ),
+     * )
+     * @param int $content
+     * @param int $news
+     * @param NewsService $service
+     * @return JsonResponse
+     */
+    public function unbindContentToNews(int $news, int $content, NewsService $service)
+    {
+        $service->unbindContentToNews($news, $content);
+
+        return $this->json(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
      * @Route("/news/{id}/contents", methods={"GET"})
      * @SWG\Get(
-     *    tags={"Content"},
+     *    tags={"News"},
      *    summary="Get all content of news",
      *     ),
      * @SWG\Response(
@@ -167,80 +214,43 @@ class NewsController extends AbstractApiController
      *     ),
      * )
      * @param int $id
-     * @param ContentService $service
+     * @param NewsService $service
      * @return JsonResponse
      */
-    public function getAllContentOfNews(int $id, ContentService $service)
+    public function getContentListByNews(int $id, NewsService $service)
     {
-        $contentList = $service->getContentListByNews($id);
-
-        return $this->json($contentList, Response::HTTP_OK);
+        $news = $service->getNewsById($id);
+        $contents = [];
+        foreach($news->getContents() as $content) {
+            $contents[] = (new ContentResponse($content))->asArray();
+        }
+        return $this->json($contents, Response::HTTP_OK);
     }
 
     /**
-     * @Route("/news/{newsId}/content/{contentId}", methods={"GET"})
+     * @Route("/news/{id}/keywords", methods={"GET"})
      * @SWG\Get(
-     *    tags={"Content"},
-     *    summary="Get one content by news",
+     *    tags={"News"},
+     *    summary="Get all keywords by news",
      *     ),
      * @SWG\Response(
      *         response=200,
-     *         description="Get one content by news",
-     *         @Model(type=DTO\GetContentByNewsResponseBody::class)
+     *         description="Get all keywords by news",
+     *         @Model(type=KeywordResponse::class)
      *     ),
      * )
-     * @param int $newsId
-     * @param int $contentId
-     * @param ContentService $service
-     * @return JsonResponse
-     */
-    public function getOneContentOfNews(int $newsId, int $contentId, ContentService $service)
-    {
-        $content = $service->getContentByNews($newsId, $contentId);
-        return $this->json(null, Response::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @Route("/news/categories/{category}/news/{news}", methods={"PUT"})
-     * @SWG\Put(
-     *    tags={"News"},
-     *    summary="bind news to category (news-to-news-category)",
-     *     @SWG\Response(
-     *         response=Response::HTTP_NO_CONTENT,
-     *         description="Update news",
-     *     ),
-     * )
-     * @param int $category
-     * @param int $news
+     * @param int $id
      * @param NewsService $service
      * @return JsonResponse
      */
-    public function bindNewsToCategory(int $category, int $news, NewsService $service)
+    public function getKeywordsByNews(int $id, NewsService $service)
     {
-        $service->bindNewsToCategory($news, $category);
+        $news = $service->getNewsById($id);
+        $keywords = [];
 
-        return $this->json(null, Response::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @Route("/news/categories/{category}/news/{news}", methods={"DELETE"})
-     * @SWG\Delete(
-     *    tags={"News"},
-     *    summary="unbind news to category (news-to-news-category)",
-     *     @SWG\Response(
-     *         response=Response::HTTP_NO_CONTENT,
-     *         description="Unbind news to category",
-     *     ),
-     * )
-     * @param int $category
-     * @param int $news
-     * @param NewsService $service
-     * @return JsonResponse
-     */
-    public function unbindNewsToCategory(int $category, int $news, NewsService $service)
-    {
-        $service->unbindNewsToCategory($news, $category);
-
-        return $this->json(null, Response::HTTP_NO_CONTENT);
+        foreach ($news->getKeywords() as $keyword) {
+            $keywords[] = (new KeywordResponse($keyword))->asArray();
+        }
+        return $this->json($keywords, Response::HTTP_OK);
     }
 }

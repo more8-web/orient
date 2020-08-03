@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\LogRepository;
+use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=LogRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class Log
 {
@@ -24,7 +26,7 @@ class Log
     private $logValue;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"}, name="created_at")
      */
     private $createdAt;
 
@@ -56,18 +58,20 @@ class Log
     }
 
     /**
-     * @return mixed
+     * @return DateTimeInterface|null
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
     /**
-     * @param mixed $createdAt
+     * @return $this
      */
-    public function setCreatedAt($createdAt): void
+    public function setCreatedAt(): self
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new DateTime('now');
+
+        return $this;
     }
 }

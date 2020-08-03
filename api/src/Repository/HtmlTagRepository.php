@@ -4,13 +4,10 @@ namespace App\Repository;
 
 use App\Entity\Content;
 use App\Entity\HtmlTag;
-use App\Entity\NewsCategory;
 use App\Exceptions\Common\DatabaseException;
 use App\Exceptions\Content\NotFoundContentException;
 use App\Exceptions\HtmlTags\NotFoundHtmlTagException;
 use App\Exceptions\News\NewsAlreadyBoundToNewsCategoryException;
-use App\Exceptions\News\NewsNotFoundException;
-use App\Exceptions\NewsCategory\NewsCategoryNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\OptimisticLockException;
@@ -32,23 +29,12 @@ class HtmlTagRepository extends ServiceEntityRepository
 
     /**
      * @param $value
-     * @return bool
-     */
-    public function isHtmlTagExists($value){
-
-        if($this->findOneBy(['html_tag_value' => $value])){
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * @param $value
-     * @return mixed
+     * @return HtmlTag
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function create($value){
+    public function create($value):HtmlTag
+    {
 
         $htmlTag = new HtmlTag();
         $htmlTag->setHtmlTagValue($value);
@@ -86,14 +72,12 @@ class HtmlTagRepository extends ServiceEntityRepository
      */
     public function delete($id)
     {
-
-        $htmlTag = $this->find($id);
-        if (!is_null($htmlTag)) {
-
+        if (is_null($htmlTag = $this->find($id))) {
+           throw new NotFoundHtmlTagException();
+        }
             $em = $this->getEntityManager();
             $em->remove($htmlTag);
             $em->flush();
-        }
     }
 
     /**

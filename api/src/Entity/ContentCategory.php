@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ContentCategoriesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,11 +33,11 @@ class ContentCategory
      * @ORM\ManyToMany(targetEntity="Content", mappedBy="categories")
      * @ORM\JoinTable(name="content_to_content_category")
      */
-    private $content;
+    private $contents;
 
     public function __construct()
     {
-        $this->content = new ArrayCollection();
+        $this->contents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -73,7 +74,7 @@ class ContentCategory
      */
     public function addContent(Content $content)
     {
-        $this->content->add($content);
+        $this->contents->add($content);
     }
 
     /**
@@ -81,6 +82,14 @@ class ContentCategory
      */
     public function removeContent(Content $content)
     {
-        $this->content->removeElement($content);
+        $this->contents->removeElement($content);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getContents(): Collection
+    {
+        return $this->contents;
     }
 }

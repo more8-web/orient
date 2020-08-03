@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Repository\ContentRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,7 +20,8 @@ class Content
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
+     *
      */
     private $content_alias;
 
@@ -40,7 +42,7 @@ class Content
     private $categories;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Keyword", inversedBy="content")
+     * @ORM\ManyToMany(targetEntity="Keyword", mappedBy="contents")
      * @ORM\JoinTable(name="keyword_to_content")
      */
     private $keywords;
@@ -53,7 +55,7 @@ class Content
 
     /**
      * @ORM\ManyToMany(targetEntity="HtmlTag", mappedBy="contents")
-     * @ORM\JoinTable(name="content_to_news")
+     * @ORM\JoinTable(name="content_to_html_tag")
      */
     private $htmlTags;
 
@@ -68,16 +70,26 @@ class Content
         $this->htmlTags = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getContentAlias(): ?string
     {
         return $this->content_alias;
     }
 
+    /**
+     * @param string $content_alias
+     * @return $this
+     */
     public function setContentAlias(string $content_alias): self
     {
         $this->content_alias = $content_alias;
@@ -85,11 +97,18 @@ class Content
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getContentDescription(): ?string
     {
         return $this->content_description;
     }
 
+    /**
+     * @param string|null $content_description
+     * @return $this
+     */
     public function setContentDescription(?string $content_description): self
     {
         $this->content_description = $content_description;
@@ -97,11 +116,18 @@ class Content
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getContentValue(): ?string
     {
         return $this->content_value;
     }
 
+    /**
+     * @param string $content_value
+     * @return $this
+     */
     public function setContentValue(string $content_value): self
     {
         $this->content_value = $content_value;
@@ -148,7 +174,6 @@ class Content
      */
     public function addKeyword(Keyword $keyword)
     {
-        $keyword->addContent($this);
         $this->keywords->add($keyword);
     }
 
@@ -157,7 +182,6 @@ class Content
      */
     public function removeKeyword(Keyword $keyword)
     {
-        $keyword->removeContent($this);
         $this->keywords->removeElement($keyword);
     }
 
@@ -166,7 +190,7 @@ class Content
      */
     public function addHtmlTags(HtmlTag $htmlTag)
     {
-        $this->news->add($htmlTag);
+        $this->htmlTags->add($htmlTag);
     }
 
     /**
@@ -174,6 +198,22 @@ class Content
      */
     public function removeHtmlTags(HtmlTag $htmlTag)
     {
-        $this->news->removeElement($htmlTag);
+        $this->htmlTags->removeElement($htmlTag);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getKeywords(): Collection
+    {
+        return $this->keywords;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getHtmlTags(): Collection
+    {
+        return $this->htmlTags;
     }
 }

@@ -17,24 +17,24 @@ class News
             NEWS_STATUS = "news_status";
 
     /**
-     * @SWG\Property(property=NewsResponse::NEWS_ID, type="integer")
+     * @SWG\Property(property=News::NEWS_ID, type="integer")
      */
     private $newsId;
 
     /**
-     * @SWG\Property(property=NewsResponse::NEWS_ALIAS, type="string")
+     * @SWG\Property(property=News::NEWS_ALIAS, type="string")
      * @Assert\NotBlank()
      */
     private $newsAlias;
 
     /**
-     * @SWG\Property(property=NewsResponse::NEWS_STATUS, type="string")
+     * @SWG\Property(property=News::NEWS_STATUS, type="string")
      * @Assert\NotBlank()
      */
     private $newsStatus;
 
     /**
-     * NewsResponse constructor.
+     * News constructor.
      * @param \App\Entity\News $news
      */
     public function __construct(\App\Entity\News $news)

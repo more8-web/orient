@@ -2,8 +2,14 @@
 
 namespace App\Repository;
 
+use App\Entity\News;
 use App\Entity\NewsCategory;
+use App\Exceptions\Common\DatabaseException;
+use App\Exceptions\News\NewsAlreadyBoundToNewsCategoryException;
+use App\Exceptions\News\NewsNotFoundException;
+use App\Exceptions\NewsCategory\NewsCategoryNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,23 +25,6 @@ class NewsCategoryRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, NewsCategory::class);
-    }
-
-    /**
-     * @return NewsCategory[]
-     */
-    public function getNewsCategoryList()
-    {
-        return $this->findAll();
-    }
-
-    /**
-     * @param $id
-     * @return NewsCategory|null
-     */
-    public function getOneNewsCategory($id)
-    {
-        return $this->find($id);
     }
 
     /**
@@ -97,7 +86,6 @@ class NewsCategoryRepository extends ServiceEntityRepository
      */
     public function delete($id)
     {
-
         $newsCategory = $this->find($id);
         if (!is_null($newsCategory)) {
 
@@ -107,6 +95,92 @@ class NewsCategoryRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return NewsCategory[]
+     */
+    public function getNewsCategoryList()
+    {
+        return $this->findAll();
+    }
+
+    /**
+     * @param $id
+     * @return NewsCategory|null
+     */
+    public function getOneNewsCategory($id)
+    {
+        return $this->find($id);
+    }
+
+    /**
+     * @param $id
+     * @return NewsCategory | null
+     */
+    public function getReference($id)
+    {
+        try {
+            $category = $this->getEntityManager()->getReference(NewsCategory::class, $id);
+        } catch (ORMException $e) {
+            throw new DatabaseException();
+        }
+
+        if ($category instanceof NewsCategory) {
+            return $category;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param $id
+     * @param News|null $news
+     */
+    public function bindToNews($id, News $news = null)
+    {
+        if (!$news) {
+            throw new NewsNotFoundException();
+        }
+
+        $newsCategory = $this->getReference($id);
+        if (!$newsCategory) {
+            throw new NewsCategoryNotFoundException();
+        }
+
+        $news->addCategory($newsCategory);
+
+        try {
+            $this->getEntityManager()->flush();
+        } catch (UniqueConstraintViolationException $e) {
+            throw new NewsAlreadyBoundToNewsCategoryException();
+        } catch (ORMException $e) {
+            throw new DatabaseException();
+        }
+    }
+
+    /**
+     * @param $id
+     * @param News|null $news
+     */
+    public function unbindToNews($id, News $news = null)
+    {
+        if (!$news) {
+            throw new NewsNotFoundException();
+        }
+
+        $newsCategory = $this->find($id);
+
+        if (!$newsCategory) {
+            throw new NewsCategoryNotFoundException();
+        }
+
+        $news->removeCategory($newsCategory);
+
+        try {
+            $this->getEntityManager()->flush();
+        } catch (ORMException $e) {
+            throw new DatabaseException();
+        }
+    }
 
     // /**
     //  * @return NewsCategories[] Returns an array of NewsCategories objects

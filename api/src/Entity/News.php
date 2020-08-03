@@ -3,7 +3,10 @@
 
 namespace App\Entity;
 
+use App\Exceptions\NewsCategory\NewsCategoryNotFoundException;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\NewsRepository;
 
@@ -43,23 +46,19 @@ class News
     private $contents;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Keyword", inversedBy="news")
-     * @ORM\JoinTable(name="news_to_keyword")
+     * @ORM\ManyToMany(targetEntity="Keyword", mappedBy="news")
+     * @ORM\JoinTable(name="keyword_to_news")
      */
     private $keywords;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Log", inversedBy="news")
-     * @ORM\JoinTable(name="log_to_news")
+     * News constructor.
      */
-    private $logs;
-
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->contents = new ArrayCollection();
         $this->keywords = new ArrayCollection();
-        $this->logs = new ArrayCollection();
     }
 
     /**
@@ -151,7 +150,6 @@ class News
      */
     public function addKeyword(Keyword $keyword)
     {
-        $keyword->addNews($this);
         $this->keywords->add($keyword);
     }
 
@@ -160,25 +158,22 @@ class News
      */
     public function removeKeyword(Keyword $keyword)
     {
-        $keyword->removeNews($this);
         $this->keywords->removeElement($keyword);
     }
 
     /**
-     * @param Log $log
+     * @return Collection
      */
-    public function addLog(Log $log)
+    public function getContents(): Collection
     {
-        $log->addNews($this);
-        $this->logs->add($log);
+        return $this->contents;
     }
 
     /**
-     * @param Log $log
+     * @return Collection
      */
-    public function removeLog(Log $log)
+    public function getKeywords(): Collection
     {
-        $log->removeNews($this);
-        $this->logs->removeElement($log);
+        return $this->keywords;
     }
 }

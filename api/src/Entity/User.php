@@ -150,11 +150,18 @@ class User implements UserInterface
         return explode(self::ROLES_SEPARATOR, $this->roles);
     }
 
+    /**
+     * @return DateTimeInterface|null
+     */
     public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
+    /**
+     * @param DateTimeInterface $updatedAt
+     * @return $this
+     */
     public function setUpdatedAt(DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
@@ -162,6 +169,9 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return DateTimeInterface|null
+     */
     public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;

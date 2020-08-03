@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Controller\Dto\Response;
 
 use Swagger\Annotations as SWG;
@@ -8,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @SWG\Definition(type="object")
  */
-class Token
+class Login
 {
     const PROPERTY_TOKEN = "token";
 
@@ -18,10 +19,6 @@ class Token
      */
     private $token;
 
-    /**
-     * Token constructor.
-     * @param $token
-     */
     public function __construct($token)
     {
         $this->setToken($token);

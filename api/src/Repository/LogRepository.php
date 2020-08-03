@@ -31,6 +31,7 @@ class LogRepository extends ServiceEntityRepository
 
         $log = new Log();
         $log->setLogValue($value);
+        $log->setCreatedAt();
 
         $em = $this->getEntityManager();
         $em->persist($log);

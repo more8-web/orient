@@ -24,14 +24,14 @@ class Keyword
     private $keyword_value;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Content", mappedBy="keywords")
+     * @ORM\ManyToMany(targetEntity="Content", inversedBy="keywords")
      * @ORM\JoinTable(name="keyword_to_content")
      */
     private $contents;
 
     /**
-     * @ORM\ManyToMany(targetEntity="News", mappedBy="keywords")
-     * @ORM\JoinTable(name="keyword_to_content")
+     * @ORM\ManyToMany(targetEntity="News", inversedBy="keywords")
+     * @ORM\JoinTable(name="keyword_to_news")
      */
     private $news;
 
@@ -73,6 +73,7 @@ class Keyword
      */
     public function addNews(News $news)
     {
+        $news->addKeyword($this);
         $this->news->add($news);
     }
 
@@ -81,6 +82,7 @@ class Keyword
      */
     public function removeNews(News $news)
     {
+        $news->removeKeyword($this);
         $this->news->removeElement($news);
     }
 
@@ -89,6 +91,7 @@ class Keyword
      */
     public function addContent(Content $content)
     {
+        $content->addKeyword($this);
         $this->contents->add($content);
     }
 
@@ -97,6 +100,7 @@ class Keyword
      */
     public function removeContent(Content $content)
     {
+        $content->removeKeyword($this);
         $this->contents->removeElement($content);
     }
 }

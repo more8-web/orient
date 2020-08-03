@@ -2,15 +2,12 @@
 
 namespace App\Controller;
 
-use App\Controller\Dto\ContentCategory as DTO;
+use App\Controller\Dto\Request\ContentCategory as ContentCategoryRequest;
+use App\Controller\Dto\Response\Content as ContentResponse;
+use App\Controller\Dto\Response\ContentCategory as ContentCategoryResponse;
 use App\Exceptions\Auth\BadRequestException;
-use App\Exceptions\Common\DatabaseException;
 use App\Services\Content\ContentService;
-use App\Services\ContentCategory\CreateContentCategoryService;
-use App\Services\ContentCategory\DeleteContentCategoryService;
-use App\Services\ContentCategory\EditContentCategoryService;
-use App\Services\ContentCategory\GetContentCategoryListService;
-use App\Services\ContentCategory\GetOneContentCategoryService;
+use App\Services\ContentCategory\ContentCategoryService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,33 +27,33 @@ class ContentCategoryController extends AbstractApiController
      *         in="body",
      *         description="Create new content category",
      *         required=true,
-     *         @Model(type=DTO\CreateContentCategoryRequestBody::class)
+     *         @Model(type=ContentCategoryRequest::class)
      *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Create new content category",
-     *         @Model(type=DTO\CreateContentCategoryResponseBody::class)
+     *         @Model(type=ContentCategoryResponse::class)
      *     ),
      * )
      * @param Request $request
-     * @param CreateContentCategoryService $service
+     * @param ContentCategoryService $service
      * @return JsonResponse
      * @throws BadRequestException
      */
-    public function createContentCategory(Request $request, CreateContentCategoryService $service)
+    public function createContentCategory(Request $request, ContentCategoryService $service)
     {
-        /** @var DTO\CreateContentCategoryRequestBody $dto */
-        $dto = $this->getDto($request, DTO\CreateContentCategoryRequestBody::class);
+        /** @var ContentCategoryRequest $dto */
+        $dto = $this->getDto($request, ContentCategoryRequest::class);
         $category = $service->createContentCategory(
             $dto->getContentCategoryAlias(),
             $dto->getContentCategoryParentId()
         );
 
-        return $this->json((new DTO\CreateContentCategoryResponseBody($category))->asArray());
+        return $this->json((new ContentCategoryResponse($category))->asArray());
     }
 
     /**
-     * @Route("/content/categories/:id", methods={"POST"})
+     * @Route("/content/categories/{id}", methods={"POST"})
      * @SWG\Post(
      *    tags={"ContentCategory"},
      *    summary="Edit content category",
@@ -65,60 +62,49 @@ class ContentCategoryController extends AbstractApiController
      *         in="body",
      *         description="Edit content category",
      *         required=true,
-     *         @Model(type=DTO\EditContentCategoryRequestBody::class)
+     *         @Model(type=ContentCategoryRequest::class)
      *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Edit content category",
-     *         @Model(type=DTO\EditContentCategoryResponseBody::class)
+     *         @Model(type=ContentCategoryResponse::class)
      *     ),
      * )
+     * @param int $id
      * @param Request $request
-     * @param EditContentCategoryService $service
+     * @param ContentCategoryService $service
      * @return JsonResponse
      */
-    public function editContentCategory(Request $request, EditContentCategoryService $service)
+    public function editContentCategory(int $id, Request $request, ContentCategoryService $service)
     {
-        /** @var DTO\EditContentCategoryRequestBody $dto */
-        $dto = $this->getDto($request, DTO\EditContentCategoryRequestBody::class);
-        $category = $service->editContentCategory(
-            $dto->getContentCategoryId(),
-            $dto->getContentCategoryParentId(),
-            $dto->getContentCategoryAlias());
+        /** @var ContentCategoryRequest $dto */
+        $dto = $this->getDto($request, ContentCategoryRequest::class);
+        $category = $service->editContentCategory($id,
+                                                    $dto->getContentCategoryParentId(),
+                                                    $dto->getContentCategoryAlias());
 
-        return $this->json((new DTO\EditContentCategoryResponseBody($category))->asArray());
+        return $this->json((new ContentCategoryResponse($category))->asArray());
     }
 
     /**
-     * @Route("/content/categories/:id", methods={"DELETE"})
+     * @Route("/content/categories/{id}", methods={"DELETE"})
      * @SWG\Delete(
      *    tags={"ContentCategory"},
      *    summary="Delete content category",
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="Delete content category",
-     *         required=true,
-     *         @Model(type=DTO\DeleteContentCategoryRequestBody::class)
      *     ),
-     *     @SWG\Response(
+     * @SWG\Response(
      *         response=204,
      *         description="Delete content category",
      *     ),
      * )
-     * @param Request $request
-     * @param DeleteContentCategoryService $service
+     * @param int $id
+     * @param ContentCategoryService $service
      * @return JsonResponse
      */
-    public function deleteContentCategory(Request $request, DeleteContentCategoryService $service)
+    public function deleteContentCategory(int $id, ContentCategoryService $service)
     {
-        /** @var DTO\DeleteContentCategoryRequestBody $dto */
-        $dto = $this->getDto($request, DTO\DeleteContentCategoryRequestBody::class);
-        $message = $service->deleteContentCategory($dto->getContentCategoryId());
+        $service->deleteContentCategory($id);
 
-        if (!$message){
-            throw new DatabaseException('Error delete content category');
-        }
         return $this->json(null, Response::HTTP_NO_CONTENT);
     }
 
@@ -132,18 +118,22 @@ class ContentCategoryController extends AbstractApiController
      *          response=200,
      *          @SWG\Schema(
      *             type="array",
-     *             @Model(type=DTO\GetContentCategoryListResponseBody::class)
+     *             @Model(type=ContentCategoryResponse::class)
      *          ),
      *          description="Get content category list",
      *     ),
      * )
-     * @param Request $request
-     * @param GetContentCategoryListService $service
+     * @param ContentCategoryService $service
      * @return JsonResponse
      */
-    public function getContentCategoryList(Request $request, GetContentCategoryListService $service)
+    public function getContentCategoryList(ContentCategoryService $service)
     {
-        $contentCategoryList = $service->getContentCategoryList();
+        $contentCategories = $service->getContentCategoryList();
+        $contentCategoryList = [];
+
+        foreach ($contentCategories as $contentCategory) {
+            $contentCategoryList[] = (new ContentCategoryResponse($contentCategory))->asArray();
+        }
 
         return $this->json($contentCategoryList, Response::HTTP_OK);
     }
@@ -157,40 +147,91 @@ class ContentCategoryController extends AbstractApiController
      *      @SWG\Response(
      *         response=200,
      *         description="Get content category by id",
-     *         @Model(type=DTO\GetOneContentCategoryByIdResponseBody::class)
+     *         @Model(type=ContentCategoryResponse::class)
      *     ),
      * )
-     * @param Request $request
-     * @param GetOneContentCategoryService $service
+     * @param $id
+     * @param ContentCategoryService $service
      * @return JsonResponse
      */
-    public function getOneContentCategoryById(Request $request, GetOneContentCategoryService $service)
+    public function getOneContentCategoryById($id, ContentCategoryService $service)
     {
+        $contentCategory = $service->getContentCategoryById($id);
 
-        $categoryContent = $service->getOneContent($request->get('id'));
-
-        return $this->json((new DTO\GetOneContentCategoryByIdResponseBody($categoryContent))->asArray());
+        return $this->json((new ContentCategoryResponse($contentCategory))->asArray());
     }
 
     /**
-     * @Route("/content/categories/{id}/content", methods={"GET"})
+     * @Route("/content/category/{id}/contents", methods={"GET"})
      * @SWG\Get(
      *    tags={"ContentCategory"},
-     *    summary="Get content of category",
-     *
-     *     @SWG\Response(
+     *    summary="Get content list by content category",
+     *     ),
+     * @SWG\Response(
      *         response=200,
-     *         description="Get content of category",
-     *         @Model(type=DTO\GetContentByCategoryResponseBody::class)
+     *         description="Get all content by content category",
+     *         @Model(type=ContentResponse::class)
      *     ),
      * )
-     * @param Request $request
-     * @param ContentService $service
+     * @param int $id
+     * @param ContentCategoryService $service
      * @return JsonResponse
      */
-    public function getContentByCategory(Request $request, ContentService $service)
+    public function getContentListByContentCategory(int $id, ContentCategoryService $service)
     {
-        $idCategory = $request->get('id');
-        return $this->json($idCategory, Response::HTTP_OK);
+        $category = $service->getContentCategoryById($id);
+        $contentList = [];
+
+        foreach($category->getContents() as $content){
+            $contentList[] = (new ContentResponse($content))->asArray();
+        }
+
+        return $this->json($contentList, Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/content/categories/{category}/contents/{content}", methods={"PUT"})
+     * @SWG\Put(
+     *    tags={"ContentCategory"},
+     *    summary="Bind content to content category (content-to-content-category)",
+     *     ),
+     * @SWG\Response(
+     *         response=Response::HTTP_NO_CONTENT,
+     *         description="Bind content to content category (content-to-content-category)",
+     *     ),
+     * )
+     * @param int $category
+     * @param int $content
+     * @param ContentCategoryService $service
+     * @return JsonResponse
+     */
+    public function bindContentToContentCategory(int $category, int $content, ContentCategoryService $service)
+    {
+        $service->bindContentToContentCategory($category, $content);
+
+        return $this->json(null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @Route("/content/categories/{category}/contents/{content}", methods={"DELETE"})
+     * @SWG\Delete(
+     *    tags={"ContentCategory"},
+     *    summary="Unbind content to content category (content-to-content-category)",
+     *     ),
+     * @SWG\Response(
+     *         response=Response::HTTP_NO_CONTENT,
+     *         description="Unbind content to content category (content-to-content-category)",
+     *     ),
+     * )
+     * @param int $category
+     * @param int $content
+     * @param ContentCategoryService $service
+     * @return JsonResponse
+     */
+    public function unbindContentToContentCategory(int $category, int $content, ContentCategoryService $service)
+    {
+        $service->unbindContentToContentCategory($category, $content);
+
+        return $this->json(null, Response::HTTP_NO_CONTENT);
     }
 }

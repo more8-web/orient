@@ -3,11 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Content;
-use App\Entity\News;
-use App\Exceptions\Common\DatabaseException;
-use App\Exceptions\Content\ContentAlreadyBoundToNewsException;
-use App\Exceptions\Content\NotFoundContentException;
-use App\Exceptions\News\NewsNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -34,8 +29,8 @@ class ContentRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function create($alias, $desc, $value){
-
+    public function create($alias, $desc, $value)
+    {
         $content = new Content();
         $content->setContentAlias($alias);
         $content->setContentDescription($desc);
@@ -104,11 +99,17 @@ class ContentRepository extends ServiceEntityRepository
      * @param $id
      * @return Content
      */
-    public function getOne($id){
-        /** @var Content $content */
-        $content = $this->find($id);
+    public function getOne($id)
+    {
+        return $this->find($id);
+    }
 
-        return $content;
+    /**
+     * @return Content[]
+     */
+    public function getContentList()
+    {
+        return $this->findAll();
     }
 
     /**
@@ -132,53 +133,24 @@ class ContentRepository extends ServiceEntityRepository
 
     /**
      * @param $id
-     * @param News|null $news
+     * @return Content[]
      */
-    public function bindToNews($id, News $news = null)
+    public function getContentListByCategory($id)
     {
-        if (!$news) {
-            throw new NewsNotFoundException();
-        }
-
-        $content = $this->find($id);
-
-        if (!$content) {
-            throw new NotFoundContentException();
-        }
-
-        $content->addNews($news);
-
-        try {
-            $this->getEntityManager()->flush();
-        } catch (ORMException $e) {
-            throw new ContentAlreadyBoundToNewsException();
-        }
+        return $this->findBy(['content_category_id'=>$id]);
     }
 
     /**
-     * @param $id
-     * @param News|null $news
+     * @param $category
+     * @param $content
+     * @return Content|null
      */
-    public function unbindToNews($id, News $news = null)
+    public function getContentByCategory($category, $content)
     {
-        if (!$news) {
-            throw new NewsNotFoundException();
-        }
-
-        $content = $this->find($id);
-
-        if (!$content) {
-            throw new NotFoundContentException();
-        }
-
-        $content->removeNews($news);
-
-        try {
-            $this->getEntityManager()->flush();
-        } catch (ORMException $e) {
-            throw new DatabaseException();
-        }
+        return $this->findOneBy(['content_category_id' => $category, 'content_id' => $content]);
     }
+
+
 
     // /**
     //  * @return Contents[] Returns an array of Contents objects

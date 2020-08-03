@@ -24,7 +24,7 @@ class HtmlTag
     private $htmlTagValue;
 
     /**
-     * @ORM\ManyToMany(targetEntity="content", inversedBy="html_tags")
+     * @ORM\ManyToMany(targetEntity="Content", inversedBy="html_tags")
      * @ORM\JoinTable(name="content_to_html_tag")
      */
     private $contents;
@@ -62,9 +62,9 @@ class HtmlTag
     }
 
     /**
-     * @return string|null
+     * @return ArrayCollection
      */
-    public function getContents(): ?string
+    public function getContents()
     {
         return $this->contents;
     }
@@ -73,7 +73,7 @@ class HtmlTag
      * @param string $contents
      * @return $this
      */
-    public function setContents(string $contents): self
+    public function setContents(string $contents)
     {
         $this->contents = $contents;
 

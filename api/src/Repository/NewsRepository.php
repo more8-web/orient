@@ -2,14 +2,14 @@
 
 namespace App\Repository;
 
+use App\Entity\Content;
 use App\Entity\News;
-use App\Entity\NewsCategory;
 use App\Exceptions\Common\DatabaseException;
-use App\Exceptions\News\NewsAlreadyBoundToNewsCategoryException;
+use App\Exceptions\Content\NotFoundContentException;
+use App\Exceptions\ContentCategory\ContentAlreadyBoundToContentCategoryException;
 use App\Exceptions\News\NewsNotFoundException;
-use App\Exceptions\NewsCategory\NewsCategoryNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Doctrine\Common\Proxy\Proxy;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -42,11 +42,30 @@ class NewsRepository extends ServiceEntityRepository
 
     /**
      * @param $id
-     * @return News|null
+     * @return Proxy|object|null
      */
     public function getOne($id)
     {
         return $this->find($id);
+    }
+
+    /**
+     * @param $id
+     * @return News | null
+     */
+    public function getReference($id)
+    {
+        try {
+            $news = $this->getEntityManager()->getReference(News::class, $id);
+        } catch (ORMException $e) {
+            throw new DatabaseException();
+        }
+
+        if ($news instanceof News) {
+            return $news;
+        }
+
+        return null;
     }
 
     /**
@@ -122,12 +141,12 @@ class NewsRepository extends ServiceEntityRepository
 
     /**
      * @param $id
-     * @param NewsCategory $category
+     * @param Content|null $content
      */
-    public function bindToCategory($id, NewsCategory $category = null)
+    public function bindToContent($id, Content $content = null)
     {
-        if (!$category) {
-            throw new NewsCategoryNotFoundException();
+        if (!$content) {
+            throw new NotFoundContentException();
         }
 
         $news = $this->find($id);
@@ -136,34 +155,32 @@ class NewsRepository extends ServiceEntityRepository
             throw new NewsNotFoundException();
         }
 
-        $news->addCategory($category);
+        $news->addContent($content);
 
         try {
             $this->getEntityManager()->flush();
-        } catch (UniqueConstraintViolationException $e) {
-            throw new NewsAlreadyBoundToNewsCategoryException();
         } catch (ORMException $e) {
-            throw new DatabaseException();
+            throw new ContentAlreadyBoundToContentCategoryException();
         }
     }
 
     /**
      * @param $id
-     * @param NewsCategory $category
+     * @param Content|null $content
      */
-    public function unbindToCategory($id, NewsCategory $category = null)
+    public function unbindToContent($id, Content $content = null)
     {
-        if (!$category) {
-            throw new NewsCategoryNotFoundException();
+        if (!$content) {
+            throw new NotFoundContentException();
         }
 
         $news = $this->find($id);
 
         if (!$news) {
-            throw new NewsNotFoundException();
+            throw new NotFoundContentException();
         }
 
-        $news->removeCategory($category);
+        $news->removeContent($content);
 
         try {
             $this->getEntityManager()->flush();
@@ -171,6 +188,8 @@ class NewsRepository extends ServiceEntityRepository
             throw new DatabaseException();
         }
     }
+
+
 
     /*
     public function findOneBySomeField($value): ?User
