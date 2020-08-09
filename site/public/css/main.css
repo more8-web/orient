@@ -1,0 +1,73 @@
+body{
+    padding-top: 0;
+    padding-left: 0;
+    min-width: 320px;
+    font-family: Roboto, sans-serif;
+}
+
+.slogan{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 19px;
+    text-transform: uppercase;
+    color: #00812E;
+}
+
+.navbar-brand{
+    min-height: 4em;
+    max-height: 10%;
+    margin-right: 0;
+    justify-content: space-between;
+}
+
+.navbar-toggler {
+    padding: 0;
+    justify-content: right;
+}
+
+.top-menu{
+    min-height: 4em;
+    height: 10%;
+    justify-content: space-between;
+    background: linear-gradient(0deg, rgba(111, 207, 151, 0.2), rgba(111, 207, 151, 0.2)), #FFFFFF;
+}
+
+.menu{
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 19px;
+    font-variant: small-caps;
+    color: #000000;
+}
+
+a:focus,a:hover {
+    color: #1c7430;
+    text-decoration: underline
+}
+
+.nav-pills .nav-link.active{
+    color: #1c7430;
+    border-radius: 22px;
+    background-color: #8fd19e;
+}
+
+.footer-menu{
+    max-width: 100%;
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 12px;
+}
+
+.footer-text{
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 14px;
+    font-size: 10px;
+    color: #000000;
+}
