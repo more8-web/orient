@@ -1,0 +1,66 @@
+
+@media (max-width: 768px) {
+
+    header{
+        width: 100%;
+    }
+
+    div.shadow{
+        width: 100%;
+    }
+
+    body > header > div.sub-header > div
+    {
+        width: 100%;
+    }
+
+    body > header > div.shadow.position-relative.sub-header > div
+    {
+        width: 100%;
+    }
+
+    img.logo{
+        left: 0;
+    }
+    span.slogan{
+        left: 18%;
+    }
+    header > div.shadow.position-relative > div > ul{
+        position: absolute;
+        left: 37%;
+        width: 38%;
+    }
+
+    header > div.shadow.position-relative > div > ul >li{
+    width: 110px;
+    }
+
+    body > header > div.shadow.position-relative.sub-header > div > ul > li.ml-2{
+        display: none;
+    }
+
+    body > header > div.shadow.position-relative.sub-header > div > ul > li.ml-3{
+        display: none;
+    }
+
+    a.btn-lang{
+        left: 60%;
+    }
+
+    a.btn-search{
+        left: 80%;
+    }
+
+    button.btn-hamburger{
+        right: 15%;
+    }
+
+    body > header > div.top-menu > ul{
+        width: 1024px;
+    }
+
+    body > header > div.top-menu > ul{
+
+    }
+
+}

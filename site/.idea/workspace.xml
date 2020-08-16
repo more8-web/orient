@@ -2,10 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4708dd30-370b-477c-a6ca-bf02dbd22624" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/css/main.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/main.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/css/adaptive/screen_1024.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/css/adaptive/screen_1150.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/css/adaptive/screen_1440.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/css/adaptive/screen_360.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/css/adaptive/screen_768.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/css/adaptive/screen_933.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/css/footer.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/css/header.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../doc/news.md" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/news.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/search.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/main.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,8 +31,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="composer.json" />
-        <option value="CSS File" />
         <option value="HTML File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -38,13 +49,17 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/css/adaptive" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="reference.idesettings.emmet" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/public" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/css/adaptive" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -61,7 +76,14 @@
       <workItem from="1596791829806" duration="9440000" />
       <workItem from="1596875394328" duration="7971000" />
       <workItem from="1596885003596" duration="11118000" />
-      <workItem from="1596962759553" duration="23982000" />
+      <workItem from="1596962759553" duration="26904000" />
+      <workItem from="1597051048284" duration="12236000" />
+      <workItem from="1597136207063" duration="1464000" />
+      <workItem from="1597223221039" duration="21819000" />
+      <workItem from="1597253746928" duration="2268000" />
+      <workItem from="1597314231067" duration="22123000" />
+      <workItem from="1597395371434" duration="27225000" />
+      <workItem from="1597480256583" duration="11785000" />
     </task>
     <servers />
   </component>

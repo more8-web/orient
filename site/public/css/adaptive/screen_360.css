@@ -1,0 +1,77 @@
+
+@media (max-width: 767px) {
+
+    header{
+        width: 100%;
+    }
+
+    div.shadow{
+        width: 100%;
+    }
+
+    body > header > div.sub-header > div
+    {
+        width: 100%;
+    }
+
+    img.logo{
+        left: 4%;
+        width: 70px;
+        height: 42px;
+    }
+
+    span.slogan{
+        font-size: 9px;
+        left: 21%;
+    }
+    header > div.shadow.position-relative > div > ul{
+        position: absolute;
+        left: 37%;
+        width: 38%;
+    }
+
+    header > div.shadow.position-relative > div > ul >li{
+    width: 110px;
+    }
+
+    body > header > div.shadow.position-relative.sub-header > div > ul > li.ml-2{
+        display: none;
+    }
+
+    body > header > div.shadow.position-relative.sub-header > div > ul > li.ml-3{
+        width: 137px;
+    }
+
+    a.btn-lang{
+        left: 62.6%;
+    }
+
+    a.btn-search{
+        width: 24px;
+        height: 24px;
+        background-image: url("../../assets/img/search-outlined_24.png") ;
+        left: 78%;
+    }
+
+    button.btn-hamburger{
+        padding: 0;
+        left: 89%;
+        width: 24px;
+        height: 24px;
+        background-image: url("../../assets/img/hamburger_menu-24.png");
+    }
+
+    button.btn-hamburger img{
+        width: 24px;
+        height: 24px;
+    }
+
+    body > header > div.top-menu > ul{
+        width: 1024px;
+    }
+
+    body > header > div.top-menu > ul{
+
+    }
+
+}

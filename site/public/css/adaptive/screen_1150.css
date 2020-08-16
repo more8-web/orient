@@ -1,0 +1,54 @@
+
+@media (max-width: 1150px) {
+
+    header{
+        width: 100%;
+
+    }
+
+    div.shadow{
+        width: 100%;
+    }
+
+    body > header > div.shadow.position-relative.sub-header > div
+    {
+        width: 1024px;
+    }
+    img.logo{
+
+        left: 4%;
+    }
+    span.slogan{
+        left: 14%;
+    }
+    header > div.shadow.position-relative > div > ul{
+        position: absolute;
+        left: 33%;
+        width: 38%;
+    }
+
+    header > div.shadow.position-relative > div > ul >li{
+    width: 110px;
+    }
+
+    a.btn-lang{
+        left: 75.6%;
+    }
+
+    a.btn-search{
+        left: 84%;
+    }
+
+    button.btn-hamburger{
+        left: 92%;
+    }
+
+    body > header > div.top-menu > ul{
+        width: 1024px;
+    }
+
+    body > header > div.top-menu > ul{
+
+    }
+
+}
