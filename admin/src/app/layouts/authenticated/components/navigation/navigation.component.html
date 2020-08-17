@@ -1,18 +1,19 @@
-<mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #drawer class="sidenav" fixedInViewport
-                 [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-                 [mode]="(isHandset$ | async) ? 'over' : 'side'"
-                 [opened]="(isHandset$ | async) === false">
+<mat-sidenav-container class="sidenav-container" autosize>
+    <mat-sidenav #sidenav class="sidenav" mode="over">
+        <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
         <mat-toolbar>Menu</mat-toolbar>
         <mat-nav-list>
             <a mat-list-item routerLink="/pages">Pages</a>
             <a mat-list-item routerLink="/news">News</a>
+            <a mat-list-item routerLink="/news-categories">News Categories</a>
             <a mat-list-item routerLink="/contents">Contents</a>
+            <a mat-list-item routerLink="/content-categories">Content Categories</a>
             <a mat-list-item routerLink="/keywords">Keywords</a>
             <app-logout-button></app-logout-button>
         </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content>
+    <mat-sidenav-content class="sidenav-content">
+        <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
         <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>

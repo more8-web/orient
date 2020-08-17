@@ -1,0 +1,10 @@
+<div class="container">
+    <app-table-row *ngIf="hasHeader" [columns]="header.columns" [values]="header.values"></app-table-row>
+    <app-table-row
+        *ngFor="let rowValues of body.values"
+        [columns]="body.columns"
+        [values]="rowValues"
+        (click)="onRowClick(rowValues.id)"
+    ></app-table-row>
+    <app-table-row *ngIf="hasFooter" [columns]="footer.columns" [values]="footer.values"></app-table-row>
+</div>

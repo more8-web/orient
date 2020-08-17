@@ -14,10 +14,11 @@ import { ContextModule } from "./context";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { environment } from "../environments/environment";
+import { FormService } from "@app/services/form.service";
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
     ],
     imports: [
         BrowserModule,
@@ -39,7 +40,10 @@ import { environment } from "../environments/environment";
             provide: HTTP_INTERCEPTORS,
             useClass: AuthorizationInterceptor,
             multi: true
-        }
+        },
+        FormService
+    ],
+    exports: [
     ],
     bootstrap: [AppComponent]
 })

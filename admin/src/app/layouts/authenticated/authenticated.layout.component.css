@@ -1,0 +1,9 @@
+:host {
+    display: flex;
+    height: 100vh;
+}
+
+.main-content {
+    background-color: whitesmoke;
+    flex: auto;
+}

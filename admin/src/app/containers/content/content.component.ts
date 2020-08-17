@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 import { Content } from "@context/models";
 import { ContentDispatcher, ContentSelectors } from "@context/store/content";
 
-
 @Component({
-  selector: 'app-content',
-  templateUrl: './content.component.html',
-  styleUrls: ['./content.component.css']
+    selector: "app-content",
+    templateUrl: "./content.component.html",
+    styleUrls: ["./content.component.css"]
 })
 export class ContentComponent implements OnInit {
 
@@ -20,7 +19,5 @@ export class ContentComponent implements OnInit {
     ngOnInit(): void {
         this.dispatcher.load();
         this.selector.list().subscribe(data => this.contents = [...data]);
-
     }
-
 }

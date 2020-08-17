@@ -1,6 +1,6 @@
 import { ContentList } from "../../models";
 
-export const newsFeatureKey = "content";
+export const newsFeatureKey = "contents";
 
 export interface State {
     entities: ContentList;

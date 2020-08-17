@@ -1,0 +1,6 @@
+:host {
+    border: 1px white solid;
+    padding: 5px;
+    color: #2f2f2f;
+    background: linear-gradient(to top, #cbc8c4, #706d6f);
+}

@@ -19,7 +19,9 @@ export const reducer = createReducer(
     ),
     on(
         actions.select,
-        (state, {id}) => ({...state, selected: id})
+        (state, {id}) => {
+            return ({...state, selected: id})
+        }
     ),
     on(
         actions.update,

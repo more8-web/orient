@@ -1,6 +1,2 @@
-<table>
-    <tr *ngFor="let keyword of keywords">
-        <td>{{ keyword.id }}</td>
-        <td>{{ keyword.value }}</td>
-    </tr>
-</table>
+<h1>Keywords</h1>
+<app-keyword-table [values]="keywords"></app-keyword-table>

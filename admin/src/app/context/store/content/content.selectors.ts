@@ -10,7 +10,6 @@ const stateIds = state => state[newsFeatureKey].ids;
 const stateSelected = state => state[newsFeatureKey].selected;
 const stateIsLoading = state => state[newsFeatureKey].isLoading;
 
-
 @Injectable()
 export class ContentSelectors {
     constructor(private store: Store) {

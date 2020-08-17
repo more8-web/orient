@@ -2,16 +2,23 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { StoreModule } from "@context/store";
 
-import { NewsComponent } from "./news.component";
+import { TableModule } from "@components/table";
+import { FormModule } from "@components/form";
+
+import { NewsTableComponent } from './news-table';
+import { NewsFormComponent } from './news-form';
+
 
 
 @NgModule({
-    declarations: [NewsComponent],
+    declarations: [NewsTableComponent, NewsFormComponent],
     imports: [
         CommonModule,
-        StoreModule
+        StoreModule,
+        TableModule,
+        FormModule
     ],
-    exports: [NewsComponent],
+    exports: [],
 })
 export class NewsModule {
 }

@@ -14,7 +14,7 @@ import { HomeComponent } from "./home.component";
         CommonModule,
         RouterModule,
         MatButtonModule,
-        AuthorizationModule
+        AuthorizationModule,
     ]
 })
 export class HomeModule {

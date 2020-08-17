@@ -11,11 +11,11 @@ export const reducer = createReducer(
     on(
         actions.loadSuccess,
         (state, {contents}) => ({
-            ...state,
-            ids: Object.values(contents).map(item => item.id).sort(),
-            entities: {...contents},
-            isLoading: false
-        })
+                ...state,
+                ids: Object.values(contents).map(item => item.id).sort(),
+                entities: {...contents},
+                isLoading: false
+            })
     ),
     on(
         actions.select,

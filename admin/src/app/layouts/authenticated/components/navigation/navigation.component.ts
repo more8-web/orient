@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { Observable } from "rxjs";
 import { map, shareReplay } from "rxjs/operators";
 import { TokenService } from "@app/guards";
+import { FormControl } from "@angular/forms";
 
 
 @Component({
@@ -14,16 +15,8 @@ export class NavigationComponent implements OnInit, DoCheck {
 
     public auth: boolean;
 
-    constructor(private breakpointObserver: BreakpointObserver,
-                private tokenService: TokenService) {
+    constructor(private tokenService: TokenService) {
     }
-
-
-    isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-        .pipe(
-            map(result => result.matches),
-            shareReplay()
-        );
 
     ngOnInit(): void {
     }

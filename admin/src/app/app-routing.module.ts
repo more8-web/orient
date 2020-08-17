@@ -15,10 +15,46 @@ import { ConfirmResetPasswordFormComponent } from "@components/authorization/res
 import { AuthenticatedLayoutComponent } from "@app/layouts/authenticated/authenticated.layout.component";
 import { DashboardComponent } from "@pages/dashboard/dashboard.component";
 import { NewsComponent } from "@pages/news";
+import {
+    ContentCategoryComponent,
+    ContentComponent, KeywordComponent,
+    NewsCategoryComponent,
+    NewsLogComponent
+} from "@app/containers";
+import { NewsFormComponent } from "@containers/news/news-form";
+import { NewsTableComponent } from "@containers/news/news-table";
+import {PageTableComponent} from "@containers/page/page-table";
+import {PageFormComponent} from "@containers/page/page-form";
 
 
 
 const routes: Routes = [
+    {
+        path: "",
+        component: AuthenticatedLayoutComponent,
+        children: [
+            {path: "", component: NewsComponent},
+            {
+                path: "pages", component: NewsComponent, children: [
+                    {path: "", component: PageTableComponent},
+                    {path: ":id", component: PageFormComponent},
+                ]
+            },
+            {
+                path: "news", component: NewsComponent, children: [
+                    {path: "", component: NewsTableComponent},
+                    {path: ":id", component: NewsFormComponent},
+                ]
+            },
+            {path: "news-categories", component: NewsCategoryComponent},
+            {path: "contents", component: ContentComponent},
+            {path: "content-categories", component: ContentCategoryComponent},
+            {path: "keywords", component: KeywordComponent},
+            {path: "logs", component: NewsLogComponent},
+            {path: "dashboard", component: NewsComponent},
+        ],
+        // canActivate: [AuthorizationGuard]
+    },
     {
         path: "",
         component: GuestLayoutComponent,
@@ -31,17 +67,6 @@ const routes: Routes = [
             {path: "", component: HomeComponent}
         ],
         canActivate: [ForAuthorizatedGuard]
-    },
-    {
-        path: "",
-        component: AuthenticatedLayoutComponent,
-        children: [
-            {path: "pages", component: NewsComponent},
-            {path: "news", component: NewsComponent},
-            {path: "contents", component: NewsComponent},
-            {path: "keywords", component: NewsComponent},
-        ],
-        // canActivate: [AuthorizationGuard]
     },
 
 ];

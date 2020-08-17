@@ -11,22 +11,24 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { LayoutModule } from '@angular/cdk/layout';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [],
   exports: [],
-  imports: [
-    CommonModule,
-    AuthorizationModule,
-    DashboardModule,
-    HomeModule,
-    MatGridListModule,
-    MatCardModule,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
-    LayoutModule
-  ]
+    imports: [
+        CommonModule,
+        AuthorizationModule,
+        DashboardModule,
+        HomeModule,
+        MatGridListModule,
+        MatCardModule,
+        MatMenuModule,
+        MatIconModule,
+        MatButtonModule,
+        LayoutModule,
+        RouterModule
+    ]
 })
 export class PagesModule {
 }

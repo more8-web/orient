@@ -1,8 +1,2 @@
-<table>
-    <tr *ngFor="let page of pages">
-        <td>{{ page.id }}</td>
-        <td>{{ page.alias }}</td>
-        <td>{{ page.url }}</td>
-        <td>{{ page.template }}</td>
-    </tr>
-</table>
+<h1>Pages</h1>
+<app-page-table [values]="pages"></app-page-table>

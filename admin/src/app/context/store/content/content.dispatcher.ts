@@ -4,7 +4,6 @@ import { Injectable } from "@angular/core";
 import * as actions from "./content.actions";
 import { Content } from "../../models";
 
-
 @Injectable()
 export class ContentDispatcher {
     constructor(private store: Store) {

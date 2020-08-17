@@ -1,8 +1,2 @@
-<table>
-    <tr *ngFor="let content of contents">
-        <td>{{ content.id }}</td>
-        <td>{{ content.alias }}</td>
-        <td>{{ content.description }}</td>
-        <td>{{ content.value }}</td>
-    </tr>
-</table>
+<h1>Contents</h1>
+<app-content-table [values]="contents"></app-content-table>

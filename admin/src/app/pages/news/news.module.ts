@@ -7,6 +7,7 @@ import {
     ContentCategoryModule, ContentModule, KeywordModule,
     NewsCategoryModule, NewsLogModule, PageModule
 } from "@app/containers";
+import { RouterModule } from "@angular/router";
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import {
         ContentCategoryModule,
         KeywordModule,
         PageModule,
+        RouterModule,
     ],
     exports: [
         NewsComponent

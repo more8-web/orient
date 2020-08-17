@@ -1,7 +1,2 @@
-<table>
-    <tr *ngFor="let category of categories">
-        <td>{{ category.id }}</td>
-        <td>{{ category.alias }}</td>
-        <td>{{ category.parent }}</td>
-    </tr>
-</table>
+<h1>News Categories</h1>
+<app-news-category-table [values]="categories"></app-news-category-table>
