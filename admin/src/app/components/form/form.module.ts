@@ -9,7 +9,7 @@ import { TextareaComponent } from "./textarea";
 import { RadioComponent } from "./radio";
 import { CheckboxComponent } from "./checkbox";
 import { FormComponent } from './form.component';
-import { ButtonComponent } from './button/button.component';
+import { ButtonComponent } from './button';
 
 @NgModule({
     declarations: [
@@ -29,7 +29,8 @@ import { ButtonComponent } from './button/button.component';
     exports: [
         FormComponent,
         InputComponent,
-        TextareaComponent
+        TextareaComponent,
+        ButtonComponent
     ]
 })
 export class FormModule {

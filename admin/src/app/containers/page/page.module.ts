@@ -4,15 +4,16 @@ import { CommonModule } from '@angular/common';
 import { StoreModule } from "@app/context";
 import { TableModule } from "@components/table";
 import { PageTableComponent } from "@containers/page/page-table";
-import { PageFormComponent } from '@containers/page/page-form';
+import { UpdatePageFormComponent } from '@containers/page/update-page-form';
 import {ReactiveFormsModule} from "@angular/forms";
 import {FormModule} from "@components/form";
 
 
 
 @NgModule({
-    declarations: [ PageTableComponent, PageFormComponent],
+    declarations: [ PageTableComponent, UpdatePageFormComponent],
     exports: [
+        PageTableComponent
     ],
     imports: [
         CommonModule,

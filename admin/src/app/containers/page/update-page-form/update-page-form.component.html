@@ -1,0 +1,15 @@
+<form [formGroup]="pageForm">
+    <app-input [value]="alias" [label]="'Alias'"
+                (formValue)="aliasInput($event.target.value)"
+                formControlName="alias" ngDefaultControl required>
+    </app-input>
+    <app-input [value]="url" [label]="'URL'"
+               (formValue)="urlInput($event.target.value)"
+               formControlName="url" ngDefaultControl>
+    </app-input>
+    <app-textarea [value]="template" [label]="'Template'"
+                  (formValue)="templateInput($event.target.value)">
+    </app-textarea>
+    <app-button [label]="'Save'" (status)="onClick($event)"></app-button>
+    <app-button [label]="'Back'" (status)="onClick($event)"></app-button>
+</form>

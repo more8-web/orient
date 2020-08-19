@@ -1,5 +1,4 @@
-import { Component, HostBinding, HostListener, Input, OnInit } from "@angular/core";
-import { FormService } from "@app/services/form.service";
+import {Component, EventEmitter, HostBinding, Input, OnInit, Output} from "@angular/core";
 
 @Component({
     selector: "app-input",
@@ -10,20 +9,20 @@ export class InputComponent implements OnInit {
 
     @Input() label: any;
     @Input() value: any;
+    @Input() formName: any;
 
     @Input() @HostBinding("class") classes;
     @HostBinding("class") localClasses = ["form-group"];
 
-    @HostListener("change", ["$event.target.value"])
-    onClick(inputValue) {
-        this.formService.onClick(this.label, inputValue);
-    }
+    @Output() formValue = new EventEmitter();
 
-
-    constructor(private formService: FormService) {
+    constructor() {
     }
 
     ngOnInit(): void {
     }
 
+    toForm(value) {
+        this.formValue.emit(value);
+    }
 }

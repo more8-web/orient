@@ -12,7 +12,9 @@ export class ButtonComponent implements OnInit {
     @Input() @HostBinding("class") classes;
     @Input() label: any;
 
-    press: boolean = false;
+    @Output() status = new EventEmitter();
+
+    press = false;
 
     constructor(private formService: FormService) {
     }
@@ -20,14 +22,14 @@ export class ButtonComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    click() {
+    onClick() {
 
-        let status = !this.press;
-        let label = this.label;
+        const status = !this.press;
 
         this.formService.clickStatus = true;
-        this.formService.onClick(label, status);
+        this.formService.onClick(this.label, status);
 
+        this.status.emit(this.label);
     }
 
 }

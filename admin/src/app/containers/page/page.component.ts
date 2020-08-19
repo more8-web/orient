@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Page } from "../../context/models";
+import { Page } from "@app/context";
 import { PageDispatcher, PageSelectors } from "../../context/store/page";
 
 @Component({

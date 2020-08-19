@@ -24,7 +24,7 @@ import {
 import { NewsFormComponent } from "@containers/news/news-form";
 import { NewsTableComponent } from "@containers/news/news-table";
 import {PageTableComponent} from "@containers/page/page-table";
-import {PageFormComponent} from "@containers/page/page-form";
+import {UpdatePageFormComponent} from "@containers/page/update-page-form";
 
 
 
@@ -37,7 +37,7 @@ const routes: Routes = [
             {
                 path: "pages", component: NewsComponent, children: [
                     {path: "", component: PageTableComponent},
-                    {path: ":id", component: PageFormComponent},
+                    {path: ":id", component: UpdatePageFormComponent},
                 ]
             },
             {

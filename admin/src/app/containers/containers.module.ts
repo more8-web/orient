@@ -8,10 +8,11 @@ import { NewsLogModule } from "./news-log";
 import { ContentCategoryModule } from "./content-category";
 import { KeywordModule } from "./keyword";
 import { PageModule } from "./page";
+import {PageComponent} from "@containers/page/page.component";
 
 
 @NgModule({
-    declarations: [],
+    declarations: [PageComponent],
     imports: [
         CommonModule,
         NewsModule,

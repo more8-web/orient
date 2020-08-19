@@ -1,6 +1,6 @@
 import { PageList } from "../../models";
 
-export const newsFeatureKey = "content";
+export const newsFeatureKey = "pages";
 
 export interface State {
     entities: PageList;

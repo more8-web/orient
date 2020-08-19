@@ -1,4 +1,8 @@
-<label>
-    {{label}}
-    <input type="text" class="form-control" name="inputValue" value="{{ value }}">
-</label>
+<div class="form-group">
+    <label>
+        {{label}}
+        <input type="text" class="form-control"
+                value="{{ value }}"
+               (change)="toForm($event)">
+    </label>
+</div>

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PageFormComponent } from './page-form.component';
+import { UpdatePageFormComponent } from './update-page-form.component';
 
 describe('PageFormComponent', () => {
-  let component: PageFormComponent;
-  let fixture: ComponentFixture<PageFormComponent>;
+  let component: UpdatePageFormComponent;
+  let fixture: ComponentFixture<UpdatePageFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PageFormComponent ]
+      declarations: [ UpdatePageFormComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PageFormComponent);
+    fixture = TestBed.createComponent(UpdatePageFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

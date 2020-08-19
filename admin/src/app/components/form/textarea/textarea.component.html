@@ -1,5 +1,6 @@
 <div class="form-group">
-    <label></label>
-    <textarea>
+    <label>{{label}}</label>
+    <br>
+    <textarea (change)="toForm($event)">{{value}}
     </textarea>
 </div>
