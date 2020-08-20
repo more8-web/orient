@@ -5,15 +5,14 @@
         width: 100%;
     }
 
-    div.shadow{
+    body > header > div.sub-header
+    {
         width: 100%;
     }
 
-    body > header > div.shadow.position-relative.sub-header > div
-    {
+    body > header > div.shadow.position-relative.sub-header > div{
         width: 768px;
     }
-
     img.logo{
 
         left: 0;

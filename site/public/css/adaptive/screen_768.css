@@ -5,25 +5,20 @@
         width: 100%;
     }
 
-    div.shadow{
-        width: 100%;
-    }
-
-    body > header > div.sub-header > div
-    {
-        width: 100%;
-    }
 
     body > header > div.shadow.position-relative.sub-header > div
     {
-        width: 100%;
+        width: 90vw;
     }
 
     img.logo{
-        left: 0;
+        left: 4%;
+        width: 15vw;
     }
+
     span.slogan{
         left: 18%;
+        font-size: 0.6em;
     }
     header > div.shadow.position-relative > div > ul{
         position: absolute;

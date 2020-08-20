@@ -10,10 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <title>Orient</title>
 </head>
-<body>
+<body style="background-color: #818182">
 
     <header class="header">
-        <div class="shadow position-relative sub-header" style="z-index: 1000">
+        <div class="shadow position-relative sub-header" style="z-index: 1000; background-color: white">
             <div class="top-block  align-items-center ">
                     <a href="/" class="d-flex align-items-center "><img src="assets/img/logo.svg" alt="" class="logo">
                                                      <span class="slogan">НАШ ОРИЕНТИР - ТО, <br>ЧТО СБЛИЖАЕТ ЛЮДЕЙ</span>
@@ -25,10 +25,16 @@
                     <li class="ml-3"><a href="#" class="">Подписаться</a></li>
                 </ul>
                 <a href="#" class="btn-lang">ENG</a>
-                <a href="#" class="btn-search"></a>
-                <input class="d-none input-search-active" placeholder="Найти...">
 
-                <button class="btn-hamburger"></button>
+                <div id="sb-search" class="sb-search">
+                    <form class="align-items-center search-form">
+                        <input class="sb-search-input" placeholder="Найти..." type="text" value="" name="search" id="search">
+                        <input class="sb-search-submit" type="submit" value="">
+                        <span class="sb-icon-search"></span>
+                    </form>
+                </div>
+
+                <button type="submit" class="btn-hamburger"></button>
             </div>
         </div>
         <div class="top-menu " >
@@ -49,9 +55,683 @@
         </div>
     </header>
 
-    <div class="content" style="height: 50px">
+<div class="d-flex justify-content-center m-auto" style="background-color: white; width: 1440px; padding-top: 24px">
+    <section class="content">
+        <span class="chapter">ГЛАВНЫЕ НОВОСТИ ORIENT</span>
+        <div class="main-banner mb-4">
+            <a href="#" class="img-fluid"><img src="assets/img/main-banner.png" alt=""></a>
+            <div class="mt-3 border-bottom" style="height: 140px">
+                <a href="#" class="h2 list-unstyled" style="color: black; font-size: 36px ">Власти Италии назвали стоимость вакцины от COVID-19</a>
+                <div class="mt-3" >
+                    <span class="h6 text-uppercase" style="color: #3fb159">В МИРЕ</span>
+                    <img src="assets/img/ei_refresh.svg" alt="">
+                    <span style="color: #818182"> 12:05</span>
+                    <img src="assets/img/ei_eye.svg" alt="">
+                    <span style="color: #818182">2</span>
+                </div>
+            </div>
+            <div class="mt-3 border-bottom" style="height: 140px">
+                <a href="#" class="h2 list-unstyled" style="color: black; font-size: 28px ">Мегатренды будущего: какие навыки понадобятся работодателям</a>
+                <div class="mt-3" >
+                    <span class="h6 text-uppercase" style="color: #3fb159; ">экономика</span>
+                    <img src="assets/img/ei_play.png" alt="">
+                    <span style="color: #818182"> 11:05</span>
+                    <img src="assets/img/ei_eye.svg" alt="">
+                    <span style="color: #818182">654</span>
+                    <img src="assets/img/ei_comment.svg" alt="">
+                    <span style="color: #818182">423</span>
+                </div>
+            </div>
+            <div class="mt-3 border-bottom" style="height: 140px">
+                <a href="#" class="h2 list-unstyled" style="color: black; font-size: 28px ">Акции Nvidia растут даже на фоне коронавируса. От них ждут еще большего</a>
+                <div class="mt-3" >
+                    <span class="h6 text-uppercase mb-0" style="color: #3fb159; ">экономика</span>
+                    <img src="assets/img/entypo_flash.svg" alt="">
+                    <span style="color: #818182"> 11:05</span>
+                    <img src="assets/img/ei_eye.svg" alt="">
+                    <span style="color: #818182">654</span>
+                    <img src="assets/img/ei_comment.svg" alt="">
+                    <span style="color: #818182">423</span>
+                </div>
+            </div>
+        </div>
+        <div class="slider">
+            <div class="row align-content-center mb-4" style="width: 100%; position: relative">
+                <span class="chapter text-uppercase col-10">актуальные темы дня</span>
+                <div class="prv_b col-1"></div>
+                <div class="nxt_b col-1 align-content-center"></div>
+            </div>
+            <div class="sl_ctr">
+                <div class="sldr justify-content-between">
+                    <img src="assets/img/story1.png" alt="">
+                    <img src="assets/img/story2.png" alt="">
+                    <img src="assets/img/storie.png" alt="">
+                    <img src="assets/img/story1.png" alt="">
+                    <img src="assets/img/story2.png" alt="">
+                    <img src="assets/img/storie.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="m-2 mb-4 mt-4" style="width: 728px; height: 90px; background-color: #3fb159;">
+        </div>
+        <div class="mt-3 border-bottom" style="height: 140px">
+                <a href="#" class="h2 list-unstyled" style="color: black; font-size: 28px ">В Туркменабате идут работы по устранению последствий сильного урагана</a>
+                <div class="mt-3" >
+                    <span class="h6 text-uppercase mb-0" style="color: #3fb159; ">общество</span>
+                    <img src="assets/img/ei_chart.svg" alt="">
+                    <span style="color: #818182"> 11:05</span>
+                    <img src="assets/img/ei_eye.svg" alt="">
+                    <span style="color: #818182">654</span>
+                    <img src="assets/img/ei_comment.svg" alt="">
+                    <span style="color: #818182">423</span>
+                </div>
+        </div>
+        <div class="mt-3 border-bottom" style="height: 140px">
+                <a href="#" class="h2 list-unstyled" style="color: black; font-size: 28px ">Бердымухамедов и Мирзиев обсудили по телефону борьбу со стихийным бедствием и пандемией</a>
+                <div class="mt-3" >
+                    <span class="h6 text-uppercase mb-0" style="color: #3fb159; ">политика</span>
+                    <img src="assets/img/ei_image.svg" alt="">
+                    <span style="color: #818182"> 11:05</span>
+                    <img src="assets/img/ei_eye.svg" alt="">
+                    <span style="color: #818182">654</span>
+                    <img src="assets/img/ei_comment.svg" alt="">
+                    <span style="color: #818182">423</span>
+                    <img src="assets/img/ei_like.svg" alt="">
+                    <span style="color: #818182">1423</span>
+                </div>
+        </div>
+        <div class="mt-3 border-bottom" style="height: 140px">
+            <a href="#" class="h2 list-unstyled" style="color: black; font-size: 28px ">В ВОЗ назвали лучшее средство против COVID-19</a>
+            <div class="mt-3" >
+                <span class="h6 text-uppercase mb-0" style="color: #3fb159; ">новости науки</span>
+                <img src="assets/img/ei_chart.svg" alt="">
+                <span style="color: #818182"> 11:05</span>
+                <img src="assets/img/ei_eye.svg" alt="">
+                <span style="color: #818182">654</span>
+                <img src="assets/img/ei_comment.svg" alt="">
+                <span style="color: #818182">423</span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <a href="#" class="img-fluid"><img src="assets/img/carousel.png" alt=""></a>
+            <div class="mt-3 border-bottom" style="height: 140px">
+                <a href="#" class="h2 list-unstyled" style="color: black; font-size: 36px ">Гибкий конвейер: какое будущее ждет цифровизацию
+                    в промышленности</a>
+                <div class="mt-3" >
+                    <span class="h6 text-uppercase" style="color: #3fb159">спецпроект</span>
+                    <img src="assets/img/ei_external-link.svg" alt="">
+                    <span style="color: #818182"> 12:05</span>
+                    <img src="assets/img/ei_eye.svg" alt="">
+                    <span style="color: #818182">2</span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-3 border-bottom" style="height: 140px">
+            <a href="#" class="h2 list-unstyled" style="color: black; font-size: 28px ">В Туркменабате идут работы по устранению последствий сильного урагана</a>
+            <div class="mt-3" >
+                <span class="h6 text-uppercase mb-0" style="color: #3fb159; ">общество</span>
+                <img src="assets/img/ei_chart.svg" alt="">
+                <span style="color: #818182"> 11:05</span>
+                <img src="assets/img/ei_eye.svg" alt="">
+                <span style="color: #818182">654</span>
+                <img src="assets/img/ei_comment.svg" alt="">
+                <span style="color: #818182">423</span>
+            </div>
+        </div>
+        <div class="mt-3 border-bottom" style="height: 140px">
+            <a href="#" class="h2 list-unstyled" style="color: black; font-size: 28px ">Бердымухамедов и Мирзиев обсудили по телефону борьбу со стихийным бедствием и пандемией</a>
+            <div class="mt-3" >
+                <span class="h6 text-uppercase mb-0" style="color: #3fb159; ">политика</span>
+                <img src="assets/img/ei_image.svg" alt="">
+                <span style="color: #818182"> 11:05</span>
+                <img src="assets/img/ei_eye.svg" alt="">
+                <span style="color: #818182">654</span>
+                <img src="assets/img/ei_comment.svg" alt="">
+                <span style="color: #818182">423</span>
+                <img src="assets/img/ei_like.svg" alt="">
+                <span style="color: #818182">1423</span>
+            </div>
+        </div>
+        <div class="mt-3 mb-4 border-bottom" style="height: 100px">
+            <a href="#" class="h2 list-unstyled" style="color: black; font-size: 28px ">В ВОЗ назвали лучшее средство против COVID-19</a>
+            <div class="mt-3">
+                <span class="h6 text-uppercase mb-0" style="color: #3fb159; ">новости науки</span>
+                <img src="assets/img/ei_chart.svg" alt="">
+                <span style="color: #818182"> 11:05</span>
+                <img src="assets/img/ei_eye.svg" alt="">
+                <span style="color: #818182">654</span>
+                <img src="assets/img/ei_comment.svg" alt="">
+                <span style="color: #818182">423</span>
+            </div>
+        </div>
+        <div class="overflow-hidden mb-4 position-relative" style="height: 385px; width: 100%; ">
+            <div class="mb-3">
+                <span class="chapter text-uppercase" style="font-size: 16px">эксклюзив</span>
+            </div>
+            <div class="" style="width: 746px; height: 343px">
+                <div class="position-absolute " style="width: 485px; height: 340px; border: solid 1px gray; border-radius: 20px; left: 0; padding: 40px;">
+                    <img src="assets/img/ellipse9.png" alt="" class="d-inline-block mr-3 float-left">
+                    <h5 class="d-inline-block pl-3 pt-3" style="width: 260px; height: 88px">Как туркменский бизнес готовится к участию в госпроектах страны</h5>
+                    <img src="assets/img/or.svg" alt="" class="pl-3">
+                    <span class="text-uppercase pt-1" style="color: #818182; font-size: 14px; font-weight: bold">Майя аманмурадова</span>
+                    <img src="assets/img/twitter.svg" alt="" class="ml-2" style="height: 16px; width: 16px">
+                    <img src="assets/img/facebook.svg" alt="" class="ml-2" style="height: 16px; width: 16px">
+                    <p class="mt-4">Союз промышленников и предпринимателей Туркменистана (СППТ) совместно с областными администрациями подготовил ряд бизнес-проектов для развития экономики регионов.</p>
+                </div>
+                <div class="position-absolute" style="width: 485px; height: 340px; border: solid 1px gray; border-radius: 20px; left: 66%; padding: 40px;">
+                    <img src="assets/img/ellipse10.png" alt="" class="d-inline-block mr-3 float-left">
+                    <h5 class="d-inline-block pl-3 pt-3" style="width: 260px; height: 88px">Как туркменский бизнес готовится к участию в госпроектах страны</h5>
+                    <img src="assets/img/or.svg" alt="" class="pl-3">
+                    <span class="text-uppercase pt-1" style="color: #818182; font-size: 14px; font-weight: bold">Майя аманмурадова</span>
+                    <img src="assets/img/twitter.svg" class="ml-2" alt="" style="height: 16px; width: 16px">
+                    <img src="assets/img/facebook.svg" class="ml-2" alt="" style="height: 16px; width: 16px">
+                    <p class="mt-4">Союз промышленников и предпринимателей Туркменистана (СППТ) совместно с областными администрациями подготовил ряд бизнес-проектов для развития экономики регионов.</p>
+                </div>
+            </div>
+        </div>
+        <div class="m-2 mb-4 mt-4" style="width: 728px; height: 90px; background-color: #3fb159;"></div>
+        <div class="mt-3 border-bottom" style="height: 140px">
+            <a href="#" class="h2 list-unstyled" style="color: black; font-size: 28px ">В Туркменабате идут работы по устранению последствий сильного урагана</a>
+            <div class="mt-3" >
+                <span class="h6 text-uppercase mb-0" style="color: #3fb159; ">общество</span>
+                <img src="assets/img/ei_chart.svg" alt="">
+                <span style="color: #818182"> 11:05</span>
+                <img src="assets/img/ei_eye.svg" alt="">
+                <span style="color: #818182">654</span>
+                <img src="assets/img/ei_comment.svg" alt="">
+                <span style="color: #818182">423</span>
+            </div>
+        </div>
+        <div class="mt-3 border-bottom" style="height: 140px">
+            <a href="#" class="h2 list-unstyled" style="color: black; font-size: 28px ">Бердымухамедов и Мирзиев обсудили по телефону борьбу со стихийным бедствием и пандемией</a>
+            <div class="mt-3" >
+                <span class="h6 text-uppercase mb-0" style="color: #3fb159; ">политика</span>
+                <img src="assets/img/ei_image.svg" alt="">
+                <span style="color: #818182"> 11:05</span>
+                <img src="assets/img/ei_eye.svg" alt="">
+                <span style="color: #818182">654</span>
+                <img src="assets/img/ei_comment.svg" alt="">
+                <span style="color: #818182">423</span>
+                <img src="assets/img/ei_like.svg" alt="">
+                <span style="color: #818182">1423</span>
+            </div>
+        </div>
+        <div class="mt-3 mb-4 border-bottom" style="height: 100px">
+            <a href="#" class="h2 list-unstyled" style="color: black; font-size: 28px ">В ВОЗ назвали лучшее средство против COVID-19</a>
+            <div class="mt-3">
+                <span class="h6 text-uppercase mb-0" style="color: #3fb159; ">новости науки</span>
+                <img src="assets/img/ei_chart.svg" alt="">
+                <span style="color: #818182"> 11:05</span>
+                <img src="assets/img/ei_eye.svg" alt="">
+                <span style="color: #818182">654</span>
+                <img src="assets/img/ei_comment.svg" alt="">
+                <span style="color: #818182">423</span>
+            </div>
+        </div>
+        <iframe width="745" height="419" src="https://www.youtube.com/embed/8tdCacx-mUg" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="mt-3 border-bottom" style="height: 140px">
+            <a href="#" class="h2 list-unstyled" style="color: black; font-size: 28px ">Каспийский экономический форум.
+                Видеорепортаж 1-го дня</a>
+            <div class="mt-3" >
+                <span class="h6 text-uppercase mb-0" style="color: #3fb159; ">экономика</span>
+                <img src="assets/img/ei_play.png" alt="">
+                <span style="color: #818182"> 11:05</span>
+                <img src="assets/img/ei_eye.svg" alt="">
+                <span style="color: #818182">654</span>
+                <img src="assets/img/ei_comment.svg" alt="">
+                <span style="color: #818182">423</span>
+            </div>
+        </div>
+        <div class="mt-3 border-bottom" style="height: 140px">
+            <a href="#" class="h2 list-unstyled" style="color: black; font-size: 28px ">Мегатренды будущего: какие навыки понадобятся работодателям </a>
+            <div class="mt-3" >
+                <span class="h6 text-uppercase mb-0" style="color: #3fb159; ">экономика</span>
+                <img src="assets/img/ei_play.png" alt="">
+                <span style="color: #818182"> 11:05</span>
+                <img src="assets/img/ei_eye.svg" alt="">
+                <span style="color: #818182">654</span>
+                <img src="assets/img/ei_comment.svg" alt="">
+                <span style="color: #818182">423</span>
+                <img src="assets/img/ei_like.svg" alt="">
+                <span style="color: #818182">1423</span>
+            </div>
+        </div>
+        <div class="mt-3 mb-4 border-bottom" style="height: 100px">
+            <a href="#" class="h2 list-unstyled" style="color: black; font-size: 28px ">В ВОЗ назвали лучшее средство против COVID-19</a>
+            <div class="mt-3">
+                <span class="h6 text-uppercase mb-0" style="color: #3fb159; ">в мире</span>
+                <img src="assets/img/ei_refresh.svg" alt="">
+                <span style="color: #818182"> 11:05</span>
+                <img src="assets/img/ei_eye.svg" alt="">
+                <span style="color: #818182">654</span>
+                <img src="assets/img/ei_comment.svg" alt="">
+                <span style="color: #818182">423</span>
+            </div>
+        </div>
+        <div class="pt-4" style="height: 250px; width: 746px">
+            <img src="assets/img/slice1.svg" alt="" style="margin-top: -250px">
+            <p class="d-inline-block" style="width: 453px; font-size: 24px; font-style: italic;">Нет ничего более преступного для финансового благополучия, чем придумать отличную идею и не удосужиться реализовать ее.</p>
+            <img src="assets/img/ellipse2.png" alt="" class="float-right" style="margin-top: 17px">
+            <div class="row align-items-center" style="margin-left: 250px">
+                <img src="assets/img/ei_arrow-right.png" alt="" style="width: 24px; height: 24px">
+                <span style="font-size: 14px; color: #3fb159; ">20 Лучших цитат Дональда Трампа</span>
+            </div>
+        </div>
+        <div class="mb-5" style="width: 720px; height: 180px; background-color: #F2994A">
 
-    </div>
+        </div>
+        <div class="mt-3 border-bottom" style="height: 140px">
+            <a href="#" class="h2 list-unstyled" style="color: black; font-size: 28px ">Каспийский экономический форум.
+                Видеорепортаж 1-го дня</a>
+            <div class="mt-3" >
+                <span class="h6 text-uppercase mb-0" style="color: #3fb159; ">экономика</span>
+                <img src="assets/img/ei_play.png" alt="">
+                <span style="color: #818182"> 11:05</span>
+                <img src="assets/img/ei_eye.svg" alt="">
+                <span style="color: #818182">654</span>
+                <img src="assets/img/ei_comment.svg" alt="">
+                <span style="color: #818182">423</span>
+            </div>
+        </div>
+        <div class="mt-3 border-bottom" style="height: 140px">
+            <a href="#" class="h2 list-unstyled" style="color: black; font-size: 28px ">Мегатренды будущего: какие навыки понадобятся работодателям </a>
+            <div class="mt-3" >
+                <span class="h6 text-uppercase mb-0" style="color: #3fb159; ">экономика</span>
+                <img src="assets/img/ei_play.png" alt="">
+                <span style="color: #818182"> 11:05</span>
+                <img src="assets/img/ei_eye.svg" alt="">
+                <span style="color: #818182">654</span>
+                <img src="assets/img/ei_comment.svg" alt="">
+                <span style="color: #818182">423</span>
+                <img src="assets/img/ei_like.svg" alt="">
+                <span style="color: #818182">1423</span>
+            </div>
+        </div>
+        <div class="mt-3 mb-4 border-bottom" style="height: 100px">
+            <a href="#" class="h2 list-unstyled" style="color: black; font-size: 28px ">В ВОЗ назвали лучшее средство против COVID-19</a>
+            <div class="mt-3">
+                <span class="h6 text-uppercase mb-0" style="color: #3fb159; ">в мире</span>
+                <img src="assets/img/ei_refresh.svg" alt="">
+                <span style="color: #818182"> 11:05</span>
+                <img src="assets/img/ei_eye.svg" alt="">
+                <span style="color: #818182">654</span>
+                <img src="assets/img/ei_comment.svg" alt="">
+                <span style="color: #818182">423</span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <a href="#" class="img-fluid"><img src="assets/img/carousel2.png" alt=""></a>
+            <div class="mt-3 pb-3 border-bottom" style="height: 140px">
+                <a href="#" class="h2 " style="color: black; font-size: 36px ">В Авазе юные сёрферы открыли сезон</a>
+                <div class="mt-4" >
+                    <span class="h6 text-uppercase" style="color: #3fb159">общество</span>
+                    <img src="assets/img/ei_image.svg" alt="">
+                    <span style="color: #818182"> 12:05</span>
+                    <img src="assets/img/ei_eye.svg" alt="">
+                    <span style="color: #818182">654</span>
+                    <img src="assets/img/ei_comment.svg" alt="">
+                    <span style="color: #818182">423</span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-3 border-bottom" style="height: 140px">
+            <a href="#" class="h2 list-unstyled" style="color: black; font-size: 28px ">Бердымухамедов и Мирзиев обсудили по телефону борьбу со стихийным бедствием и пандемией</a>
+            <div class="mt-3" >
+                <span class="h6 text-uppercase mb-0" style="color: #3fb159; ">политика</span>
+                <img src="assets/img/ei_chart.svg" alt="">
+                <span style="color: #818182"> 11:05</span>
+                <img src="assets/img/ei_eye.svg" alt="">
+                <span style="color: #818182">654</span>
+                <img src="assets/img/ei_comment.svg" alt="">
+                <span style="color: #818182">423</span>
+            </div>
+        </div>
+        <div class="mt-3 border-bottom" style="height: 100px">
+            <a href="#" class="h2 list-unstyled" style="color: black; font-size: 28px ">В ВОЗ назвали лучшее средство против COVID-19</a>
+            <div class="mt-3" >
+                <span class="h6 text-uppercase mb-0" style="color: #3fb159; ">общество</span>
+                <img src="assets/img/ei_image.svg" alt="">
+                <span style="color: #818182"> 11:05</span>
+                <img src="assets/img/ei_eye.svg" alt="">
+                <span style="color: #818182">654</span>
+                <img src="assets/img/ei_comment.svg" alt="">
+                <span style="color: #818182">423</span>
+                <img src="assets/img/ei_like.svg" alt="">
+                <span style="color: #818182">1423</span>
+            </div>
+        </div>
+        <div class="mt-5 mb-4 d-flex overflow-hidden" style="width: 746px; height: 385px">
+            <div class="mr-2" style="width: 300px; height: 384px; border: solid 1px lightgray; border-radius: 20px 20px 0 0;">
+                <div class="" style="width: 300px; height: 201px; border-radius: 20px 20px 0 0;">
+                    <img src="assets/img/photo1.png" alt="" style="height: 201px; width: 100%"/>
+                    <p class="mt-4 ml-3" style="font-size: 22px; line-height: 26px; width: 264px; ">Почему хлопковые регионы превратились в зоны экологического бедствия планеты</p>
+                </div>
+            </div>
+            <div class="mr-2" style="width: 300px; height: 384px; border: solid 1px lightgrey; border-radius: 20px 20px 0 0;">
+                <div class="" style="width: 300px; height: 201px; ">
+                    <img src="assets/img/photo2.png" alt="" style="height: 201px; width: 100%"/>
+                    <p class="mt-4 ml-3" style="font-size: 22px; line-height: 26px; width: 264px; ">Прогноз мировых котировок на природный газ после второй волны covid19</p>
+                </div>
+            </div>
+            <div class="mr-2" style="width: 300px; height: 384px; border: solid 1px lightgrey; border-radius: 20px 20px 0 0;">
+                <div class="" style="width: 300px; height: 201px; ">
+                    <img src="assets/img/photo2.png" alt="" style="height: 201px; width: 100%"/>
+                    <p class="mt-4 ml-3" style="font-size: 22px; line-height: 26px; width: 264px; ">Прогноз мировых котировок на природный газ после второй волны covid19</p>
+                </div>
+            </div>
+        </div>
+        <div class="m-auto" style="width: 720px; height: 180px; background-color: #F2994A;">
+
+        </div>
+        <div class="mt-5" style="width: 745px; ">
+            <span class="chapter text-uppercase " style="font-size: 16px">в мире</span>
+            <ul class="mt-3 ml-auto pt-3 d-flex justify-content-between flex-wrap list-unstyled" style="border-top: solid lightgrey  1px">
+                <li style="flex: 0 1 50%; " class="p-0 mb-4">
+                    <p class="d-inline-block mb-0" style="width: 262px; cursor: pointer">В Туркменабате идут работы по устранению последствий сильного урагана</p>
+                    <img src="assets/img/rectangle5.png" alt="" class="float-right pr-4">
+                    <small class="float-left" style="color: #828282; font-size: 14px;">1 час назад</small>
+                </li>
+                <li style="flex: 0 1 50%; " class="p-0 mb-4">
+                    <p class="d-inline-block pl-3 mb-0" style="width: 262px; cursor: pointer">В Туркменабате идут работы по устранению последствий сильного урагана</p>
+                    <img src="assets/img/rectangle5.png" alt="" class="float-right ">
+                    <small class="float-left pl-3" style="color: #828282; font-size: 14px;">1 час назад</small>
+                </li>
+                <li style="flex: 0 1 50%; " class="p-0 mb-4">
+                    <p class="d-inline-block mb-0" style="width: 262px; cursor: pointer">В Иране представили шесть новинок для борьбы с коронавирусом</p>
+                    <img src="assets/img/rectangle6.png" alt="" class="float-right pr-4">
+                    <small class="float-left" style="color: #828282; font-size: 14px;">1 час назад</small>
+                </li>
+                <li style="flex: 0 1 50%; " class="p-0 mb-4">
+                    <p class="d-inline-block pl-3 mb-0" style="width: 262px; cursor: pointer">В Иране представили шесть новинок для борьбы с коронавирусом</p>
+                    <img src="assets/img/rectangle6.png" alt="" class="float-right ">
+                    <small class="float-left pl-3" style="color: #828282; font-size: 14px;">1 час назад</small>
+                </li>
+                <li style="flex: 0 1 50%; " class="p-0 mb-4">
+                    <p class="d-inline-block mb-0" style="width: 262px; cursor: pointer">В Туркменабате идут работы по устранению последствий сильного урагана</p>
+                    <img src="assets/img/rectangle5.png" alt="" class="float-right pr-4">
+                    <small class="float-left" style="color: #828282; font-size: 14px;">1 час назад</small>
+                </li>
+                <li style="flex: 0 1 50%; " class="p-0 mb-4">
+                    <p class="d-inline-block pl-3 mb-0" style="width: 262px; cursor: pointer">В Туркменабате идут работы по устранению последствий сильного урагана</p>
+                    <img src="assets/img/rectangle5.png" alt="" class="float-right ">
+                    <small class="float-left pl-3" style="color: #828282; font-size: 14px;">1 час назад</small>
+                </li>
+                <li style="flex: 0 1 50%; " class="p-0 mb-4">
+                    <p class="d-inline-block mb-0" style="width: 262px; cursor: pointer">В Иране представили шесть новинок для борьбы с коронавирусом</p>
+                    <img src="assets/img/rectangle6.png" alt="" class="float-right pr-4">
+                    <small class="float-left" style="color: #828282; font-size: 14px;">1 час назад</small>
+                </li>
+                <li style="flex: 0 1 50%; " class="p-0 mb-4">
+                    <p class="d-inline-block pl-3 mb-0" style="width: 262px; cursor: pointer">В Иране представили шесть новинок для борьбы с коронавирусом</p>
+                    <img src="assets/img/rectangle6.png" alt="" class="float-right ">
+                    <small class="float-left pl-3" style="color: #828282; font-size: 14px;">1 час назад</small>
+                </li>
+            </ul>
+        </div>
+        <div class="overflow-hidden mb-4 position-relative" style="height: 238px; width: 100%; ">
+            <div class="mb-3">
+                <span class="chapter text-uppercase" style="font-size: 16px">экспертное мнение</span>
+            </div>
+            <div class="" style="width: 746px; height: 100%">
+                <div class="position-absolute " style="width: 485px; height: 198px; border: solid 1px gray; border-radius: 20px; left: 0; padding: 30px;">
+                    <img src="assets/img/ellipse5.png" alt="" class="d-inline-block mr-2 float-left">
+                    <h5 class="d-inline-block ml-3 mt-2" style="font-size:16px; line-height: 150%; width: 277px; height: 92px">Цитата или короткий комментарий лидера мнения, продвигаемого эксперта по некой актуальной теме, проблеме.</h5>
+                    <span class="text-uppercase pt-1 ml-3" style="color: #818182; font-size: 14px; font-weight: bold">Курбан мамедов</span>
+                    <img src="assets/img/ei_arrow-right.png" alt="" class="pl-3 float-right">
+                </div>
+                <div class="position-absolute " style="width: 485px; height: 198px; border: solid 1px gray; border-radius: 20px; left: 66%; padding: 30px;">
+                    <img src="assets/img/ellipse6.png" alt="" class="d-inline-block mr-2 float-left">
+                    <h5 class="d-inline-block ml-3 mt-2" style="font-size:16px; line-height: 150%; width: 277px; height: 92px">Цитата или короткий комментарий лидера мнения, продвигаемого эксперта по некой актуальной теме, проблеме.</h5>
+                    <span class="text-uppercase pt-1 ml-3" style="color: #818182; font-size: 14px; font-weight: bold">Курбан мамедов</span>
+                    <img src="assets/img/ei_arrow-right.png" alt="" class="pl-3 float-right">
+                </div>
+            </div>
+        </div>
+        <div class="mt-5  ml-0 mb-5" style="width: 747px; height: 500px;">
+            <span class="chapter text-uppercase" style="font-size: 16px;">общество</span>
+            <div class="row ml-0" style="width: 745px; height: 433px; border-top: 1px solid #A4B2BB;">
+                <div class="col-6 pt-3 pr-3 pl-0">
+                    <div class="border-bottom mb-3">
+                        <p class="float-left mb-0" style="width: 163px; cursor: pointer; font-weight: 500;">Чем лечат коронавирус: 8 перспективных препаратов</p>
+                        <img src="assets/img/photo3.png" class="float-right">
+                        <div class="mb-3" style="width: 152px; font-size: 14px;">
+                            <span style="color: #818182"> 11:05</span>
+                            <img src="assets/img/ei_eye.svg" alt="">
+                            <span style="color: #818182">654</span>
+                            <img src="assets/img/ei_comment.svg" alt="">
+                            <span style="color: #818182">423</span>
+                        </div>
+                    </div>
+                    <div class="border-bottom mb-3">
+                        <p class="float-left mb-0" style="width: 163px; cursor: pointer; font-weight: 500;">В Иране представили шесть новинок для борьбы с коронавирусом</p>
+                        <img src="assets/img/rectangle7.png" class="float-right">
+                        <div class="mb-3" style="width: 152px; font-size: 14px;">
+                            <span style="color: #818182"> 11:05</span>
+                            <img src="assets/img/ei_eye.svg" alt="">
+                            <span style="color: #818182">654</span>
+                            <img src="assets/img/ei_comment.svg" alt="">
+                            <span style="color: #818182">423</span>
+                        </div>
+                    </div>
+                    <div class="">
+                        <p class="float-left mb-0" style="width: 163px; cursor: pointer; font-weight: 500;">В Туркменабате идут работы по устранению последствий сильного урагана</p>
+                        <img src="assets/img/rectangle8.png" class="float-right">
+                        <div class="mb-3" style="width: 152px; font-size: 14px;">
+                            <span style="color: #818182"> 11:05</span>
+                            <img src="assets/img/ei_eye.svg" alt="">
+                            <span style="color: #818182">654</span>
+                            <img src="assets/img/ei_comment.svg" alt="">
+                            <span style="color: #818182">423</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6 pt-3 pl-3 pr-0">
+                    <img src="assets/img/photo4.png" class="w-auto">
+                    <p class=" " style="width: 352px; cursor: pointer; font-size: 24px; font-weight: 500;">Бердымухамедов и Мирзиев обсудили по телефону борьбу со стихийным бедствием
+                        и пандемией</p>
+                    <div class="mb-3 mt-3" style="width: 152px; font-size: 14px;">
+                        <span style="color: #818182"> 11:05</span>
+                        <img src="assets/img/ei_eye.svg" alt="">
+                        <span style="color: #818182">654</span>
+                        <img src="assets/img/ei_comment.svg" alt="">
+                        <span style="color: #818182">423</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mb-5" style="width: 746px; height: 360px;">
+            <span class="chapter text-uppercase" style="font-size: 16px;">спорт</span>
+            <div class="row ml-0 pt-4" style="width: 745px; height: 350px; border-top: 1px solid #A4B2BB;">
+                <div class="col-6 pl-0 pr-0">
+                    <img src="assets/img/rectangle.png" class="w-auto">
+                    <p class="pt-3 " style="width: 352px; cursor: pointer; font-size: 24px; font-weight: 500;">Лионель Месси установил новый рекорд Ла Лиги</p>
+                    <div class="mb-3 mt-3" style="width: 152px; font-size: 14px;">
+                        <span style="color: #818182"> 11:05</span>
+                        <img src="assets/img/ei_eye.svg" alt="">
+                        <span style="color: #818182">654</span>
+                        <img src="assets/img/ei_comment.svg" alt="">
+                        <span style="color: #818182">423</span>
+                    </div>
+                </div>
+                <div class="col-6 pr-0 pl-3">
+                    <div class="border-bottom mb-3">
+                        <p class="float-left mb-0" style="width: 163px; cursor: pointer; font-weight: 500;">В Туркменабате идут работы устранению последствий сильного урагана</p>
+                        <img src="assets/img/photo3.png" class="float-right">
+                        <div class="mb-3" style="width: 152px; font-size: 14px;">
+                            <span style="color: #818182"> 11:05</span>
+                            <img src="assets/img/ei_eye.svg" alt="">
+                            <span style="color: #818182">654</span>
+                            <img src="assets/img/ei_comment.svg" alt="">
+                            <span style="color: #818182">423</span>
+                        </div>
+                    </div>
+                    <div class="border-bottom mb-3">
+                        <p class="float-left mb-0" style="width: 163px; cursor: pointer; font-weight: 500;">В ВОЗ назвали лучшее средство против COVID-19</p>
+                        <img src="assets/img/rectangle7.png" class="float-right">
+                        <div class="mb-3" style="width: 152px; font-size: 14px;">
+                            <span style="color: #818182"> 11:05</span>
+                            <img src="assets/img/ei_eye.svg" alt="">
+                            <span style="color: #818182">654</span>
+                            <img src="assets/img/ei_comment.svg" alt="">
+                            <span style="color: #818182">423</span>
+                        </div>
+                    </div>
+              </div>
+            </div>
+        </div>
+        <div class="m-auto" style="width: 720px; height: 180px; background-color: #F2994A;">
+
+        </div>
+        <div class="mt-5 mb-4" style="width: 746px; height: 464px;">
+            <span class="chapter text-uppercase" style="font-size: 16px;">культура</span>
+            <div class="row ml-0 pt-4" style="width: 745px; height: 350px; border-top: 1px solid #A4B2BB;">
+                <div class="col-6 pl-0 pr-0">
+                    <img src="assets/img/rectangle1.png" class="w-auto">
+                    <p class="mt-3 " style="width: 352px; cursor: pointer; font-size: 24px; font-weight: 500;">«Стрелы неба – копья земли»: картина Рериха в Туркменистане</p>
+                    <div class="mb-3 mt-3" style="width: 152px; font-size: 14px;">
+                        <span style="color: #818182"> 11:05</span>
+                        <img src="assets/img/ei_eye.svg" alt="">
+                        <span style="color: #818182">654</span>
+                        <img src="assets/img/ei_comment.svg" alt="">
+                        <span style="color: #818182">423</span>
+                    </div>
+                </div>
+                <div class="col-6 pr-0 pl-3">
+                    <div class="border-bottom mb-3">
+                        <p class="float-left mb-0" style="width: 163px; cursor: pointer; font-weight: 500;">В Туркменабате идут работы устранению последствий сильного урагана</p>
+                        <img src="assets/img/photo3.png" class="float-right">
+                        <div class="mb-3" style="width: 152px; font-size: 14px;">
+                            <span style="color: #818182"> 11:05</span>
+                            <img src="assets/img/ei_eye.svg" alt="">
+                            <span style="color: #818182">654</span>
+                            <img src="assets/img/ei_comment.svg" alt="">
+                            <span style="color: #818182">423</span>
+                        </div>
+                    </div>
+                    <div class="border-bottom mb-3">
+                        <p class="float-left mb-0" style="width: 163px; cursor: pointer; font-weight: 500;">В ВОЗ назвали лучшее средство против COVID-19</p>
+                        <img src="assets/img/rectangle7.png" class="float-right">
+                        <div class="mb-3" style="width: 152px; font-size: 14px;">
+                            <span style="color: #818182"> 11:05</span>
+                            <img src="assets/img/ei_eye.svg" alt="">
+                            <span style="color: #818182">654</span>
+                            <img src="assets/img/ei_comment.svg" alt="">
+                            <span style="color: #818182">423</span>
+                        </div>
+                    </div>
+                    <div class="border-bottom mb-3">
+                        <p class="float-left mb-0" style="width: 163px; cursor: pointer; font-weight: 500;">В ВОЗ назвали лучшее средство против COVID-19</p>
+                        <img src="assets/img/rectangle7.png" class="float-right">
+                        <div class="mb-3" style="width: 152px; font-size: 14px;">
+                            <span style="color: #818182"> 11:05</span>
+                            <img src="assets/img/ei_eye.svg" alt="">
+                            <span style="color: #818182">654</span>
+                            <img src="assets/img/ei_comment.svg" alt="">
+                            <span style="color: #818182">423</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-5  ml-0 mb-5" style="width: 747px; height: 500px;">
+            <span class="chapter text-uppercase" style="font-size: 16px;">экомир</span>
+            <div class="row ml-0" style="width: 745px; height: 433px; border-top: 1px solid #A4B2BB;">
+                <div class="col-6 pt-3 pr-3 pl-0">
+                    <div class="border-bottom mb-3">
+                        <p class="float-left mb-0" style="width: 163px; cursor: pointer; font-weight: 500;">Чем лечат коронавирус: 8 перспективных препаратов</p>
+                        <img src="assets/img/photo3.png" class="float-right">
+                        <div class="mb-3" style="width: 152px; font-size: 14px;">
+                            <span style="color: #818182"> 11:05</span>
+                            <img src="assets/img/ei_eye.svg" alt="">
+                            <span style="color: #818182">654</span>
+                            <img src="assets/img/ei_comment.svg" alt="">
+                            <span style="color: #818182">423</span>
+                        </div>
+                    </div>
+                    <div class="border-bottom mb-3">
+                        <p class="float-left mb-0" style="width: 163px; cursor: pointer; font-weight: 500;">В Иране представили шесть новинок для борьбы с коронавирусом</p>
+                        <img src="assets/img/rectangle7.png" class="float-right">
+                        <div class="mb-3" style="width: 152px; font-size: 14px;">
+                            <span style="color: #818182"> 11:05</span>
+                            <img src="assets/img/ei_eye.svg" alt="">
+                            <span style="color: #818182">654</span>
+                            <img src="assets/img/ei_comment.svg" alt="">
+                            <span style="color: #818182">423</span>
+                        </div>
+                    </div>
+                    <div class="">
+                        <p class="float-left mb-0" style="width: 163px; cursor: pointer; font-weight: 500;">В Туркменабате идут работы по устранению последствий сильного урагана</p>
+                        <img src="assets/img/rectangle8.png" class="float-right">
+                        <div class="mb-3" style="width: 152px; font-size: 14px;">
+                            <span style="color: #818182"> 11:05</span>
+                            <img src="assets/img/ei_eye.svg" alt="">
+                            <span style="color: #818182">654</span>
+                            <img src="assets/img/ei_comment.svg" alt="">
+                            <span style="color: #818182">423</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 pt-3 pl-3 pr-0">
+                    <img src="assets/img/rectangle2.png" class="w-auto">
+                    <p class=" " style="width: 352px; cursor: pointer; font-size: 24px; font-weight: 500;">Бердымухамедов и Мирзиев обсудили по телефону борьбу со стихийным бедствием
+                        и пандемией</p>
+                    <div class="mb-3 mt-3" style="width: 152px; font-size: 14px;">
+                        <span style="color: #818182"> 11:05</span>
+                        <img src="assets/img/ei_eye.svg" alt="">
+                        <span style="color: #818182">654</span>
+                        <img src="assets/img/ei_comment.svg" alt="">
+                        <span style="color: #818182">423</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <span class="chapter text-uppercase" style="font-size: 16px;">спецпроекты</span>
+            <div class="border-top mt-3  pt-5" style="width: 1133px; height: 1239px;">
+                <div class="col pl-0 pr-0 rectangle3">
+                    <p class="m-auto" style="width: 943px">За время пандемии IT компании подорожали на 250 миллиардов долларов</p>
+                </div>
+                <div class="ml-0 d-flex mt-4 justify-content-between" >
+                    <div class="rectangle4 " >
+                            <p class="mt-auto " style="width: 278px; ">Что подарить родителям, чтобы спать спокойно </p>
+                    </div>
+                    <div class="rectangle21">
+                            <p class="m-auto" style="width: 278px">Какое будущее ждет газовую промышленность</p>
+                    </div>
+                </div>
+                <div class="ml-0 d-flex mt-4 justify-content-between">
+                    <div class="rectangle9">
+                            <p class="m-auto" style="width: 278px">Ликбез стройности: О чем молчат ваш диетолог и тренер</p>
+                    </div>
+                    <div class="rectangle22">
+                            <p class="m-auto" style="width: 278px">Коллекционный Ахалтекинец limited edition</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="right-sidebar">
+        <span class="right-sidebar-chapter" style="margin-bottom: 15px">ОРИЕНТ РЕКОМЕНДУЕТ</span>
+        <ul class="list-unstyled mt-2 list-recommended list-group" style="margin-top: 15px">
+            <li>
+                <a href="#" class="list-group-item"><span>У свободы в Италии кофейный аромат, а Бэнкси нарисовал нового супергероя – медсестру</span></a>
+            </li>
+            <li>
+                <a href="#" class="list-group-item"><span>Национальная Спартакиада в Туркменистане финишировала лидерством столичной молодежи</span></a>
+            </li>
+            <li>
+                <a href="#" class="list-group-item"><span>Мусульмане будут молиться в Рамадан дома, а туристы на МКС встретят Новый год</span></a>
+            </li>
+            <li>
+                <a href="#" class="list-group-item"><span>Как уроженец Туркменистана покорил мир сумо</span></a>
+            </li>
+            <li>
+                <a href="#" class="list-group-item"><span>Музыка киноклассики – в исполнении студентов Туркменской национальной консерватории</span></a>
+            </li>
+        </ul>
+    </section>
+</div>
 
     <footer class="bg-dark">
         <div class="row justify-content-center">
@@ -135,7 +815,8 @@
         </div>
     </footer>
 
-<script src="js/jquery-1.8.0.js"></script>
+<script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.js"></script>
+
 </body>
 </html>

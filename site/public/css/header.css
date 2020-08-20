@@ -18,13 +18,13 @@ div.sub-header{
     display: flex;
     position: relative;
     height: 80px;
-    width: 1440px;
+    width: 1120px;
     margin: 0 auto;
 }
 
 .slogan{
         position: absolute;
-        left: 11.7%;
+        left: 9%;
         padding-left: 15px;
         font-style: normal;
         font-weight: bold;
@@ -37,7 +37,7 @@ div.sub-header{
 
 .logo{
     position: absolute;
-    left: 3.5%;
+    left: -1.5%;
     height: 66px;
     width: 110px;
 }
@@ -49,7 +49,7 @@ div.top-block ul{
     list-style: none;
     text-align: right;
     position: absolute;
-    left: 33%;
+    left: 28%;
     width: 47%;
     height: 35px;
     font-style: normal;
@@ -79,7 +79,7 @@ div.top-block ul li a:hover{
 
 a.btn-lang{
     position: absolute;
-    left: 83%;
+    left: 85%;
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -99,40 +99,35 @@ a.btn-lang:hover{
     background-color: #6FCF97;
 }
 
-.btn-search{
+#sb-search{
     position: absolute;
-    left: 89.5%;
-    width: 35px;
-    height: 35px;
+    left: 80%;
+}
+
+#search{
+    text-align: center;
+    width: 0;
     border: none;
-    background-color: #fff;
+}
+
+.search-form{
+    width: 135px;
+    height: 35px;
+    z-index: 1000;
+}
+
+.search-form:focus{
+    width: 30vw;
+}
+
+.sb-search-submit{
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    background-color: white;
+    background-repeat: no-repeat;
     background-image: url("../assets/img/search.svg");
-}
-
-.btn-search:hover{
-    border: #1c7430 solid 1px;
-}
-
-.btn-search-active{
-    position: absolute;
-    left: 27%;
-    width: 35px;
-    height: 35px;
-    border: none;
-    background-color: #fff;
-    background-image: url("../assets/img/search_active.svg");
-}
-
-.input-search-active{
-    border-color: #fff;
-    width: 40%;
-    height: 35px;
-    position: absolute;
-    left: 30%;
-
-}
-textarea:focus, input:focus{
-    outline: none;
 }
 
 .btn-hamburger{
@@ -164,14 +159,12 @@ textarea:focus, input:focus{
 }
 
 div.top-menu > ul{
-    display: flex;
     list-style: none;
     align-items: center;
-    text-align: left;
-    padding: 0 50px;
     height: 56px;
-    width: 1440px;
+    width: 1120px;
     margin: 0 auto;
+    padding-left: 0;
 }
 
 div.top-menu > ul > li > a{

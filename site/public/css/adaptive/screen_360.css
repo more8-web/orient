@@ -1,17 +1,13 @@
 
-@media (max-width: 767px) {
+@media (max-width: 500px) {
 
     header{
         width: 100%;
     }
 
-    div.shadow{
-        width: 100%;
-    }
-
-    body > header > div.sub-header > div
+    div.top-block
     {
-        width: 100%;
+        width: 360%;
     }
 
     img.logo{

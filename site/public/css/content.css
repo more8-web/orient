@@ -1,0 +1,132 @@
+.container{
+    width: 1440px;
+    padding: 24px 0 0 0;
+}
+.content{
+    width: 747px;
+
+}
+
+span.chapter{
+    font-size: 14px;
+    width: 169px;
+    height: 16px;
+    font-weight: bold;
+    color: red;
+}
+
+.right-sidebar{
+    width: 358px;
+    height: 434px;
+    padding-left: 29px;
+}
+
+span.right-sidebar-chapter{
+    font-size: 14px;
+    width: 169px;
+    height: 16px;
+    font-weight: bold;
+    color: red;
+}
+
+ul.list-recommended{
+
+}
+
+ul.list-recommended a{
+    font-size: 14px;
+    text-decoration: none;
+    color: black;
+}
+
+div.main-banner{
+    margin-top: 15px;
+}
+
+.sl_ctr{
+    position:relative;
+    width:736px;
+    height:400px;
+    overflow:hidden;
+}
+.sldr{
+    position:relative;
+    width:10000px;
+    height:400px;
+}
+.sldr img{
+    margin-left: 5px;
+    float:left;
+}
+.prv_b, .nxt_b{
+    position: absolute;
+    display: inline-block;
+    width:24px;
+    height:24px;
+    cursor:pointer;
+    padding: 0;
+    margin: 0;
+}
+.prv_b:hover, .nxt_b:hover{opacity:.6;}
+
+.prv_b{
+    right: 70px;
+    background:url("../assets/img/prev.svg") no-repeat;
+}
+.nxt_b{
+    right: 30px;
+    background:url("../assets/img/next.svg") no-repeat;
+}
+
+.rectangle3{
+    width: 1134px;
+    height: 500px;
+    background-image: url("../assets/img/rectangle3.png");
+    font-weight: bold;
+    font-size: 48px;
+    line-height: 56px;
+    text-align: center;
+    color: #FFFFFF;
+    padding-top: 200px;
+}
+
+.rectangle4{
+    width: 552px;
+    height: 310px;
+    background-image: url("../assets/img/rectangle4.png");
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 38px;
+    color: #FFFFFF;
+
+}
+
+.rectangle21{
+    width: 552px;
+    height: 310px;
+    background-image: url("../assets/img/rectangle21.png");
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 38px;
+    color: #FFFFFF;
+}
+
+.rectangle9{
+    width: 552px;
+    height: 310px;
+    background-image: url("../assets/img/rectangle9.svg");
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 38px;
+    color: #FFFFFF;
+}
+
+.rectangle22{
+    width: 552px;
+    height: 310px;
+    background-image: url("../assets/img/rectangle22.png");
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 38px;
+    color: #FFFFFF;
+}
