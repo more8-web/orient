@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {Component, forwardRef, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
 import {PageDispatcher, PageSelectors} from "@app/context";
 import {ActivatedRoute, Router} from "@angular/router";
 
@@ -7,6 +7,13 @@ import {ActivatedRoute, Router} from "@angular/router";
     selector: 'app-page-form',
     templateUrl: './update-page-form.component.html',
     styleUrls: ['./update-page-form.component.css'],
+    providers: [
+    {
+        provide: NG_VALUE_ACCESSOR,
+        multi: true,
+        useExisting: forwardRef(() => UpdatePageFormComponent),
+    }
+]
 })
 export class UpdatePageFormComponent implements OnInit {
     pageForm: FormGroup;
@@ -35,11 +42,11 @@ export class UpdatePageFormComponent implements OnInit {
             }
         });
 
-        this.pageForm = this.fb.group({
-            alias: [""],
-            url: [""],
-            template: [""],
-        });
+        this.pageForm = new FormGroup({
+            alias: new FormControl(Validators.required),
+            url: new FormControl(),
+            template: new FormControl(),
+        }, Validators.required);
 
         console.log(this.pageForm);
     }
